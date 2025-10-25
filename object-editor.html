@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantasy OS - Hobbit-Höhle Desktop</title>
+    <title>Living Room - Objekt Identifikation</title>
     
     <!-- Fantasy Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -12,127 +12,28 @@
     <link rel="stylesheet" href="css/fantasy-variables.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/rooms.css">
-    <link rel="stylesheet" href="css/objects.css">
-    <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/room-object-overlay.css">
     
-    <!-- Object Editor Styles -->
     <style>
-        /* Object Editor Styles */
-        .object-editor-sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 350px;
-            height: 100vh;
-            background: rgba(0,0,0,0.9);
-            border-left: 2px solid var(--magic-gold);
-            z-index: 10000;
+        body {
+            margin: 0;
             padding: 20px;
-            overflow-y: auto;
-            display: none;
-            font-family: 'MedievalSharp', cursive;
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
         }
-        
-        .object-editor-sidebar.active {
+        .image-container {
+            position: relative;
+            display: inline-block;
+            border: 2px solid #666;
+        }
+        .room-image {
+            max-width: 100%;
+            height: auto;
             display: block;
         }
-        
-        .object-editor-sidebar h3 {
-            color: var(--magic-gold);
-            margin-top: 0;
-            font-family: 'MedievalSharp', cursive;
-        }
-        
-        .object-editor-sidebar button {
-            background: var(--magic-purple);
-            color: white;
-            border: 2px solid var(--magic-gold);
-            padding: 8px 12px;
-            margin: 5px 5px 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'MedievalSharp', cursive;
-            font-size: 12px;
-        }
-        
-        .object-editor-sidebar button:hover {
-            background: var(--magic-gold);
-            color: var(--magic-purple);
-        }
-        
-        .editor-coordinates {
-            font-family: monospace;
-            background: rgba(0,0,0,0.3);
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            border: 1px solid var(--magic-gold);
-        }
-        
-        .editor-object-list {
-            margin-top: 20px;
-        }
-        
-        .editor-object-item {
-            background: rgba(0,0,0,0.3);
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border-left: 4px solid var(--magic-gold);
-        }
-        
-        .editor-click-area {
-            position: absolute;
-            border: 2px solid rgba(212, 175, 55, 0.7);
-            background: rgba(212, 175, 55, 0.2);
-            pointer-events: none;
-            z-index: 1000;
-            cursor: move;
-        }
-        
-        .editor-click-area.active {
-            border-color: #D4AF37;
-            background: rgba(212, 175, 55, 0.3);
-        }
-        
-        .editor-resize-handle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #D4AF37;
-            border: 1px solid white;
-            pointer-events: all;
-            cursor: nw-resize;
-        }
-        
-        .editor-resize-handle.se {
-            bottom: -5px;
-            right: -5px;
-            cursor: se-resize;
-        }
-        
-        .editor-resize-handle.sw {
-            bottom: -5px;
-            left: -5px;
-            cursor: sw-resize;
-        }
-        
-        .editor-resize-handle.ne {
-            top: -5px;
-            right: -5px;
-            cursor: ne-resize;
-        }
-        
-        .editor-resize-handle.nw {
-            top: -5px;
-            left: -5px;
-            cursor: nw-resize;
-        }
-        
         .click-indicator {
-            position: fixed;
+            position: absolute;
             width: 20px;
             height: 20px;
             background: red;
@@ -140,9 +41,35 @@
             border: 2px solid white;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            z-index: 1001;
+            z-index: 10;
         }
-        
+        .info-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #666;
+        }
+        .coordinates {
+            font-family: monospace;
+            background: #333;
+            padding: 5px;
+            border-radius: 3px;
+            margin: 5px 0;
+        }
+        .object-list {
+            margin-top: 20px;
+        }
+        .object-item {
+            background: #333;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #D4AF37;
+        }
         .click-area {
             position: absolute;
             border: 2px solid rgba(212, 175, 55, 0.5);
@@ -151,12 +78,10 @@
             z-index: 5;
             cursor: move;
         }
-        
         .click-area.active {
             border-color: #D4AF37;
             background: rgba(212, 175, 55, 0.2);
         }
-        
         .resize-handle {
             position: absolute;
             width: 10px;
@@ -166,59 +91,27 @@
             pointer-events: all;
             cursor: nw-resize;
         }
-        
         .resize-handle.se {
             bottom: -5px;
             right: -5px;
             cursor: se-resize;
         }
-        
         .resize-handle.sw {
             bottom: -5px;
             left: -5px;
             cursor: sw-resize;
         }
-        
         .resize-handle.ne {
             top: -5px;
             right: -5px;
             cursor: ne-resize;
         }
-        
         .resize-handle.nw {
             top: -5px;
             left: -5px;
             cursor: nw-resize;
         }
-        
-        /* Disable gesture system when editor is active */
-        .fantasy-desktop.editor-mode .gesture-canvas-container {
-            display: none !important;
-        }
-        
-        .fantasy-desktop.editor-mode .room-object-overlay {
-            display: none !important;
-        }
-        
-        .fantasy-desktop.editor-mode .room-background {
-            cursor: crosshair !important;
-            pointer-events: auto !important;
-        }
-        
-        /* Hide side panels in editor mode */
-        .fantasy-desktop.editor-mode .room-side-panel {
-            display: none !important;
-        }
-        
-        /* Make room background full width in editor mode */
-        .fantasy-desktop.editor-mode .room-background {
-            width: 100% !important;
-            height: 100% !important;
-        }
     </style>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 </head>
 <body>
     <!-- Fantasy Desktop Container -->
@@ -257,325 +150,68 @@
         <!-- Room Content -->
         <main class="room-content">
             
-            <!-- Living Room (Default) -->
+            <!-- Living Room -->
             <div class="room active" id="living-room">
                 <!-- Left Side Panel -->
                 <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Spells</h3>
-                    <div class="spell-input-container">
-                        <input type="text" id="spellInput" placeholder="Enter spell..." class="spell-input">
-                        <button id="castSpell" class="cast-spell-btn">Cast</button>
-                    </div>
-                    <div class="spell-list">
-                        <h4>Known Spells:</h4>
-                        <ul>
-                            <li>"ignite fireplace"</li>
-                            <li>"summon light"</li>
-                            <li>"open portal to kitchen"</li>
-                            <li>"store treasure in chest"</li>
-                        </ul>
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="info-panel">
+                        <h3>🎯 Klick-Koordinaten</h3>
+                        <div class="coordinates" id="coordinates">Klicke auf das Bild</div>
+                        
+                        <h3>📝 Identifizierte Objekte</h3>
+                        <div class="object-list" id="objectList">
+                            <p>Noch keine Objekte identifiziert</p>
+                        </div>
+                        
+                        <button onclick="clearObjects()">🗑️ Alle löschen</button>
+                        <button onclick="exportObjects()">📤 Exportieren</button>
+                        
+                        <h3>⌨️ Keyboard Shortcuts</h3>
+                        <div style="font-size: 12px; color: #ccc;">
+                            <p><strong>WASD:</strong> Größe anpassen (wenn Objekt ausgewählt)</p>
+                            <p><strong>W:</strong> Höhe +10px</p>
+                            <p><strong>S:</strong> Höhe -10px</p>
+                            <p><strong>A:</strong> Breite -10px</p>
+                            <p><strong>D:</strong> Breite +10px</p>
+                            <p><strong>Delete:</strong> Ausgewähltes Objekt löschen</p>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');">
-                    <!-- Interactive Objects are now handled by RoomObjectOverlay system -->
-                    <!-- No need for separate object elements - clicks are detected on the background -->
-                    
-                    <!-- Magical Particles -->
-                    <div class="particle-system">
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
+                    <div class="image-container">
+                        <img src="assets/images/rooms/living-room.png" alt="Living Room" class="room-image" id="roomImage">
+                        <div class="click-indicator" id="clickIndicator" style="display: none;"></div>
                     </div>
                 </div>
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">🎯 Klick-Koordinaten</h3>
-                    <div class="coordinates" id="coordinates" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Klicke auf das Bild</div>
-                    
-                    <h3>📝 Identifizierte Objekte</h3>
-                    <div class="object-list" id="objectList">
-                        <p>Noch keine Objekte identifiziert</p>
-                    </div>
-                    
-                    <button onclick="clearObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🗑️ Alle löschen</button>
-                    <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Exportieren</button>
-                    
-                    <h3>⌨️ Keyboard Shortcuts</h3>
-                    <div style="font-size: 12px; color: #ccc;">
-                        <p><strong>WASD:</strong> Größe anpassen (wenn Objekt ausgewählt)</p>
-                        <p><strong>W:</strong> Höhe +10px</p>
-                        <p><strong>S:</strong> Höhe -10px</p>
-                        <p><strong>A:</strong> Breite -10px</p>
-                        <p><strong>D:</strong> Breite +10px</p>
-                        <p><strong>Delete:</strong> Ausgewähltes Objekt löschen</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Other Rooms (Hidden by default) -->
-            <div class="room" id="kitchen">
-                <!-- Left Side Panel -->
-                <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Spells</h3>
-                    <div class="spell-input-container">
-                        <input type="text" id="spellInputKitchen" placeholder="Zauberspruch eingeben..." class="spell-input">
-                        <button id="castSpellKitchen" class="cast-spell-btn">Zaubern</button>
-                    </div>
-                    <div class="spell-list">
-                        <h4>Kitchen Spells:</h4>
-                        <ul>
-                            <li>"brew potion"</li>
-                            <li>"summon ingredients"</li>
-                            <li>"clean cauldron"</li>
-                            <li>"heat water"</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Center Background -->
-                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');">
-                    <div class="room-content-text">
-                        <h2>Kitchen - File Manager</h2>
-                        <p>Organized pantry for your files</p>
-                    </div>
-                </div>
-                
-                <!-- Right Side Panel -->
-                <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Object Editor</h3>
+                    <h3 class="fantasy-header">Instructions</h3>
                     <div class="gesture-instructions">
-                        <h4>Click Coordinates:</h4>
-                        <div id="coordinatesKitchen" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
-                        <p><strong>Click anywhere on the room to add objects!</strong></p>
-                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
-                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="room" id="bedroom">
-                <!-- Left Side Panel -->
-                <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Spells</h3>
-                    <div class="spell-input-container">
-                        <input type="text" id="spellInputBedroom" placeholder="Zauberspruch eingeben..." class="spell-input">
-                        <button id="castSpellBedroom" class="cast-spell-btn">Zaubern</button>
-                    </div>
-                    <div class="spell-list">
-                        <h4>Bedroom Spells:</h4>
+                        <h4>Object Editor:</h4>
                         <ul>
-                            <li>"rest mode"</li>
-                            <li>"sleep timer"</li>
-                            <li>"dream portal"</li>
-                            <li>"wake up"</li>
+                            <li>Click on image to add objects</li>
+                            <li>Drag corners to resize</li>
+                            <li>Use WASD keys for fine tuning</li>
+                            <li>Export when finished</li>
                         </ul>
-                    </div>
-                </div>
-                
-                <!-- Center Background -->
-                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');">
-                    <div class="room-content-text">
-                        <h2>Bedroom - Rest Mode</h2>
-                        <p>Quiet retreat for breaks</p>
-                    </div>
-                </div>
-                
-                <!-- Right Side Panel -->
-                <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Object Editor</h3>
-                    <div class="gesture-instructions">
-                        <h4>Click Coordinates:</h4>
-                        <div id="coordinatesBedroom" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
-                        <p><strong>Click anywhere on the room to add objects!</strong></p>
-                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
-                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="room" id="workshop">
-                <!-- Left Side Panel -->
-                <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Spells</h3>
-                    <div class="spell-input-container">
-                        <input type="text" id="spellInputWorkshop" placeholder="Zauberspruch eingeben..." class="spell-input">
-                        <button id="castSpellWorkshop" class="cast-spell-btn">Zaubern</button>
-                    </div>
-                    <div class="spell-list">
-                        <h4>Workshop Spells:</h4>
-                        <ul>
-                            <li>"craft tool"</li>
-                            <li>"repair item"</li>
-                            <li>"upgrade system"</li>
-                            <li>"forge weapon"</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Center Background -->
-                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');">
-                    <div class="room-content-text">
-                        <h2>Workshop - Tools/Apps</h2>
-                        <p>Workplace with tools and applications</p>
-                    </div>
-                </div>
-                
-                <!-- Right Side Panel -->
-                <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Object Editor</h3>
-                    <div class="gesture-instructions">
-                        <h4>Click Coordinates:</h4>
-                        <div id="coordinatesWorkshop" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
-                        <p><strong>Click anywhere on the room to add objects!</strong></p>
-                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
-                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="room" id="library">
-                <!-- Left Side Panel -->
-                <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Spells</h3>
-                    <div class="spell-input-container">
-                        <input type="text" id="spellInputLibrary" placeholder="Zauberspruch eingeben..." class="spell-input">
-                        <button id="castSpellLibrary" class="cast-spell-btn">Zaubern</button>
-                    </div>
-                    <div class="spell-list">
-                        <h4>Library Spells:</h4>
-                        <ul>
-                            <li>"open book"</li>
-                            <li>"search knowledge"</li>
-                            <li>"save document"</li>
-                            <li>"archive scroll"</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Center Background -->
-                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
-                    <div class="room-content-text">
-                        <h2>Library - Documents</h2>
-                        <p>Books and scrolls for your documents</p>
-                    </div>
-                </div>
-                
-                <!-- Right Side Panel -->
-                <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Object Editor</h3>
-                    <div class="gesture-instructions">
-                        <h4>Click Coordinates:</h4>
-                        <div id="coordinatesLibrary" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
-                        <p><strong>Click anywhere on the room to add objects!</strong></p>
-                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
-                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="room" id="garden">
-                <!-- Left Side Panel -->
-                <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Spells</h3>
-                    <div class="spell-input-container">
-                        <input type="text" id="spellInputGarden" placeholder="Zauberspruch eingeben..." class="spell-input">
-                        <button id="castSpellGarden" class="cast-spell-btn">Zaubern</button>
-                    </div>
-                    <div class="spell-list">
-                        <h4>Garden Spells:</h4>
-                        <ul>
-                            <li>"connect internet"</li>
-                            <li>"open portal"</li>
-                            <li>"grow network"</li>
-                            <li>"harvest data"</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Center Background -->
-                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
-                    <div class="room-content-text">
-                        <h2>Garden - External Connections</h2>
-                        <p>Connection to the outside world and internet</p>
-                    </div>
-                </div>
-                
-                <!-- Right Side Panel -->
-                <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Object Editor</h3>
-                    <div class="gesture-instructions">
-                        <h4>Click Coordinates:</h4>
-                        <div id="coordinatesGarden" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
-                        <p><strong>Click anywhere on the room to add objects!</strong></p>
-                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
-                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
                     </div>
                 </div>
             </div>
         </main>
-
-        <!-- Status Bar -->
-        <footer class="status-bar">
-            <div class="status-left">
-                <span class="current-room">Living Room</span>
-                <span class="magic-level">Magic: 100%</span>
-            </div>
-            <div class="status-center">
-                <div class="spell-history">
-                    <span class="last-spell">Last Spell: -</span>
-                </div>
-            </div>
-            <div class="status-right">
-                <button class="help-btn" id="helpBtn">Help</button>
-                <button class="settings-btn" id="settingsBtn">Settings</button>
-            </div>
-        </footer>
     </div>
-
-    <div class="click-indicator" id="clickIndicator" style="display: none;"></div>
-
-    <!-- JavaScript -->
-    <script src="js/sound-system.js"></script>
-    <script src="js/utils/gesture-helpers.js"></script>
-    <script src="js/gesture-patterns.js"></script>
-    <script src="js/gesture-analysis.js"></script>
-    <script src="js/gesture-actions.js"></script>
-    <script src="js/gesture-recognition.js"></script>
-    <script src="js/spell-parser.js"></script>
-    <script src="js/room-manager.js"></script>
-    <script src="js/object-interaction.js"></script>
-    <script src="js/room-object-overlay.js"></script>
-    <script src="js/particle-system.js"></script>
-    <script src="js/main.js"></script>
-
+    
     <script>
         let objects = [];
-        let selectedObject = null;
-        let isResizing = false;
-        let currentRoom = 'living-room';
+        let imageRect = null;
         
-        // Add click listener directly to room background elements
-        function setupRoomClickListeners() {
-            const roomBackgrounds = document.querySelectorAll('.room-background');
-            roomBackgrounds.forEach(bg => {
-                bg.addEventListener('click', handleRoomClick, true);
-                console.log('🎯 Click listener added to:', bg);
-            });
-        }
-        
-        function handleRoomClick(e) {
-            console.log('🎯 Room click detected!', e.target);
-            
-            const rect = e.currentTarget.getBoundingClientRect();
+        document.getElementById('roomImage').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
-            console.log(`Click coordinates: ${x}, ${y}`);
             
             // Show click indicator
             const indicator = document.getElementById('clickIndicator');
@@ -596,7 +232,7 @@
             setTimeout(() => {
                 indicator.style.display = 'none';
             }, 1000);
-        }
+        });
         
         function addObject(name, x, y) {
             const object = {
@@ -620,13 +256,13 @@
             }
             
             list.innerHTML = objects.map((obj, index) => `
-                <div class="object-item" style="background: rgba(0,0,0,0.3); padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 4px solid var(--magic-gold);">
+                <div class="object-item">
                     <strong>${obj.name}</strong><br>
                     Position (top-left): ${obj.x}, ${obj.y}<br>
                     Größe: ${obj.width} x ${obj.height}<br>
                     Mitte: ${obj.x + obj.width/2}, ${obj.y + obj.height/2}<br>
-                    <button onclick="editObject(${index})" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 4px 8px; margin: 2px; border-radius: 3px; cursor: pointer; font-family: 'MedievalSharp', cursive; font-size: 10px;">✏️ Bearbeiten</button>
-                    <button onclick="deleteObject(${index})" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 4px 8px; margin: 2px; border-radius: 3px; cursor: pointer; font-family: 'MedievalSharp', cursive; font-size: 10px;">🗑️ Löschen</button>
+                    <button onclick="editObject(${index})">✏️ Bearbeiten</button>
+                    <button onclick="deleteObject(${index})">🗑️ Löschen</button>
                 </div>
             `).join('');
         }
@@ -668,9 +304,12 @@
                     selectObject(index);
                 });
                 
-                document.querySelector('.room-background').appendChild(area);
+                document.querySelector('.image-container').appendChild(area);
             });
         }
+        
+        let selectedObject = null;
+        let isResizing = false;
         
         function selectObject(index) {
             // Remove previous selection
@@ -840,32 +479,6 @@
                         break;
                 }
             }
-        });
-        
-        // Initialize
-        window.addEventListener('load', () => {
-            console.log('🎯 Fantasy OS Object Editor initialized');
-            
-            // Setup click listeners after everything is loaded
-            setTimeout(() => {
-                setupRoomClickListeners();
-            }, 1000);
-            
-            // Update time display
-            function updateTime() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString('de-DE', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-                const timeElement = document.querySelector('.status-right');
-                if (timeElement) {
-                    timeElement.innerHTML = `<span class="current-time">${timeString}</span><button class="help-btn" id="helpBtn">Help</button><button class="settings-btn" id="settingsBtn">Settings</button>`;
-                }
-            }
-            
-            updateTime();
-            setInterval(updateTime, 1000);
         });
     </script>
 </body>
