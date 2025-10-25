@@ -1,0 +1,630 @@
+/**
+ * Fantasy OS - Room Progression CSS
+ * Styling for room progression system, unlocking, secret passages, and upgrades
+ * Created: 2025-10-25T16:42:58.000Z
+ */
+
+/* Room Progression Base Styles */
+.room-progression-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Room Tab Progression Indicators */
+.room-tab {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.room-tab.locked {
+    opacity: 0.5;
+    filter: grayscale(100%);
+    cursor: not-allowed;
+}
+
+.room-tab.locked .room-icon {
+    filter: grayscale(100%) brightness(0.5);
+}
+
+.room-tab.unlocked {
+    opacity: 1;
+    filter: none;
+}
+
+.room-tab.unlocked .room-icon {
+    filter: none;
+}
+
+/* Room Unlock Animations */
+@keyframes roomUnlockAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes roomTabUnlock {
+    0% {
+        transform: scale(1);
+        filter: grayscale(100%);
+    }
+    50% {
+        transform: scale(1.1);
+        filter: grayscale(0%) brightness(1.2);
+    }
+    100% {
+        transform: scale(1);
+        filter: none;
+    }
+}
+
+/* Room Unlock Notifications */
+.room-unlock-notification {
+    animation: roomUnlockAppear 0.5s ease-out;
+}
+
+.room-unlock-notification .unlock-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    animation: unlockIconPulse 2s infinite;
+}
+
+.room-unlock-notification .unlock-content h3 {
+    color: #ffd700;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.room-unlock-notification .unlock-content p {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.room-unlock-notification .unlock-message {
+    font-style: italic;
+    color: #c9a96e;
+    font-size: 14px;
+}
+
+@keyframes unlockIconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Room Unlock Effects */
+.room-unlock-effects {
+    pointer-events: none;
+}
+
+.magical-particle {
+    animation: magicalParticleFloat 3s ease-out forwards;
+}
+
+@keyframes magicalParticleFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(0.5);
+    }
+}
+
+.trophy-sparkle {
+    animation: trophySparkle 2.5s ease-out forwards;
+}
+
+@keyframes trophySparkle {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5) rotate(360deg);
+    }
+}
+
+.default-reveal {
+    animation: defaultReveal 2s ease-out forwards;
+}
+
+@keyframes defaultReveal {
+    0% {
+        opacity: 0.8;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+/* Unlock Particles */
+.unlock-particle {
+    animation: unlockParticleFloat 2s ease-out forwards;
+}
+
+@keyframes unlockParticleFloat {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0);
+    }
+}
+
+.unlock-sparkle {
+    animation: unlockSparkle 1.5s ease-out forwards;
+}
+
+@keyframes unlockSparkle {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.5) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) rotate(360deg);
+    }
+}
+
+/* Secret Passage Styles */
+.passage-discovery-notification {
+    animation: passageDiscoveryAppear 0.5s ease-out;
+}
+
+.passage-discovery-notification .passage-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    animation: passageIconPulse 2s infinite;
+}
+
+.passage-discovery-notification .passage-content h3 {
+    color: #e94560;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.passage-discovery-notification .passage-content p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.passage-discovery-notification .passage-name {
+    font-weight: bold;
+    color: #f27121;
+}
+
+.passage-discovery-notification .passage-description {
+    font-style: italic;
+    color: #c9a96e;
+    font-size: 14px;
+}
+
+.passage-discovery-notification .passage-rooms {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.passage-discovery-notification .passage-arrow {
+    color: #e94560;
+    font-weight: bold;
+}
+
+@keyframes passageDiscoveryAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes passageIconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Passage Discovery Effects */
+.passage-discovery-effects {
+    pointer-events: none;
+}
+
+.passage-particle {
+    animation: passageParticleFloat 3s ease-out forwards;
+}
+
+@keyframes passageParticleFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(0.3);
+    }
+}
+
+/* Passage Indicators */
+.passage-indicator {
+    animation: passageIndicatorPulse 2s infinite;
+}
+
+@keyframes passageIndicatorPulse {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Passage Navigation */
+.passage-navigation-btn {
+    transition: all 0.3s ease;
+}
+
+.passage-navigation-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(233, 69, 96, 0.4);
+}
+
+.passage-navigation-btn .passage-icon {
+    margin-right: 8px;
+}
+
+.passage-navigation-btn .passage-text {
+    font-size: 14px;
+}
+
+/* Passage Transition */
+.passage-transition-overlay {
+    animation: passageTransition 1s ease-in-out;
+}
+
+@keyframes passageTransition {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+/* Room Upgrade Styles */
+.upgrade-unlock-notification {
+    animation: upgradeUnlockAppear 0.5s ease-out;
+}
+
+.upgrade-unlock-notification .upgrade-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    animation: upgradeIconPulse 2s infinite;
+}
+
+.upgrade-unlock-notification .upgrade-content h3 {
+    color: #ffd700;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.upgrade-unlock-notification .upgrade-content p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.upgrade-unlock-notification .upgrade-name {
+    font-weight: bold;
+    color: #ff6b35;
+}
+
+.upgrade-unlock-notification .upgrade-description {
+    font-style: italic;
+    color: #c9a96e;
+    font-size: 14px;
+}
+
+.upgrade-unlock-notification .upgrade-room {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #8b4513;
+}
+
+.upgrade-unlock-notification .apply-upgrade-btn {
+    background: linear-gradient(135deg, #ffd700 0%, #ff6b35 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.upgrade-unlock-notification .apply-upgrade-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes upgradeUnlockAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes upgradeIconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Upgrade Application */
+.upgrade-application-notification {
+    animation: upgradeApplicationAppear 0.5s ease-out;
+}
+
+.upgrade-application-notification .upgrade-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    animation: upgradeIconPulse 2s infinite;
+}
+
+.upgrade-application-notification .upgrade-content h3 {
+    color: #ffd700;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.upgrade-application-notification .upgrade-content p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.upgrade-application-notification .upgrade-name {
+    font-weight: bold;
+    color: #ff6b35;
+}
+
+.upgrade-application-notification .upgrade-description {
+    font-style: italic;
+    color: #c9a96e;
+    font-size: 14px;
+}
+
+.upgrade-application-notification .upgrade-room {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #8b4513;
+}
+
+@keyframes upgradeApplicationAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Upgrade Visual Effects */
+.upgraded-room {
+    position: relative;
+}
+
+.magical-particles {
+    pointer-events: none;
+}
+
+.magical-particle {
+    animation: magicalParticleFloat 4s ease-in-out infinite;
+}
+
+@keyframes magicalParticleFloat {
+    0%, 100% {
+        opacity: 0.7;
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1.2);
+    }
+}
+
+.upgrade-indicator {
+    animation: upgradeIndicatorPulse 2s infinite;
+}
+
+@keyframes upgradeIndicatorPulse {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.upgrade-application-effects {
+    animation: upgradeApplicationEffect 2s ease-out forwards;
+}
+
+@keyframes upgradeApplicationEffect {
+    0% {
+        opacity: 0.8;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+/* Room Progression Status Indicators */
+.room-progression-status {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 12px;
+}
+
+.room-progression-status.locked {
+    color: #666;
+}
+
+.room-progression-status.unlocked {
+    color: #ffd700;
+}
+
+.room-progression-status.explored {
+    color: #4CAF50;
+}
+
+.room-progression-status.mastered {
+    color: #9C27B0;
+}
+
+.room-progression-status.enhanced {
+    color: #FF5722;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .room-unlock-notification,
+    .passage-discovery-notification,
+    .upgrade-unlock-notification,
+    .upgrade-application-notification {
+        min-width: 300px;
+        padding: 20px;
+        font-size: 14px;
+    }
+    
+    .room-unlock-notification .unlock-icon,
+    .passage-discovery-notification .passage-icon,
+    .upgrade-unlock-notification .upgrade-icon,
+    .upgrade-application-notification .upgrade-icon {
+        font-size: 36px;
+    }
+    
+    .passage-navigation-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .room-unlock-notification,
+    .passage-discovery-notification,
+    .upgrade-unlock-notification,
+    .upgrade-application-notification {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-color: #e94560;
+    }
+    
+    .room-unlock-notification {
+        border-color: #8b4513;
+    }
+    
+    .upgrade-unlock-notification,
+    .upgrade-application-notification {
+        border-color: #ffd700;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .room-tab.locked {
+        opacity: 0.3;
+        filter: grayscale(100%) contrast(200%);
+    }
+    
+    .room-unlock-notification,
+    .passage-discovery-notification,
+    .upgrade-unlock-notification,
+    .upgrade-application-notification {
+        border-width: 3px;
+        box-shadow: 0 0 0 2px currentColor;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .room-unlock-notification,
+    .passage-discovery-notification,
+    .upgrade-unlock-notification,
+    .upgrade-application-notification {
+        animation: none;
+    }
+    
+    .magical-particle,
+    .passage-particle,
+    .unlock-particle,
+    .unlock-sparkle {
+        animation: none;
+    }
+    
+    .room-tab {
+        transition: none;
+    }
+    
+    .passage-navigation-btn {
+        transition: none;
+    }
+}

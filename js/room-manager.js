@@ -59,6 +59,15 @@ class RoomManager {
             return false;
         }
         
+        // Check room accessibility with progression system
+        if (typeof window !== 'undefined' && window.fantasyOS && window.fantasyOS.components.roomProgression) {
+            const roomProgression = window.fantasyOS.components.roomProgression;
+            if (!roomProgression.isRoomAccessible(roomId)) {
+                console.warn(`🚫 Room ${roomId} is not accessible`);
+                return false;
+            }
+        }
+        
         // Add current room to history
         if (this.currentRoom !== roomId) {
             this.addToHistory(this.currentRoom);
@@ -81,6 +90,12 @@ class RoomManager {
         
         // Check achievement progress
         this.checkAchievementProgress(roomId);
+        
+        // Mark room as explored in progression system
+        if (typeof window !== 'undefined' && window.fantasyOS && window.fantasyOS.components.roomProgression) {
+            const roomProgression = window.fantasyOS.components.roomProgression;
+            roomProgression.exploreRoom(roomId);
+        }
         
         console.log(`🏠 Switched to room: ${this.rooms[roomId].name}`);
         return true;

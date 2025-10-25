@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  vibejam-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fr4iser/vibejam2:frontend
+    container_name: vibejam-frontend
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./logs:/var/log/nginx
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    networks:
+      proxy:
+    labels:
+      # Basis-Konfiguration
+      - "traefik.docker.network=proxy"
+      - "traefik.enable=true"
+      
+      # HTTP zu HTTPS Weiterleitung
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.rule=Host(`vibejam2.fr4iser.com`)"
+      - "traefik.http.routers.frontend.middlewares=redirect-to-https@docker"
+      
+      # HTTPS Konfiguration
+      - "traefik.http.routers.frontend-secure.entrypoints=websecure"
+      - "traefik.http.routers.frontend-secure.rule=Host(`vibejam2.fr4iser.com`)"
+      - "traefik.http.routers.frontend-secure.tls=true"
+      - "traefik.http.routers.frontend-secure.tls.certresolver=http_resolver"
+      
+      # Service Konfiguration
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+      
+      # Middleware Chain
+      - "traefik.http.routers.frontend-secure.middlewares=default@file"
+      
+      # Sticky Sessions für bessere Performance
+      - "traefik.http.services.frontend.loadbalancer.sticky.cookie.httpOnly=true"
+      - "traefik.http.services.frontend.loadbalancer.sticky.cookie.secure=true"
+      
+      # Security Headers
+      - "traefik.http.middlewares.security-headers.headers.customRequestHeaders.X-Forwarded-Proto=https"
+      - "traefik.http.middlewares.security-headers.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN"
+      - "traefik.http.middlewares.security-headers.headers.customResponseHeaders.X-Content-Type-Options=nosniff"
+      - "traefik.http.middlewares.security-headers.headers.customResponseHeaders.X-XSS-Protection=1; mode=block"
+
+volumes:
+  frontend_logs:
+    driver: local
+
+networks:
+  proxy:
+    external: true

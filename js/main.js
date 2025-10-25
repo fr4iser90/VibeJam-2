@@ -23,7 +23,11 @@ class FantasyOS {
             soundSystem: null,
             questManager: null,
             achievementSystem: null,
-            hobbitCompanion: null
+            hobbitCompanion: null,
+            roomProgression: null,
+            roomUnlocking: null,
+            secretPassages: null,
+            roomUpgrades: null
         };
         
         // Event handlers
@@ -128,6 +132,30 @@ class FantasyOS {
             
             // Make it globally available
             window.hobbitCompanion = this.components.hobbitCompanion;
+        }
+        
+        // Initialize room progression system
+        if (typeof RoomProgression !== 'undefined') {
+            this.components.roomProgression = new RoomProgression();
+            console.log('🏰 Room Progression System initialized');
+        }
+        
+        // Initialize room unlocking system
+        if (typeof RoomUnlocking !== 'undefined' && this.components.roomProgression) {
+            this.components.roomUnlocking = new RoomUnlocking(this.components.roomProgression);
+            console.log('🔓 Room Unlocking System initialized');
+        }
+        
+        // Initialize secret passages system
+        if (typeof SecretPassages !== 'undefined' && this.components.roomProgression) {
+            this.components.secretPassages = new SecretPassages(this.components.roomProgression);
+            console.log('🚪 Secret Passages System initialized');
+        }
+        
+        // Initialize room upgrades system
+        if (typeof RoomUpgrades !== 'undefined' && this.components.roomProgression) {
+            this.components.roomUpgrades = new RoomUpgrades(this.components.roomProgression);
+            console.log('✨ Room Upgrades System initialized');
         }
     }
     
@@ -242,6 +270,22 @@ class FantasyOS {
             console.error('❌ Spell parser not available');
         }
         
+        // Trigger secret passage discovery check for spell casting
+        if (this.components.secretPassages) {
+            this.components.secretPassages.handleSpellCastDiscovery({
+                spellText: spellText,
+                roomId: this.currentRoom
+            });
+        }
+        
+        // Trigger room progression events for spell casting
+        if (this.components.roomProgression) {
+            this.components.roomProgression.triggerEvent('spell-cast', {
+                spellText: spellText,
+                roomId: this.currentRoom
+            });
+        }
+        
         // Update last spell
         this.lastSpell = spellText;
         
@@ -261,6 +305,17 @@ class FantasyOS {
      * Switch to a different room
      */
     switchRoom(roomId) {
+        // Check room accessibility with progression system
+        if (this.components.roomProgression && !this.components.roomProgression.isRoomAccessible(roomId)) {
+            console.warn(`🚫 Room ${roomId} is not accessible`);
+            
+            // Show room locked notification
+            if (this.components.roomUnlocking) {
+                this.components.roomUnlocking.showUnlockFailure(roomId);
+            }
+            return false;
+        }
+        
         // Update active tab
         document.querySelectorAll('.room-tab').forEach(tab => {
             tab.classList.remove('active');
@@ -284,6 +339,11 @@ class FantasyOS {
         // Update current room
         this.currentRoom = roomId;
         
+        // Mark room as explored in progression system
+        if (this.components.roomProgression) {
+            this.components.roomProgression.exploreRoom(roomId);
+        }
+        
         // Update room backgrounds based on lighting state
         if (this.components.roomObjectOverlay) {
             this.components.roomObjectOverlay.updateRoomBackgrounds();
@@ -302,7 +362,18 @@ class FantasyOS {
             this.components.hobbitCompanion.eventHandlers.get('room-changed')?.(roomId);
         }
         
+        // Check for auto-unlock opportunities
+        if (this.components.roomProgression) {
+            this.components.roomProgression.checkAutoUnlock();
+        }
+        
+        // Check for upgrade auto-unlock opportunities
+        if (this.components.roomUpgrades) {
+            this.components.roomUpgrades.checkAutoUnlockUpgrades();
+        }
+        
         console.log(`🏠 Switched to room: ${roomId}`);
+        return true;
     }
     
     /**
@@ -320,6 +391,24 @@ class FantasyOS {
         // Notify hobbit companion of object interaction
         if (this.components.hobbitCompanion) {
             this.components.hobbitCompanion.eventHandlers.get('object-interaction')?.(objectType, this.currentRoom);
+        }
+        
+        // Trigger secret passage discovery check
+        if (this.components.secretPassages) {
+            this.components.secretPassages.handleObjectInteractionDiscovery({
+                objectType: objectType,
+                action: 'click',
+                roomId: this.currentRoom
+            });
+        }
+        
+        // Trigger room progression events
+        if (this.components.roomProgression) {
+            this.components.roomProgression.triggerEvent('object-interaction', {
+                objectType: objectType,
+                action: 'click',
+                roomId: this.currentRoom
+            });
         }
     }
     
@@ -642,7 +731,7 @@ class FantasyOS {
         }
         
         if (magicLevelElement) {
-            magicLevelElement.textContent = `Magie: ${this.magicLevel}%`;
+            magicLevelElement.textContent = `Magic: ${this.magicLevel}%`;
         }
         
         if (lastSpellElement) {
@@ -883,6 +972,94 @@ class FantasyOS {
         if (this.components.achievementSystem) {
             this.components.achievementSystem.resetAchievementSystem();
         }
+    }
+    
+    /**
+     * Get room progression system
+     */
+    getRoomProgression() {
+        return this.components.roomProgression;
+    }
+    
+    /**
+     * Get room unlocking system
+     */
+    getRoomUnlocking() {
+        return this.components.roomUnlocking;
+    }
+    
+    /**
+     * Get secret passages system
+     */
+    getSecretPassages() {
+        return this.components.secretPassages;
+    }
+    
+    /**
+     * Get room upgrades system
+     */
+    getRoomUpgrades() {
+        return this.components.roomUpgrades;
+    }
+    
+    /**
+     * Unlock a room
+     */
+    unlockRoom(roomId) {
+        if (this.components.roomUnlocking) {
+            return this.components.roomUnlocking.attemptUnlockRoom(roomId);
+        }
+        return false;
+    }
+    
+    /**
+     * Get room progression status
+     */
+    getRoomProgressionStatus(roomId) {
+        if (this.components.roomProgression) {
+            return this.components.roomProgression.getRoomStatus(roomId);
+        }
+        return null;
+    }
+    
+    /**
+     * Get all room progression data
+     */
+    getAllRoomProgression() {
+        if (this.components.roomProgression) {
+            return this.components.roomProgression.getAllRoomProgress();
+        }
+        return {};
+    }
+    
+    /**
+     * Get room progression statistics
+     */
+    getRoomProgressionStats() {
+        if (this.components.roomProgression) {
+            return this.components.roomProgression.getProgressionStats();
+        }
+        return {};
+    }
+    
+    /**
+     * Get secret passage statistics
+     */
+    getSecretPassageStats() {
+        if (this.components.secretPassages) {
+            return this.components.secretPassages.getPassageStats();
+        }
+        return {};
+    }
+    
+    /**
+     * Get room upgrade statistics
+     */
+    getRoomUpgradeStats() {
+        if (this.components.roomUpgrades) {
+            return this.components.roomUpgrades.getUpgradeStats();
+        }
+        return {};
     }
 }
 
