@@ -16,6 +16,7 @@ class FantasyOS {
         this.components = {
             roomManager: null,
             objectInteraction: null,
+            roomObjectOverlay: null,
             spellParser: null,
             gestureRecognition: null,
             particleSystem: null,
@@ -73,6 +74,12 @@ class FantasyOS {
         // Initialize object interaction
         if (typeof ObjectInteraction !== 'undefined') {
             this.components.objectInteraction = new ObjectInteraction();
+        }
+        
+        // Initialize room object overlay
+        if (typeof RoomObjectOverlay !== 'undefined') {
+            this.components.roomObjectOverlay = new RoomObjectOverlay();
+            console.log('🎯 Room Object Overlay System initialized');
         }
         
         // Initialize spell parser
@@ -134,11 +141,8 @@ class FantasyOS {
         if (closeHelp) closeHelp.addEventListener('click', () => this.hideHelp());
         if (closeSettings) closeSettings.addEventListener('click', () => this.hideSettings());
         
-        // Object interactions
-        const objects = document.querySelectorAll('.object');
-        objects.forEach(object => {
-            object.addEventListener('click', (e) => this.handleObjectClick(e));
-        });
+        // Object interactions are now handled by RoomObjectOverlay system
+        // No need for individual object event listeners
         
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));

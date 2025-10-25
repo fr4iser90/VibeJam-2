@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy OS - Object Test</title>
+    
+    <!-- Fantasy Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/fantasy-variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/room-object-overlay.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: var(--bg-primary);
+            font-family: 'Crimson Text', serif;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .room {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            margin-bottom: 40px;
+            border: 3px solid var(--warm-gold);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .room-background {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+        
+        .room-title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--magic-purple);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 18px;
+            z-index: 200;
+        }
+        
+        .instructions {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid var(--warm-gold);
+        }
+        
+        .instructions h2 {
+            color: var(--warm-gold);
+            font-family: 'Cinzel', serif;
+            margin-bottom: 15px;
+        }
+        
+        .instructions p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="instructions">
+            <h2>🎯 Fantasy OS - Object Interaction Test</h2>
+            <p><strong>So funktioniert das neue System:</strong></p>
+            <ul>
+                <li>🖱️ <strong>Hover</strong> über Objekte → Tooltip erscheint</li>
+                <li>🖱️ <strong>Click</strong> auf Objekte → Interaktion wird ausgeführt</li>
+                <li>🎨 <strong>Animationen</strong> → Visuelle Effekte bei Klicks</li>
+                <li>🔊 <strong>Sounds</strong> → Objekt-spezifische Geräusche</li>
+                <li>💬 <strong>Nachrichten</strong> → Feedback über Interaktionen</li>
+            </ul>
+            <p><strong>Teste die Objekte in den verschiedenen Räumen:</strong></p>
+        </div>
+        
+        <!-- Living Room Test -->
+        <div class="room" id="living-room">
+            <div class="room-title">🏠 Living Room - Teste Kamin, Lampe, Bücherregal, Tür, Sessel, Tisch</div>
+            <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');"></div>
+        </div>
+        
+        <!-- Kitchen Test -->
+        <div class="room" id="kitchen">
+            <div class="room-title">🍳 Kitchen - Teste Kamin, Lampe, Regale, Töpfe, Tisch, Obstschale</div>
+            <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');"></div>
+        </div>
+        
+        <!-- Library Test -->
+        <div class="room" id="library">
+            <div class="room-title">📚 Library - Teste Bücherregale, Sessel, Tisch, Lampe, Fenster</div>
+            <div class="room-background" style="background-image: url('assets/images/rooms/library.png');"></div>
+        </div>
+        
+        <!-- Workshop Test -->
+        <div class="room" id="workshop">
+            <div class="room-title">🔨 Workshop - Teste Werkbänke, Werkzeuge, Regale, Kisten, Laternen</div>
+            <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');"></div>
+        </div>
+        
+        <!-- Bedroom Test -->
+        <div class="room" id="bedroom">
+            <div class="room-title">🛏️ Bedroom - Teste Bett, Nachttisch, Lampe, Fenster, Vorhänge</div>
+            <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');"></div>
+        </div>
+        
+        <!-- Garden Test -->
+        <div class="room" id="garden">
+            <div class="room-title">🌿 Garden - Teste Tür, Fenster, Blumen, Zaun, Pfad, Baum</div>
+            <div class="room-background" style="background-image: url('assets/images/rooms/garden.png');"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/room-object-overlay.js"></script>
+    
+    <script>
+        // Initialize the Room Object Overlay System
+        console.log('🎯 Initializing Room Object Overlay Test...');
+        
+        const roomObjectOverlay = new RoomObjectOverlay();
+        
+        console.log('✨ Room Object Overlay System ready!');
+        console.log('🖱️ Try hovering and clicking on objects in the rooms above!');
+        
+        // Add some debug info
+        window.roomObjectOverlay = roomObjectOverlay;
+        console.log('🔧 Debug: window.roomObjectOverlay available for testing');
+    </script>
+</body>
+</html>

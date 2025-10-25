@@ -1,0 +1,367 @@
+/* Fantasy OS - Room Object Overlay Styles */
+
+/* Object Animation Overlays */
+.object-animation-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: 100;
+    border-radius: 50%;
+}
+
+/* Animation Keyframes */
+@keyframes fireFlicker {
+    0%, 100% { 
+        opacity: 0.8; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--warm-orange) 0%, transparent 70%);
+    }
+    25% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--warm-red) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 0.9; 
+        transform: scale(1.05);
+        background: radial-gradient(circle, var(--warm-gold) 0%, transparent 70%);
+    }
+    75% { 
+        opacity: 1; 
+        transform: scale(1.15);
+        background: radial-gradient(circle, var(--warm-orange) 0%, transparent 70%);
+    }
+}
+
+@keyframes lightGlow {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--warm-gold) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+        background: radial-gradient(circle, var(--cool-white) 0%, transparent 70%);
+    }
+}
+
+@keyframes bookGlow {
+    0%, 100% { 
+        opacity: 0.7; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--earth-green) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--magic-cyan) 0%, transparent 70%);
+    }
+}
+
+@keyframes magicPulse {
+    0%, 100% { 
+        opacity: 0.8; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--magic-purple) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.3);
+        background: radial-gradient(circle, var(--magic-cyan) 0%, transparent 70%);
+    }
+}
+
+@keyframes comfortGlow {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--earth-brown) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--warm-gold) 0%, transparent 70%);
+    }
+}
+
+@keyframes utilityGlow {
+    0%, 100% { 
+        opacity: 0.7; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--cool-silver) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--cool-white) 0%, transparent 70%);
+    }
+}
+
+@keyframes storageGlow {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--earth-brown) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--magic-purple) 0%, transparent 70%);
+    }
+}
+
+@keyframes toolGlow {
+    0%, 100% { 
+        opacity: 0.7; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--earth-brown) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--warm-orange) 0%, transparent 70%);
+    }
+}
+
+@keyframes craftGlow {
+    0%, 100% { 
+        opacity: 0.8; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--warm-orange) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+        background: radial-gradient(circle, var(--warm-red) 0%, transparent 70%);
+    }
+}
+
+@keyframes restGlow {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--cool-blue) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--magic-purple) 0%, transparent 70%);
+    }
+}
+
+@keyframes natureGlow {
+    0%, 100% { 
+        opacity: 0.7; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--earth-green) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--magic-cyan) 0%, transparent 70%);
+    }
+}
+
+@keyframes viewGlow {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--cool-blue) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+        background: radial-gradient(circle, var(--magic-cyan) 0%, transparent 70%);
+    }
+}
+
+@keyframes foodGlow {
+    0%, 100% { 
+        opacity: 0.7; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--warm-gold) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--warm-orange) 0%, transparent 70%);
+    }
+}
+
+@keyframes adjustGlow {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--cool-silver) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--magic-purple) 0%, transparent 70%);
+    }
+}
+
+@keyframes structureGlow {
+    0%, 100% { 
+        opacity: 0.7; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--earth-brown) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--cool-silver) 0%, transparent 70%);
+    }
+}
+
+@keyframes pathGlow {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1);
+        background: radial-gradient(circle, var(--earth-brown) 0%, transparent 70%);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1);
+        background: radial-gradient(circle, var(--magic-purple) 0%, transparent 70%);
+    }
+}
+
+/* Tooltip Animations */
+@keyframes tooltipFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+        scale: 0.9;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        scale: 1;
+    }
+}
+
+@keyframes tooltipFadeOut {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        scale: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+        scale: 0.9;
+    }
+}
+
+/* Message Animations */
+@keyframes messageSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+        scale: 0.9;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        scale: 1;
+    }
+}
+
+@keyframes messageSlideOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+        scale: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+        scale: 0.9;
+    }
+}
+
+/* Room Background Enhancements */
+.room-background {
+    position: relative;
+    cursor: default;
+    transition: all 0.3s ease;
+}
+
+.room-background:hover {
+    filter: brightness(1.05) contrast(1.1);
+}
+
+/* Object Interaction Feedback */
+.room-background.object-interacting {
+    filter: brightness(1.1) contrast(1.2);
+    transform: scale(1.01);
+}
+
+/* Dark Mode Support */
+.room-background.dark-mode {
+    filter: brightness(0.8) contrast(1.2);
+}
+
+.room-background.dark-mode:hover {
+    filter: brightness(0.9) contrast(1.3);
+}
+
+/* Responsive Object Areas */
+@media (max-width: 768px) {
+    .object-animation-overlay {
+        /* Scale down animations for mobile */
+        transform: scale(0.8);
+    }
+    
+    .room-background {
+        /* Ensure touch targets are large enough */
+        min-height: 400px;
+    }
+}
+
+/* High DPI Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .room-background {
+        /* Ensure crisp rendering on high DPI displays */
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Accessibility Enhancements */
+.room-background:focus {
+    outline: 2px solid var(--magic-purple);
+    outline-offset: 2px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .object-animation-overlay {
+        animation: none !important;
+        opacity: 0.8;
+    }
+    
+    .room-background {
+        transition: none;
+    }
+    
+    .room-background:hover {
+        filter: none;
+        transform: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .object-animation-overlay,
+    .object-tooltip,
+    .interaction-message {
+        display: none !important;
+    }
+    
+    .room-background {
+        filter: none !important;
+        transform: none !important;
+    }
+}

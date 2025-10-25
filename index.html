@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/rooms.css">
     <link rel="stylesheet" href="css/objects.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/room-object-overlay.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
@@ -78,63 +79,8 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');">
-                    <!-- Interactive Objects -->
-                    <div class="interactive-objects">
-                    
-                    <!-- Fireplace -->
-                    <div class="object fireplace" data-object="fireplace">
-                        <img src="assets/images/objects/fireplace.png" alt="Fireplace" class="object-icon">
-                        <div class="object-tooltip">Fireplace - Brightness/Energy</div>
-                        <div class="object-effects">
-                            <div class="fire-effect"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Lamp -->
-                    <div class="object lamp" data-object="lamp">
-                        <img src="assets/images/objects/lamp.png" alt="Lamp" class="object-icon">
-                        <div class="object-tooltip">Lamp - Lighting</div>
-                        <div class="object-effects">
-                            <div class="light-effect"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Chest -->
-                    <div class="object chest" data-object="chest">
-                        <img src="assets/images/objects/chest.png" alt="Chest" class="object-icon">
-                        <div class="object-tooltip">Chest - Store files</div>
-                        <div class="object-effects">
-                            <div class="treasure-effect"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Crystal Ball -->
-                    <div class="object crystal-ball" data-object="crystal-ball">
-                        <img src="assets/images/objects/crystal-ball.png" alt="Crystal Ball" class="object-icon">
-                        <div class="object-tooltip">Crystal Ball - Monitor/Display</div>
-                        <div class="object-effects">
-                            <div class="magic-effect"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Spell Book -->
-                    <div class="object spell-book" data-object="spell-book">
-                        <img src="assets/images/objects/spell-book.png" alt="Spell Book" class="object-icon">
-                        <div class="object-tooltip">Spell Book - Help/Documentation</div>
-                        <div class="object-effects">
-                            <div class="book-effect"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Cauldron -->
-                    <div class="object cauldron" data-object="cauldron">
-                        <img src="assets/images/objects/cauldron.png" alt="Cauldron" class="object-icon">
-                        <div class="object-tooltip">Cauldron - Downloads/Processing</div>
-                        <div class="object-effects">
-                            <div class="brew-effect"></div>
-                        </div>
-                    </div>
-                    </div>
+                    <!-- Interactive Objects are now handled by RoomObjectOverlay system -->
+                    <!-- No need for separate object elements - clicks are detected on the background -->
                     
                     <!-- Magical Particles -->
                     <div class="particle-system">
@@ -485,6 +431,7 @@
     <script src="js/spell-parser.js"></script>
     <script src="js/room-manager.js"></script>
     <script src="js/object-interaction.js"></script>
+    <script src="js/room-object-overlay.js"></script>
     <script src="js/particle-system.js"></script>
     <script src="js/main.js"></script>
 </body>
