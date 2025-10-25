@@ -385,12 +385,8 @@ class RoomObjectOverlay {
      * Set up event listeners for objects
      */
     setupObjectEventListeners() {
-        // Listen for clicks on room backgrounds
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('room-background')) {
-                this.handleRoomClick(e);
-            }
-        });
+        // Set up click listeners directly on room background elements
+        this.setupRoomClickListeners();
         
         // Disabled hover effects - only clicks work
         // document.addEventListener('mousemove', (e) => {
@@ -398,6 +394,76 @@ class RoomObjectOverlay {
         //         this.handleRoomHover(e);
         //     }
         // });
+    }
+    
+    /**
+     * Set up click listeners on room background elements
+     */
+    setupRoomClickListeners() {
+        // Find all room background elements and add mousedown listeners
+        const roomBackgrounds = document.querySelectorAll('.room-background');
+        roomBackgrounds.forEach(background => {
+            let clickStartTime = 0;
+            let clickStartX = 0;
+            let clickStartY = 0;
+            
+            background.addEventListener('mousedown', (e) => {
+                // Store the original coordinates
+                clickStartTime = Date.now();
+                clickStartX = e.clientX;
+                clickStartY = e.clientY;
+                console.log('🎯 Mouse down on room background:', clickStartX, clickStartY);
+                console.log('🎯 Target element:', e.target);
+                console.log('🎯 Current target:', e.currentTarget);
+            });
+            
+            background.addEventListener('mouseup', (e) => {
+                const clickDuration = Date.now() - clickStartTime;
+                const clickDistance = Math.sqrt(
+                    Math.pow(e.clientX - clickStartX, 2) + 
+                    Math.pow(e.clientY - clickStartY, 2)
+                );
+                
+                // Only handle short clicks (less than 200ms and less than 10px movement)
+                if (clickDuration < 200 && clickDistance < 10) {
+                    console.log('🎯 Short click detected on room background!');
+                    console.log('🎯 Click coordinates:', clickStartX, clickStartY);
+                    
+                    // Create a synthetic click event with the original coordinates
+                    const syntheticEvent = {
+                        clientX: clickStartX,
+                        clientY: clickStartY,
+                        target: background
+                    };
+                    
+                    this.handleRoomClick(syntheticEvent);
+                }
+            });
+        });
+        
+        console.log(`🎯 Set up mousedown/mouseup listeners on ${roomBackgrounds.length} room backgrounds`);
+        
+        // Add global mousedown listener for debugging
+        document.addEventListener('mousedown', (e) => {
+            console.log('🖱️ Global mousedown:', e.clientX, e.clientY, 'target:', e.target);
+            
+            // Debug: Check which room is actually active
+            const activeRoom = document.querySelector('.room.active');
+            if (activeRoom) {
+                console.log('🏠 Active room ID:', activeRoom.id);
+                const activeBackground = activeRoom.querySelector('.room-background');
+                if (activeBackground) {
+                    console.log('🖼️ Active background:', activeBackground.style.backgroundImage);
+                }
+            }
+            
+            // Debug: Check ALL room backgrounds
+            const allRoomBackgrounds = document.querySelectorAll('.room-background');
+            console.log('🔍 All room backgrounds:');
+            allRoomBackgrounds.forEach((bg, index) => {
+                console.log(`  ${index}: ${bg.style.backgroundImage}`);
+            });
+        });
     }
     
     /**
@@ -437,11 +503,7 @@ class RoomObjectOverlay {
         }
         
         // Get click coordinates relative to the room background
-        const roomBackground = activeRoom.querySelector('.room-background');
-        if (!roomBackground) {
-            console.log('❌ No room background found');
-            return;
-        }
+        const roomBackground = event.target; // We know it's the room-background element
         const rect = roomBackground.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;

@@ -45,6 +45,9 @@ class GestureRecognition {
         this.setupCanvas();
         this.setupEventListeners();
         
+        // Enable canvas for gesture detection but allow clicks to pass through
+        this.canvas.style.pointerEvents = 'auto';
+        
         console.log('🎨 Gesture recognition initialized');
         return true;
     }
@@ -118,13 +121,30 @@ class GestureRecognition {
                 this.hasMoved = false;
                 this.isDrawing = false;
                 
-                // Event Delegation: Klick an darunterliegende Elemente weiterleiten
-                // Temporär Canvas deaktivieren um Element darunter zu finden
-                this.canvas.style.pointerEvents = 'none';
-                const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
-                this.canvas.style.pointerEvents = 'auto';
+                // Event Delegation: Klick an das aktive Room-Background-Element weiterleiten
+                const activeRoom = document.querySelector('.room.active');
+                const activeRoomBackground = activeRoom ? activeRoom.querySelector('.room-background') : null;
                 
-                if (elementBelow) {
+                if (activeRoomBackground) {
+                    // Create synthetic mousedown/mouseup events for room-background
+                    const syntheticMouseDown = new MouseEvent('mousedown', {
+                        clientX: e.clientX,
+                        clientY: e.clientY,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    const syntheticMouseUp = new MouseEvent('mouseup', {
+                        clientX: e.clientX,
+                        clientY: e.clientY,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    
+                    activeRoomBackground.dispatchEvent(syntheticMouseDown);
+                    setTimeout(() => {
+                        activeRoomBackground.dispatchEvent(syntheticMouseUp);
+                    }, 10);
+                } else if (elementBelow) {
                     elementBelow.click();
                 }
                 return;

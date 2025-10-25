@@ -489,12 +489,13 @@ body {
     border: none;
     background: transparent;
     cursor: default; /* Default cursor when not drawing */
-    pointer-events: auto; /* Enable pointer events for gesture detection */
+    pointer-events: none; /* Disable pointer events by default */
     position: relative;
 }
 
 .gesture-canvas.gesture-active {
     cursor: crosshair;
+    pointer-events: auto; /* Enable pointer events only when drawing */
 }
 
 .gesture-canvas:active {
