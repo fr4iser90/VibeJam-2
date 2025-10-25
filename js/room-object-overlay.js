@@ -443,26 +443,11 @@ class RoomObjectOverlay {
         
         console.log(`🎯 Set up mousedown/mouseup listeners on ${roomBackgrounds.length} room backgrounds`);
         
-        // Add global mousedown listener for debugging
+        // Add global mousedown listener for mouse coordinates
         document.addEventListener('mousedown', (e) => {
-            console.log('🖱️ Global mousedown:', e.clientX, e.clientY, 'target:', e.target);
-            
-            // Debug: Check which room is actually active
-            const activeRoom = document.querySelector('.room.active');
-            if (activeRoom) {
-                console.log('🏠 Active room ID:', activeRoom.id);
-                const activeBackground = activeRoom.querySelector('.room-background');
-                if (activeBackground) {
-                    console.log('🖼️ Active background:', activeBackground.style.backgroundImage);
-                }
-            }
-            
-            // Debug: Check ALL room backgrounds
-            const allRoomBackgrounds = document.querySelectorAll('.room-background');
-            console.log('🔍 All room backgrounds:');
-            allRoomBackgrounds.forEach((bg, index) => {
-                console.log(`  ${index}: ${bg.style.backgroundImage}`);
-            });
+            // Store mouse coordinates for feedback
+            window.lastClickX = e.clientX;
+            window.lastClickY = e.clientY;
         });
     }
     
@@ -502,8 +487,8 @@ class RoomObjectOverlay {
             return;
         }
         
-        // Get click coordinates relative to the room background
-        const roomBackground = event.target; // We know it's the room-background element
+        // Get click coordinates relative to the ACTIVE room background
+        const roomBackground = activeRoom ? activeRoom.querySelector('.room-background') : event.target;
         const rect = roomBackground.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
@@ -876,7 +861,40 @@ class RoomObjectOverlay {
         if (!objectData) return;
         
         const message = `Interacting with ${objectData.name}: ${objectData.description}`;
-        this.showMessage(message);
+        this.showMessageAtMouse(message);
+    }
+    
+    /**
+     * Show a message directly at mouse position
+     */
+    showMessageAtMouse(message, duration = 2000) {
+        // Get the last click coordinates from the global mousedown event
+        const messageElement = document.createElement('div');
+        messageElement.className = 'interaction-message-at-mouse';
+        messageElement.textContent = message;
+        messageElement.style.cssText = `
+            position: fixed;
+            left: ${window.lastClickX || 0}px;
+            top: ${window.lastClickY || 0}px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #D4AF37;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 14px;
+            z-index: 10000;
+            pointer-events: none;
+            transform: translate(-50%, -100%);
+            animation: fadeInOut ${duration}ms ease-in-out;
+        `;
+        
+        document.body.appendChild(messageElement);
+        
+        setTimeout(() => {
+            if (messageElement.parentNode) {
+                messageElement.parentNode.removeChild(messageElement);
+            }
+        }, duration);
     }
     
     /**
