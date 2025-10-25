@@ -34,33 +34,46 @@ class RoomProgression {
                 accessLevel: this.accessLevels.LOCKED
             },
             'bedroom': {
-                requiredQuests: ['credentials-recovery'],
+                requiredQuests: ['dream-walker'],
                 requiredAchievements: [],
-                requiredRooms: ['living-room'],
-                accessLevel: this.accessLevels.LOCKED
-            },
-            'workshop': {
-                requiredQuests: ['credentials-recovery'],
-                requiredAchievements: ['room-explorer'],
                 requiredRooms: ['kitchen'],
                 accessLevel: this.accessLevels.LOCKED
             },
-            'library': {
-                requiredQuests: ['credentials-recovery'],
+            'workshop': {
+                requiredQuests: ['crafting-mastery'],
                 requiredAchievements: ['room-explorer'],
                 requiredRooms: ['bedroom'],
                 accessLevel: this.accessLevels.LOCKED
             },
-            'garden': {
-                requiredQuests: ['credentials-recovery'],
+            'library': {
+                requiredQuests: ['knowledge-seeker'],
                 requiredAchievements: ['room-explorer'],
-                requiredRooms: ['workshop', 'library'],
+                requiredRooms: ['workshop'],
+                accessLevel: this.accessLevels.LOCKED
+            },
+            'garden': {
+                requiredQuests: ['nature-connection'],
+                requiredAchievements: ['room-explorer'],
+                requiredRooms: ['library'],
                 accessLevel: this.accessLevels.LOCKED
             }
         };
         
         // Initialize progression data for new users
         this.initializeProgressionData();
+        
+        // FORCE HIDE ROOMS IMMEDIATELY
+        this.initializeRoomUI();
+        
+        // Also hide rooms after DOM is ready
+        setTimeout(() => {
+            this.initializeRoomUI();
+        }, 100);
+        
+        // And hide them again after everything loads
+        setTimeout(() => {
+            this.initializeRoomUI();
+        }, 1000);
         
         console.log('🏰 Room Progression System initialized');
     }
@@ -124,7 +137,51 @@ class RoomProgression {
             }
         });
         
+        // Initialize UI based on room access levels
+        this.initializeRoomUI();
+        
         this.saveProgressionData();
+    }
+    
+    /**
+     * Initialize room UI based on access levels
+     */
+    initializeRoomUI() {
+        console.log('🎨 FORCE HIDING LOCKED ROOMS...');
+        
+        // FORCE HIDE ALL LOCKED ROOMS IMMEDIATELY
+        const lockedRooms = ['kitchen', 'bedroom', 'workshop', 'library', 'garden'];
+        
+        lockedRooms.forEach(roomId => {
+            const roomTab = document.querySelector(`[data-room="${roomId}"]`);
+            if (roomTab) {
+                roomTab.style.display = 'none';
+                roomTab.style.visibility = 'hidden';
+                roomTab.style.opacity = '0';
+                roomTab.style.pointerEvents = 'none';
+                roomTab.style.position = 'absolute';
+                roomTab.style.left = '-9999px';
+                roomTab.style.top = '-9999px';
+                roomTab.style.width = '0';
+                roomTab.style.height = '0';
+                roomTab.style.overflow = 'hidden';
+                roomTab.classList.add('locked');
+                console.log(`🔒 FORCE HIDDEN: ${roomId}`);
+            }
+        });
+        
+        // Make sure Living Room is visible
+        const livingRoomTab = document.querySelector('[data-room="living-room"]');
+        if (livingRoomTab) {
+            livingRoomTab.style.display = 'block';
+            livingRoomTab.style.visibility = 'visible';
+            livingRoomTab.style.opacity = '1';
+            livingRoomTab.style.pointerEvents = 'auto';
+            livingRoomTab.classList.remove('locked');
+            console.log(`🔓 LIVING ROOM VISIBLE`);
+        }
+        
+        console.log('✅ FORCE HIDE COMPLETE');
     }
     
     /**
@@ -203,6 +260,9 @@ class RoomProgression {
         roomData.accessLevel = this.accessLevels.UNLOCKED;
         roomData.unlockedAt = new Date().toISOString();
         
+        // Update UI to show unlocked room
+        this.updateRoomTabUI(roomId, true);
+        
         this.saveProgressionData();
         
         // Trigger room unlocked event
@@ -210,6 +270,36 @@ class RoomProgression {
         
         console.log(`🔓 Room ${roomId} unlocked!`);
         return true;
+    }
+    
+    /**
+     * Update room tab UI based on unlock status
+     */
+    updateRoomTabUI(roomId, isUnlocked) {
+        const roomTab = document.querySelector(`[data-room="${roomId}"]`);
+        if (!roomTab) return;
+        
+        if (isUnlocked) {
+            roomTab.classList.remove('locked');
+            roomTab.classList.add('unlocking');
+            roomTab.style.display = 'block';
+            roomTab.style.visibility = 'visible';
+            roomTab.style.pointerEvents = 'auto';
+            
+            // Add reveal animation
+            setTimeout(() => {
+                roomTab.classList.add('revealing');
+                setTimeout(() => {
+                    roomTab.classList.remove('unlocking', 'revealing');
+                }, 800);
+            }, 100);
+        } else {
+            roomTab.classList.add('locked');
+            roomTab.classList.remove('unlocking', 'revealing');
+            roomTab.style.display = 'none';
+            roomTab.style.visibility = 'hidden';
+            roomTab.style.pointerEvents = 'none';
+        }
     }
     
     /**

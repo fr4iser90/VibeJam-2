@@ -209,12 +209,43 @@ class SpellParser {
         // Execute spell action
         const result = this.executeSpellAction(spell);
         
+        // Trigger quest events based on spell
+        this.triggerQuestEvents(normalizedSpell, result.success);
+        
         return {
             success: result.success,
             message: result.success ? spell.successMessage : spell.failMessage,
             effect: spell.effects,
             spell: normalizedSpell
         };
+    }
+    
+    /**
+     * Trigger quest events based on spell
+     */
+    triggerQuestEvents(spellText, success) {
+        if (!success) return;
+        
+        // Map spells to quest triggers
+        const spellToTrigger = {
+            'illuminate': 'lamp1-illuminate', // Will be refined based on context
+            'ignite': 'fireplace-ignite',
+            'browse': 'book-browse',
+            'examine': 'vase-examine',
+            'open portal to kitchen': 'portal-spell-cast',
+            'open portal to bedroom': 'portal-spell-cast',
+            'open portal to workshop': 'portal-spell-cast',
+            'open portal to library': 'portal-spell-cast',
+            'open portal to garden': 'portal-spell-cast'
+        };
+        
+        const trigger = spellToTrigger[spellText];
+        if (trigger && typeof window.fantasyOS !== 'undefined' && 
+            window.fantasyOS.components.questManager) {
+            
+            console.log(`🎯 Triggering quest event: ${trigger}`);
+            window.fantasyOS.components.questManager.triggerEvent(trigger);
+        }
     }
     
     /**
@@ -351,7 +382,55 @@ class SpellParser {
      * Open portal to room
      */
     openPortal(targetRoom) {
-        // This would integrate with RoomManager
+        console.log(`🔮 Opening portal to ${targetRoom}...`);
+        
+        // Check if room is accessible through room progression system
+        if (typeof window.fantasyOS !== 'undefined' && 
+            window.fantasyOS.components.roomProgression) {
+            
+            const roomProgression = window.fantasyOS.components.roomProgression;
+            
+            // Check if quest requirements are met
+            const questRequirements = {
+                'kitchen': 'credentials-recovery',
+                'bedroom': 'dream-walker', 
+                'workshop': 'crafting-mastery',
+                'library': 'knowledge-seeker',
+                'garden': 'nature-connection'
+            };
+            
+            const requiredQuest = questRequirements[targetRoom];
+            
+            if (requiredQuest) {
+                // Check if quest is completed
+                const questCompleted = window.fantasyOS.components.questManager ? 
+                    window.fantasyOS.components.questManager.isQuestCompleted(requiredQuest) : false;
+                
+                if (!questCompleted) {
+                    // Quest not completed - show hobbit help
+                    this.showHobbitHelp(targetRoom, requiredQuest);
+                    return { 
+                        success: false, 
+                        message: `The portal to ${targetRoom} remains closed. Complete the ${requiredQuest} quest first!` 
+                    };
+                }
+                
+                // Quest completed - unlock room
+                console.log(`✅ Quest ${requiredQuest} completed, unlocking ${targetRoom}`);
+                roomProgression.unlockRoom(targetRoom);
+            }
+            
+            if (!roomProgression.isRoomAccessible(targetRoom)) {
+                // Room is still locked
+                this.showHobbitHelp(targetRoom);
+                return { 
+                    success: false, 
+                    message: `The portal to ${targetRoom} remains closed. The room is locked!` 
+                };
+            }
+        }
+        
+        // Room is accessible - switch to it
         if (typeof RoomManager !== 'undefined') {
             const roomManager = new RoomManager();
             return { success: roomManager.switchToRoom(targetRoom) };
@@ -364,6 +443,39 @@ class SpellParser {
             return { success: true };
         }
         return { success: false };
+    }
+    
+    /**
+     * Show hobbit help for locked rooms
+     */
+    showHobbitHelp(targetRoom, requiredQuest = null) {
+        const hobbitMessages = {
+            'kitchen': requiredQuest ? 
+                "The hobbit whispers: 'Complete the credentials recovery quest first, then the kitchen portal will open!'" :
+                "The hobbit whispers: 'To unlock the kitchen, you must first complete the credentials recovery quest!'",
+            'bedroom': requiredQuest ? 
+                "The hobbit suggests: 'Finish the dream exploration quest, then the bedroom portal will open!'" :
+                "The hobbit suggests: 'The bedroom requires completing the dream exploration quest!'",
+            'workshop': requiredQuest ? 
+                "The hobbit advises: 'Complete the crafting mastery quest, then the workshop portal will open!'" :
+                "The hobbit advises: 'The workshop needs the crafting mastery quest to be completed!'",
+            'library': requiredQuest ? 
+                "The hobbit explains: 'Finish the knowledge seeking quest, then the library portal will open!'" :
+                "The hobbit explains: 'The library awaits those who finish the knowledge seeking quest!'",
+            'garden': requiredQuest ? 
+                "The hobbit tells you: 'Complete the nature connection quest, then the garden portal will open!'" :
+                "The hobbit tells you: 'The garden opens only after completing the nature connection quest!'"
+        };
+        
+        const message = hobbitMessages[targetRoom] || `The hobbit looks confused about ${targetRoom}.`;
+        
+        // Show hobbit dialogue
+        if (typeof window.fantasyOS !== 'undefined' && 
+            window.fantasyOS.components.hobbitCompanion) {
+            window.fantasyOS.components.hobbitCompanion.showDialogue(message);
+        }
+        
+        console.log(`🧙‍♂️ Hobbit help: ${message}`);
     }
     
     /**

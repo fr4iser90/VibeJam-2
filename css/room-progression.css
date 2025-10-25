@@ -4,6 +4,42 @@
  * Created: 2025-10-25T16:42:58.000Z
  */
 
+/* FORCE HIDE LOCKED ROOMS - NO EXCEPTIONS */
+[data-room="kitchen"].locked,
+[data-room="bedroom"].locked, 
+[data-room="workshop"].locked,
+[data-room="library"].locked,
+[data-room="garden"].locked {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* UNLOCKED ROOMS SHOULD BE VISIBLE */
+[data-room="kitchen"]:not(.locked),
+[data-room="bedroom"]:not(.locked), 
+[data-room="workshop"]:not(.locked),
+[data-room="library"]:not(.locked),
+[data-room="garden"]:not(.locked) {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
 /* Room Progression Base Styles */
 .room-progression-container {
     position: relative;
@@ -18,9 +54,15 @@
 }
 
 .room-tab.locked {
-    opacity: 0.5;
-    filter: grayscale(100%);
-    cursor: not-allowed;
+    opacity: 0 !important;
+    filter: grayscale(100%) !important;
+    cursor: not-allowed !important;
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
 }
 
 .room-tab.locked .room-icon {
@@ -626,5 +668,21 @@
     
     .passage-navigation-btn {
         transition: none;
+    }
+}
+
+/* Room Tab Unlock Animation */
+@keyframes roomTabUnlock {
+    0% { 
+        transform: scale(1); 
+        box-shadow: 0 0 0 rgba(78, 205, 196, 0);
+    }
+    50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 0 20px rgba(78, 205, 196, 0.8);
+    }
+    100% { 
+        transform: scale(1); 
+        box-shadow: 0 0 0 rgba(78, 205, 196, 0);
     }
 }

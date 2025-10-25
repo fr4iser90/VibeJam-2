@@ -375,10 +375,53 @@ class RoomObjectOverlay {
         // Initialize object states
         this.initializeObjectStates();
         
+        // Set initial dark mode for living room
+        this.setInitialDarkMode();
+        
         // Add debug layer for development
         this.addDebugLayer();
         
         console.log('✨ Room Object Overlay System initialized!');
+    }
+    
+    /**
+     * Set initial dark mode for living room
+     */
+    setInitialDarkMode() {
+        console.log('🌙 Setting initial dark mode for living room...');
+        
+        // Set initial dark mode flag FIRST
+        this.isDarkMode = true;
+        console.log('🌙 Dark mode flag set to true');
+        
+        // Set living room to dark mode initially
+        const livingRoomBackground = document.querySelector('#living-room .room-background');
+        if (livingRoomBackground) {
+            livingRoomBackground.style.backgroundImage = "url('assets/images/rooms/living-room-dark.png')";
+            console.log('✅ Living room set to dark mode');
+        } else {
+            console.log('❌ Living room background not found!');
+        }
+        
+        // Set all lighting objects to inactive initially
+        const livingRoomObjects = this.activeObjects.get('living-room');
+        if (livingRoomObjects) {
+            livingRoomObjects.set('lamp_1', { isActive: false, lastInteraction: null, interactionCount: 0 });
+            livingRoomObjects.set('lamp_2', { isActive: false, lastInteraction: null, interactionCount: 0 });
+            livingRoomObjects.set('fireplace', { isActive: false, lastInteraction: null, interactionCount: 0 });
+            console.log('✅ All lighting objects set to inactive');
+        } else {
+            console.log('❌ Living room objects not found!');
+        }
+        
+        // Force dark mode with timeout to ensure DOM is ready
+        setTimeout(() => {
+            const livingRoomBackground = document.querySelector('#living-room .room-background');
+            if (livingRoomBackground) {
+                livingRoomBackground.style.backgroundImage = "url('assets/images/rooms/living-room-dark.png')";
+                console.log('✅ Living room FORCED to dark mode');
+            }
+        }, 100);
     }
     
     /**
@@ -574,6 +617,49 @@ class RoomObjectOverlay {
         
         // Show interaction feedback
         this.showInteractionFeedback(objectName, roomId);
+        
+        // Check if we should exit dark mode (but don't block interactions)
+        if (this.isDarkMode && roomId === 'living-room') {
+            this.checkDarkModeExit(roomId);
+        }
+    }
+    
+    /**
+     * Check if we should exit dark mode
+     */
+    checkDarkModeExit(roomId) {
+        if (roomId !== 'living-room') return;
+        
+        const livingRoomObjects = this.activeObjects.get('living-room');
+        const lamp1Active = livingRoomObjects.get('lamp_1').isActive;
+        const lamp2Active = livingRoomObjects.get('lamp_2').isActive;
+        const fireplaceActive = livingRoomObjects.get('fireplace').isActive;
+        
+        // Exit dark mode if at least one lighting object is active
+        if (lamp1Active || lamp2Active || fireplaceActive) {
+            console.log('💡 Exiting dark mode - lighting objects activated!');
+            this.exitDarkMode();
+        }
+    }
+    
+    /**
+     * Exit dark mode and switch to normal mode
+     */
+    exitDarkMode() {
+        this.isDarkMode = false;
+        
+        // Switch to normal background
+        const livingRoomBackground = document.querySelector('#living-room .room-background');
+        if (livingRoomBackground) {
+            livingRoomBackground.style.backgroundImage = "url('assets/images/rooms/living-room.png')";
+            console.log('✅ Switched to normal mode');
+        }
+        
+        // Update hobbit dialogue
+        const hobbitText = document.querySelector('#hobbitDialogue .hobbit-text');
+        if (hobbitText) {
+            hobbitText.textContent = "Thank you! Now I can see better. I need to read something to find the portal spell!";
+        }
     }
     
     /**

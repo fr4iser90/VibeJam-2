@@ -237,9 +237,12 @@ class RoomUnlocking {
     updateRoomUI(roomId) {
         const roomTab = document.querySelector(`[data-room="${roomId}"]`);
         if (roomTab) {
-            // Remove locked state
+            // Remove locked state and make visible
             roomTab.classList.remove('locked');
             roomTab.classList.add('unlocked');
+            roomTab.style.display = 'block';
+            roomTab.style.visibility = 'visible';
+            roomTab.style.pointerEvents = 'auto';
             
             // Add unlock animation
             roomTab.style.animation = 'roomTabUnlock 1s ease-out';
@@ -248,6 +251,12 @@ class RoomUnlocking {
             const roomIcon = roomTab.querySelector('.room-icon');
             if (roomIcon) {
                 roomIcon.style.filter = 'none';
+            }
+            
+            // Remove lock icon if present
+            const lockIcon = roomTab.querySelector('.lock-icon');
+            if (lockIcon) {
+                lockIcon.remove();
             }
         }
     }

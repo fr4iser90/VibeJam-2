@@ -18,6 +18,7 @@ const mainQuestline = {
                 id: 'credentials-recovery',
                 title: 'Credential Recovery',
                 description: 'Help the Hobbit recover his Fantasy OS credentials',
+                status: 'active',
                 type: 'main',
                 act: 1,
                 steps: [
@@ -27,69 +28,76 @@ const mainQuestline = {
                         description: 'Talk to the Hobbit in the living room', 
                         room: 'living-room', 
                         completed: false,
-                        triggers: ['hobbit-interaction']
+                        triggers: ['hobbit-interaction'],
+                        hobbitDialogue: "I have lost my Fantasy OS credentials! I need help! Can you light up the place?"
                     },
                     { 
-                        id: 'search-living', 
-                        title: 'Search Living Room', 
-                        description: 'Look for credential fragments in the living room', 
+                        id: 'light-lamp1', 
+                        title: 'Light Lamp 1', 
+                        description: 'Turn on the first lamp to illuminate the room', 
                         room: 'living-room', 
                         completed: false,
-                        triggers: ['fireplace-interaction', 'lamp-interaction']
+                        triggers: ['lamp1-illuminate'],
+                        objectCoords: { x: 722, y: 455 },
+                        spell: 'illuminate'
                     },
                     { 
-                        id: 'search-kitchen', 
-                        title: 'Search Kitchen', 
-                        description: 'Check the cauldron for magical ingredients', 
-                        room: 'kitchen', 
-                        completed: false,
-                        triggers: ['cauldron-interaction']
-                    },
-                    { 
-                        id: 'search-library', 
-                        title: 'Search Library', 
-                        description: 'Find ancient texts in the library', 
-                        room: 'library', 
-                        completed: false,
-                        triggers: ['book-interaction', 'crystal-ball-interaction']
-                    },
-                    { 
-                        id: 'search-workshop', 
-                        title: 'Search Workshop', 
-                        description: 'Look for tools in the workshop', 
-                        room: 'workshop', 
-                        completed: false,
-                        triggers: ['tool-interaction']
-                    },
-                    { 
-                        id: 'search-bedroom', 
-                        title: 'Search Bedroom', 
-                        description: 'Check the bedroom for hidden items', 
-                        room: 'bedroom', 
-                        completed: false,
-                        triggers: ['bed-interaction']
-                    },
-                    { 
-                        id: 'search-garden', 
-                        title: 'Search Garden', 
-                        description: 'Explore the garden for natural magic', 
-                        room: 'garden', 
-                        completed: false,
-                        triggers: ['garden-interaction']
-                    },
-                    { 
-                        id: 'complete', 
-                        title: 'Restore Credentials', 
-                        description: 'Combine all fragments to restore the Fantasy OS', 
+                        id: 'light-lamp2', 
+                        title: 'Light Lamp 2', 
+                        description: 'Turn on the second lamp for more light', 
                         room: 'living-room', 
                         completed: false,
-                        triggers: ['credential-restoration']
+                        triggers: ['lamp2-illuminate'],
+                        objectCoords: { x: 706, y: 760 },
+                        spell: 'illuminate'
+                    },
+                    { 
+                        id: 'ignite-fireplace', 
+                        title: 'Ignite Fireplace', 
+                        description: 'Light the fireplace to warm up the room', 
+                        room: 'living-room', 
+                        completed: false,
+                        triggers: ['fireplace-ignite'],
+                        objectCoords: { x: 160, y: 816 },
+                        spell: 'ignite'
+                    },
+                    { 
+                        id: 'read-book', 
+                        title: 'Read Book', 
+                        description: 'Read the book to find the portal spell', 
+                        room: 'living-room', 
+                        completed: false,
+                        triggers: ['book-browse'],
+                        objectCoords: { x: 538, y: 433 },
+                        spell: 'browse',
+                        hobbitDialogue: "Thank you! Now I can see better. I need to read something to find the portal spell!"
+                    },
+                    { 
+                        id: 'cast-portal-spell', 
+                        title: 'Cast Portal Spell', 
+                        description: 'Cast the portal spell to open the kitchen', 
+                        room: 'living-room', 
+                        completed: false,
+                        triggers: ['portal-spell-cast'],
+                        spell: 'open portal to kitchen',
+                        hobbitDialogue: "Perfect! I found the portal spell! Now I can open the kitchen!"
+                    },
+                    { 
+                        id: 'examine-vase', 
+                        title: 'Examine Vase', 
+                        description: 'Check the vase for hints about the next quest', 
+                        room: 'living-room', 
+                        completed: false,
+                        triggers: ['vase-examine'],
+                        objectCoords: { x: -4, y: 763 },
+                        spell: 'examine',
+                        hobbitDialogue: "The vase contains hints about the kitchen quest!"
                     }
                 ],
                 rewards: ['unlock-kitchen', 'magic-level-10'],
                 dependencies: [],
-                triggers: ['hobbit-interaction', 'room-search'],
-                status: 'available'
+                triggers: ['hobbit-interaction', 'lamp1-illuminate', 'lamp2-illuminate', 'fireplace-ignite', 'book-browse', 'portal-spell-cast', 'vase-examine'],
+                status: 'active'
             },
             'act-2': {
                 id: 'ancient-artifacts',

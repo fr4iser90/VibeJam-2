@@ -22,6 +22,35 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    
+    <!-- IMMEDIATE ROOM HIDING SCRIPT -->
+    <script>
+        // FORCE HIDE LOCKED ROOMS IMMEDIATELY
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔒 FORCE HIDING ROOMS ON PAGE LOAD...');
+            
+            const lockedRooms = ['kitchen', 'bedroom', 'workshop', 'library', 'garden'];
+            
+            lockedRooms.forEach(roomId => {
+                const roomTab = document.querySelector(`[data-room="${roomId}"]`);
+                if (roomTab) {
+                    roomTab.style.display = 'none';
+                    roomTab.style.visibility = 'hidden';
+                    roomTab.style.opacity = '0';
+                    roomTab.style.pointerEvents = 'none';
+                    roomTab.style.position = 'absolute';
+                    roomTab.style.left = '-9999px';
+                    roomTab.style.top = '-9999px';
+                    roomTab.style.width = '0';
+                    roomTab.style.height = '0';
+                    roomTab.style.overflow = 'hidden';
+                    console.log(`🔒 HIDDEN: ${roomId}`);
+                }
+            });
+            
+            console.log('✅ ROOMS FORCE HIDDEN ON LOAD');
+        });
+    </script>
 </head>
 <body>
     <!-- Fantasy Desktop Container -->
@@ -34,25 +63,30 @@
                     <span class="room-icon">🏠</span>
                     <span class="room-name">Living Room</span>
                 </button>
-                <button class="room-tab" data-room="kitchen">
+                <button class="room-tab locked" data-room="kitchen" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
                     <span class="room-icon">🍳</span>
                     <span class="room-name">Kitchen</span>
+                    <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab" data-room="bedroom">
+                <button class="room-tab locked" data-room="bedroom" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
                     <span class="room-icon">🛏️</span>
                     <span class="room-name">Bedroom</span>
+                    <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab" data-room="workshop">
+                <button class="room-tab locked" data-room="workshop" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
                     <span class="room-icon">🔨</span>
                     <span class="room-name">Workshop</span>
+                    <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab" data-room="library">
+                <button class="room-tab locked" data-room="library" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
                     <span class="room-icon">📚</span>
                     <span class="room-name">Library</span>
+                    <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab" data-room="garden">
+                <button class="room-tab locked" data-room="garden" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
                     <span class="room-icon">🌿</span>
                     <span class="room-name">Garden</span>
+                    <span class="lock-icon">🔒</span>
                 </button>
             </div>
         </nav>
@@ -81,7 +115,7 @@
                 </div>
                 
                 <!-- Center Background -->
-                <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');">
+                <div class="room-background" style="background-image: url('assets/images/rooms/living-room-dark.png');">
                     <!-- Magical Particles -->
                     <div class="particle-system">
                         <div class="particle"></div>
@@ -101,7 +135,7 @@
                             <img src="assets/images/objects/hobbit.png" alt="Hobbit" class="hobbit-image">
                         </div>
                         <div class="hobbit-dialogue-sidebar" id="hobbitDialogue">
-                            <p class="hobbit-text">I've lost my Fantasy OS credentials!</p>
+                            <p class="hobbit-text">I have lost my Fantasy OS credentials! I need help! Can you light up the place?</p>
                             <div class="hobbit-options">
                                 <button class="hobbit-btn" onclick="talkToHobbit('greeting')">Quest Info</button>
                                 <button class="hobbit-btn" onclick="talkToHobbit('interaction')">Help</button>
