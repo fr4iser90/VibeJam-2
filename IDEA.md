@@ -32,36 +32,36 @@ Ein interaktiver Fantasy Desktop Simulator als Webanwendung, der eine Hobbit-Hö
 
 ## 🏠 **HOBBIT-HÖHLE LAYOUT**
 
-### **Räume = Apps:**
-| Raum | Funktion | OS-Äquivalent | Beschreibung |
+### **Rooms = Apps:**
+| Room | Function | OS Equivalent | Description |
 |------|----------|----------------|--------------|
-| **Wohnzimmer** | Desktop/Start | Haupt-Desktop | Gemütlicher Hauptraum mit Kamin |
-| **Küche** | Datei-Manager | File Explorer | Organisierte Speisekammer |
-| **Schlafzimmer** | Ruhemodus | Sleep Mode | Ruhiger Rückzugsort |
-| **Werkstatt** | Tools/Apps | Anwendungen | Arbeitsplatz mit Werkzeugen |
-| **Bibliothek** | Dokumente | Documents | Bücher und Schriftrollen |
-| **Garten** | Externe Verbindungen | Internet/Browser | Verbindung zur Außenwelt |
+| **Living Room** | Desktop/Start | Main Desktop | Cozy main room with fireplace |
+| **Kitchen** | File Manager | File Explorer | Organized pantry |
+| **Bedroom** | Sleep Mode | Sleep Mode | Quiet retreat |
+| **Workshop** | Tools/Apps | Applications | Workspace with tools |
+| **Library** | Documents | Documents | Books and scrolls |
+| **Garden** | External Connections | Internet/Browser | Connection to outside world |
 
-### **Interaktive Gegenstände:**
-| Gegenstand | Funktion | OS-Äquivalent | Interaktion |
+### **Interactive Objects:**
+| Object | Function | OS Equivalent | Interaction |
 |------------|----------|----------------|-------------|
-| **Kamin** | Helligkeit/Energie | Monitor-Helligkeit | Holz hineinwerfen → Feuer |
-| **Lampe** | Beleuchtung | Desktop-Hintergrund | An/Aus schalten |
-| **Truhe** | Dateien speichern | File Storage | Schätze hineinlegen |
-| **Kristallkugel** | Monitor/Display | Screen/Display | Magische Bilder zeigen |
-| **Zauberbuch** | Hilfe/Dokumentation | Help System | Zaubersprüche nachschlagen |
-| **Kessel** | Downloads/Verarbeitung | Download Manager | Zutaten mischen → Ergebnis |
+| **Fireplace** | Brightness/Energy | Monitor Brightness | Throw wood in → fire |
+| **Lamp** | Lighting | Desktop Background | Turn on/off |
+| **Chest** | File Storage | File Storage | Store treasures |
+| **Crystal Ball** | Monitor/Display | Screen/Display | Show magical images |
+| **Spell Book** | Help/Documentation | Help System | Look up spells |
+| **Cauldron** | Downloads/Processing | Download Manager | Mix ingredients → result |
 
 ## 🧙‍♂️ **SPELL-COMMANDS**
 
-### **Text-Spells:**
-| Spell | Funktion | OS-Äquivalent | Beispiel |
+### **Text Spells:**
+| Spell | Function | OS Equivalent | Example |
 |-------|----------|----------------|----------|
-| `"ignite fireplace"` | Kamin entzünden | Monitor heller | Holz in Kamin → Feuer |
-| `"summon light"` | Lampe einschalten | Hintergrund ändern | Lampe leuchtet auf |
-| `"open portal to kitchen"` | Küche öffnen | Ordner öffnen | Portal zur Küche |
-| `"store treasure in chest"` | Datei speichern | File speichern | Schatz in Truhe |
-| `"cast protection spell"` | Sicherheitsmodus | Security Mode | Schild um System |
+| `"ignite fireplace"` | Ignite fireplace | Monitor brighter | Wood in fireplace → fire |
+| `"summon light"` | Turn on lamp | Change background | Lamp lights up |
+| `"open portal to kitchen"` | Open kitchen | Open folder | Portal to kitchen |
+| `"store treasure in chest"` | Save file | Save file | Treasure in chest |
+| `"cast protection spell"` | Security mode | Security Mode | Shield around system |
 | `"brew potion"` | Download starten | Download beginnen | Kessel brodelt |
 | `"read ancient tome"` | Dokument öffnen | File öffnen | Buch öffnet sich |
 
@@ -167,96 +167,96 @@ Ein interaktiver Fantasy Desktop Simulator als Webanwendung, der eine Hobbit-Hö
 
 ---
 
-## 📝 **TASK-BESCHREIBUNGEN**
+## 📝 **TASK DESCRIPTIONS**
 
-### **Task 1.1 - HTML-Struktur erstellen**
-**Beschreibung:** Basis-HTML mit Fantasy-Desktop-Container, Room-Navigation, Object-Container und Spell-System
-**Zeit:** 30min
-**Output:** `index.html` mit vollständiger Struktur
+### **Task 1.1 - Create HTML Structure**
+**Description:** Base HTML with fantasy desktop container, room navigation, object container and spell system
+**Time:** 30min
+**Output:** `index.html` with complete structure
 
-### **Task 1.2 - CSS-Styling für Fantasy-Design**
-**Beschreibung:** Fantasy-Farbpalette, Typografie, Layout-System und Basis-Animationen
-**Zeit:** 45min
-**Output:** `css/main.css` mit komplettem Styling
+### **Task 1.2 - CSS Styling for Fantasy Design**
+**Description:** Fantasy color palette, typography, layout system and basic animations
+**Time:** 45min
+**Output:** `css/main.css` with complete styling
 
-### **Task 1.3 - JavaScript-Basis-Funktionalität**
-**Beschreibung:** Hauptklasse FantasyOS, Event-Listener und Basis-Funktionen
-**Zeit:** 45min
-**Output:** `js/main.js` mit Grundfunktionalität
+### **Task 1.3 - JavaScript Base Functionality**
+**Description:** Main FantasyOS class, event listeners and basic functions
+**Time:** 45min
+**Output:** `js/main.js` with basic functionality
 
-### **Task 2.1 - Room-Navigation implementieren**
-**Beschreibung:** Tab-System für Room-Wechsel, aktive Room-Verwaltung
-**Zeit:** 30min
-**Output:** Funktionsfähige Room-Navigation
+### **Task 2.1 - Implement Room Navigation**
+**Description:** Tab system for room switching, active room management
+**Time:** 30min
+**Output:** Functional room navigation
 
-### **Task 2.2 - Room-Hintergründe integrieren**
-**Beschreibung:** Echte Fantasy-Hintergrundbilder in Rooms einbinden
-**Zeit:** 30min
-**Output:** Alle 6 Rooms mit echten Hintergründen
+### **Task 2.2 - Integrate Room Backgrounds**
+**Description:** Integrate real fantasy background images into rooms
+**Time:** 30min
+**Output:** All 6 rooms with real backgrounds
 
-### **Task 2.3 - Room-Übergänge animieren**
-**Beschreibung:** Smooth-Transitions zwischen Rooms mit CSS-Animationen
-**Zeit:** 30min
-**Output:** Animierte Room-Wechsel
+### **Task 2.3 - Animate Room Transitions**
+**Description:** Smooth transitions between rooms with CSS animations
+**Time:** 30min
+**Output:** Animated room transitions
 
-### **Task 3.1 - Fantasy-Objekte positionieren**
-**Beschreibung:** 6 Fantasy-Objekte in Rooms positionieren und stylen
-**Zeit:** 30min
-**Output:** Alle Objekte korrekt positioniert
+### **Task 3.1 - Position Fantasy Objects**
+**Description:** Position and style 6 fantasy objects in rooms
+**Time:** 30min
+**Output:** All objects correctly positioned
 
-### **Task 3.2 - Hover-Effekte implementieren**
-**Beschreibung:** Glow-Effekte, Tooltips und Hover-Animationen für Objekte
-**Zeit:** 30min
-**Output:** Interaktive Hover-Effekte
+### **Task 3.2 - Implement Hover Effects**
+**Description:** Glow effects, tooltips and hover animations for objects
+**Time:** 30min
+**Output:** Interactive hover effects
 
-### **Task 3.3 - Click-Interaktionen erstellen**
-**Beschreibung:** Click-Handler für alle Objekte mit visuellen Feedback
-**Zeit:** 30min
-**Output:** Funktionsfähige Objekt-Interaktionen
+### **Task 3.3 - Create Click Interactions**
+**Description:** Click handlers for all objects with visual feedback
+**Time:** 30min
+**Output:** Functional object interactions
 
-### **Task 4.1 - Text-Spell-Parser entwickeln**
-**Beschreibung:** Natural Language Processing für Zaubersprüche
-**Zeit:** 45min
-**Output:** Funktionsfähiger Spell-Parser
+### **Task 4.1 - Develop Text Spell Parser**
+**Description:** Natural Language Processing for spells
+**Time:** 45min
+**Output:** Functional spell parser
 
-### **Task 4.2 - Gesten-Erkennung implementieren**
-**Beschreibung:** Mouse-Path-Analysis für Kreis, Zick-Zack, Spirale, Herz
-**Zeit:** 45min
-**Output:** Gesten-Erkennungs-System
+### **Task 4.2 - Implement Gesture Recognition**
+**Description:** Mouse path analysis for circle, zigzag, spiral, heart
+**Time:** 45min
+**Output:** Gesture recognition system
 
-### **Task 4.3 - Spell-Effekte animieren**
-**Beschreibung:** Visuelle Effekte für alle Spells und Gesten
-**Zeit:** 30min
-**Output:** Animierte Spell-Effekte
+### **Task 4.3 - Animate Spell Effects**
+**Description:** Visual effects for all spells and gestures
+**Time:** 30min
+**Output:** Animated spell effects
 
-### **Task 5.1 - Web Audio API integrieren**
-**Beschreibung:** Sound-System mit Ambient- und Action-Sounds
-**Zeit:** 30min
-**Output:** Funktionsfähiges Sound-System
+### **Task 5.1 - Integrate Web Audio API**
+**Description:** Sound system with ambient and action sounds
+**Time:** 30min
+**Output:** Functional sound system
 
-### **Task 5.2 - Sound-Effekte hinzufügen**
-**Beschreibung:** Sounds für alle Interaktionen und Spells
-**Zeit:** 30min
-**Output:** Vollständige Audio-Integration
+### **Task 5.2 - Add Sound Effects**
+**Description:** Sounds for all interactions and spells
+**Time:** 30min
+**Output:** Complete audio integration
 
-### **Task 6.1 - Responsive Design optimieren**
-**Beschreibung:** Mobile-optimierung und verschiedene Bildschirmgrößen
-**Zeit:** 30min
-**Output:** Responsive Fantasy-Desktop
+### **Task 6.1 - Optimize Responsive Design**
+**Description:** Mobile optimization and different screen sizes
+**Time:** 30min
+**Output:** Responsive fantasy desktop
 
-### **Task 6.2 - Performance testen und optimieren**
-**Beschreibung:** Ladezeiten optimieren, Animationen smooth machen
-**Zeit:** 30min
-**Output:** Optimierte Performance
+### **Task 6.2 - Test and Optimize Performance**
+**Description:** Optimize loading times, make animations smooth
+**Time:** 30min
+**Output:** Optimized performance
 
 ---
 
-## 🚀 **NÄCHSTER TASK**
+## 🚀 **NEXT TASK**
 
-**Welchen Task soll ich als nächstes angehen?**
+**Which task should I tackle next?**
 
-1. **Task 1.1** - HTML-Struktur erstellen
-2. **Task 1.2** - CSS-Styling für Fantasy-Design  
+1. **Task 1.1** - Create HTML Structure
+2. **Task 1.2** - CSS Styling for Fantasy Design  
 3. **Task 1.3** - JavaScript-Basis-Funktionalität
 4. **Task 2.1** - Room-Navigation implementieren
 5. **Task 3.1** - Fantasy-Objekte positionieren

@@ -24,7 +24,7 @@ class ObjectInteraction {
                 animation: 'lightGlow'
             },
             chest: {
-                name: 'Truhe',
+                name: 'Chest',
                 description: 'Chest - Store files',
                 action: 'open',
                 effects: ['storage', 'treasure'],
@@ -32,7 +32,7 @@ class ObjectInteraction {
                 animation: 'treasureSparkle'
             },
             'crystal-ball': {
-                name: 'Kristallkugel',
+                name: 'Crystal Ball',
                 description: 'Crystal Ball - Monitor/Display',
                 action: 'gaze',
                 effects: ['vision', 'magic', 'display'],
@@ -40,7 +40,7 @@ class ObjectInteraction {
                 animation: 'magicPulse'
             },
             'spell-book': {
-                name: 'Zauberbuch',
+                name: 'Spell Book',
                 description: 'Spell Book - Help/Documentation',
                 action: 'read',
                 effects: ['knowledge', 'help', 'magic'],
@@ -48,7 +48,7 @@ class ObjectInteraction {
                 animation: 'bookGlow'
             },
             cauldron: {
-                name: 'Kessel',
+                name: 'Cauldron',
                 description: 'Cauldron - Downloads/Processing',
                 action: 'brew',
                 effects: ['brewing', 'processing', 'magic'],
@@ -88,6 +88,12 @@ class ObjectInteraction {
         
         // Show interaction feedback
         this.showInteractionFeedback(objectType);
+        
+        // Check quest progress
+        this.checkQuestProgress(objectType);
+        
+        // Check achievement progress
+        this.checkAchievementProgress(objectType);
         
         return true;
     }
@@ -401,6 +407,56 @@ class ObjectInteraction {
             } else {
                 objectElement.classList.remove('active');
             }
+        }
+    }
+    
+    /**
+     * Check quest progress based on object interaction
+     */
+    checkQuestProgress(objectType) {
+        // Get current room
+        const currentRoom = this.getCurrentRoom();
+        
+        // Check if FantasyOS quest manager is available
+        if (typeof window.fantasyOS !== 'undefined' && window.fantasyOS.components.questManager) {
+            const questManager = window.fantasyOS.components.questManager;
+            
+            // Check active quests for progress
+            const activeQuests = questManager.getActiveQuests();
+            
+            activeQuests.forEach(questId => {
+                const quest = questManager.getQuestInfo(questId);
+                if (quest && quest.steps) {
+                    // Find steps that match this object interaction
+                    quest.steps.forEach(step => {
+                        if (step.room === currentRoom && step.triggers && step.triggers.includes(`${objectType}-interaction`)) {
+                            if (!step.completed) {
+                                questManager.updateQuestProgress(questId, step.id);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+    
+    /**
+     * Check achievement progress based on object interaction
+     */
+    checkAchievementProgress(objectType) {
+        // Check if FantasyOS achievement system is available
+        if (typeof window.fantasyOS !== 'undefined' && window.fantasyOS.components.achievementSystem) {
+            const achievementSystem = window.fantasyOS.components.achievementSystem;
+            
+            // Check for room explorer achievement
+            achievementSystem.checkAchievementProgress('room-explorer', 'visit-rooms', {
+                roomVisited: true
+            });
+            
+            // Check for object interaction achievements
+            achievementSystem.checkAchievementProgress('object-master', 'interact-objects', {
+                objectInteracted: objectType
+            });
         }
     }
 }

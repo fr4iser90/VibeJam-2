@@ -17,7 +17,7 @@
 
 4. **Freepik** - https://freepik.com
    - Suche: "fantasy", "hobbit", "magical"
-   - Kostenlos mit Registrierung
+   - Free with registration
 
 ### **Fantasy-spezifische Quellen:**
 1. **ArtStation** - https://artstation.com
@@ -44,7 +44,7 @@
 
 2. **Zapsplat** - https://zapsplat.com
    - Suche: "fantasy", "magical", "ambient"
-   - Kostenlos mit Registrierung
+   - Free with registration
    - **Hochqualitative Sounds**
 
 3. **BBC Sound Effects** - https://sound-effects.bbcrewind.co.uk
@@ -94,94 +94,94 @@
 #### **1. Wohnzimmer - Cozy Fireplace**
 - **Quelle:** Freesound.org
 - **Suche:** "fireplace crackling", "cozy fire", "warm atmosphere"
-- **Beschreibung:** Knistern des Feuers, warme Atmosphäre
+- **Description:** Fire crackling, warm atmosphere
 - **Format:** MP3, 30s, Loopable
 
-#### **2. Küche - Gentle Cooking**
+#### **2. Kitchen - Gentle Cooking**
 - **Quelle:** Zapsplat.com
 - **Suche:** "gentle cooking", "kitchen ambient", "soft clinking"
-- **Beschreibung:** Sanfte Küchengeräusche, leises Klirren
+- **Description:** Gentle kitchen sounds, soft clinking
 - **Format:** MP3, 30s, Loopable
 
-#### **3. Schlafzimmer - Peaceful Silence**
+#### **3. Bedroom - Peaceful Silence**
 - **Quelle:** BBC Sound Effects
 - **Suche:** "peaceful", "quiet", "soft breathing"
-- **Beschreibung:** Sehr leise, ruhige Atmosphäre
+- **Description:** Very quiet, peaceful atmosphere
 - **Format:** MP3, 30s, Loopable
 
-#### **4. Werkstatt - Gentle Crafting**
+#### **4. Workshop - Gentle Crafting**
 - **Quelle:** Freesound.org
 - **Suche:** "woodworking", "gentle hammering", "crafting"
-- **Beschreibung:** Sanfte Werkstattgeräusche
+- **Description:** Gentle workshop sounds
 - **Format:** MP3, 30s, Loopable
 
-#### **5. Bibliothek - Quiet Reading**
+#### **5. Library - Quiet Reading**
 - **Quelle:** Tabletop Audio
 - **Suche:** "library", "quiet study", "page turning"
-- **Beschreibung:** Leise Bibliotheksatmosphäre
+- **Description:** Quiet library atmosphere
 - **Format:** MP3, 30s, Loopable
 
-#### **6. Garten - Nature Sounds**
+#### **6. Garden - Nature Sounds**
 - **Quelle:** YouTube Audio Library
 - **Suche:** "nature", "birds", "gentle breeze"
-- **Beschreibung:** Sanfte Naturgeräusche
+- **Description:** Gentle nature sounds
 - **Format:** MP3, 30s, Loopable
 
-### **Action Sounds (1-3 Sekunden):**
+### **Action Sounds (1-3 seconds):**
 
 #### **1. Portal Opening**
 - **Quelle:** Freesound.org
 - **Suche:** "portal open", "magical whoosh", "mystical energy"
-- **Beschreibung:** Magisches Portal-Öffnen
-- **Format:** MP3, 2s, Einmalig
+- **Description:** Magical portal opening
+- **Format:** MP3, 2s, One-time
 
 #### **2. Spell Casting**
 - **Quelle:** Zapsplat.com
 - **Suche:** "spell cast", "magical chime", "enchantment"
-- **Beschreibung:** Zauberspruch-Aktivierung
-- **Format:** MP3, 1.5s, Einmalig
+- **Description:** Spell activation
+- **Format:** MP3, 1.5s, One-time
 
 #### **3. Object Interaction**
 - **Quelle:** BBC Sound Effects
 - **Suche:** "wooden click", "soft click", "interactive"
-- **Beschreibung:** Sanfter Klick-Sound
-- **Format:** MP3, 0.5s, Einmalig
+- **Description:** Soft click sound
+- **Format:** MP3, 0.5s, One-time
 
 #### **4. Fire Ignition**
 - **Quelle:** Freesound.org
 - **Suche:** "fire ignite", "flame start", "spark"
-- **Beschreibung:** Feuer entzünden
-- **Format:** MP3, 1s, Einmalig
+- **Description:** Ignite fire
+- **Format:** MP3, 1s, One-time
 
 #### **5. Treasure Storage**
 - **Quelle:** Zapsplat.com
 - **Suche:** "chest close", "treasure", "magical chime"
-- **Beschreibung:** Truhe schließen
-- **Format:** MP3, 1.5s, Einmalig
+- **Description:** Close chest
+- **Format:** MP3, 1.5s, One-time
 
 #### **6. Light Activation**
 - **Quelle:** Freesound.org
 - **Suche:** "light on", "glow", "illumination"
-- **Beschreibung:** Licht einschalten
-- **Format:** MP3, 1s, Einmalig
+- **Description:** Turn on light
+- **Format:** MP3, 1s, One-time
 
 ---
 
-## 🎵 **SOUND-GENERATOR-TOOLS**
+## 🎵 **SOUND GENERATOR TOOLS**
 
-### **AI-Sound Generators:**
+### **AI Sound Generators:**
 1. **Mubert** - https://mubert.com
-   - Generiert Ambient-Musik
-   - Kostenlos mit Registrierung
-   - **Perfekt für Hintergrund-Atmosphäre**
+   - Generates ambient music
+   - Free with registration
+   - **Perfect for background atmosphere**
 
 2. **AIVA** - https://aiva.ai
-   - AI-Musik-Generator
-   - Kostenlos für persönliche Nutzung
-   - **Gut für Fantasy-Musik**
+   - AI music generator
+   - Free for personal use
+   - **Good for fantasy music**
 
 3. **Soundraw** - https://soundraw.io
-   - AI-Sound-Effekte
+   - AI sound effects
    - Kostenpflichtig, aber sehr gut
    - **Professionelle Qualität**
 

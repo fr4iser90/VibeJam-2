@@ -19,7 +19,7 @@ Style: Warm, inviting hobbit-hole interior with:
 - No text or UI elements, just the room background
 ```
 
-### **2. Küche (Datei-Manager)**
+### **2. Kitchen (File Manager)**
 ```
 Create a hobbit kitchen interior background for a fantasy file manager interface.
 
@@ -37,7 +37,7 @@ Style: Organized, cozy hobbit kitchen with:
 - No text or UI elements
 ```
 
-### **3. Schlafzimmer (Ruhemodus)**
+### **3. Bedroom (Sleep Mode)**
 ```
 Create a peaceful hobbit bedroom interior for a fantasy sleep mode interface.
 
@@ -138,7 +138,7 @@ Style: Hobbit-style oil lamp with:
 - No text or UI elements
 ```
 
-### **Truhe (Dateien speichern)**
+### **Chest (File Storage)**
 ```
 Create a detailed wooden treasure chest icon for a fantasy desktop interface.
 
@@ -168,7 +168,7 @@ Style: Magical crystal ball with:
 - No text or UI elements
 ```
 
-### **Zauberbuch (Hilfe/Dokumentation)**
+### **Spell Book (Help/Documentation)**
 ```
 Create a detailed spell book icon for a fantasy desktop interface.
 

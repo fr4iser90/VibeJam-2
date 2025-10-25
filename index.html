@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/objects.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/room-object-overlay.css">
+    <link rel="stylesheet" href="css/quest-ui.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
@@ -382,10 +383,40 @@
                 </div>
             </div>
             <div class="status-right">
+                <button class="quest-btn" id="questBtn">Quests</button>
+                <button class="achievement-btn" id="achievementBtn">Achievements</button>
                 <button class="help-btn" id="helpBtn">Help</button>
                 <button class="settings-btn" id="settingsBtn">Settings</button>
             </div>
         </footer>
+        
+        <!-- Quest System UI -->
+        <div class="quest-system" id="quest-system" style="display: none;">
+            <div class="quest-header">
+                <div class="quest-title">Quest Journal</div>
+                <div class="quest-subtitle">Track your adventures</div>
+            </div>
+            <div class="quest-content">
+                <div id="quest-progress"></div>
+            </div>
+        </div>
+        
+        <!-- Achievement System UI -->
+        <div class="achievement-system" id="achievement-system" style="display: none;">
+            <div class="achievement-header">
+                <div class="achievement-title">Achievements</div>
+                <div class="achievement-subtitle">Your accomplishments</div>
+            </div>
+            <div class="achievement-content">
+                <div id="achievement-progress"></div>
+            </div>
+        </div>
+        
+        <!-- Quest Progress UI -->
+        <div class="quest-progress" id="quest-progress-ui" style="display: none;">
+            <div class="quest-progress-title">Active Quests</div>
+            <div id="quest-progress-list"></div>
+        </div>
     </div>
 
     <!-- Help Modal -->
@@ -454,6 +485,9 @@
     <script src="js/object-interaction.js"></script>
     <script src="js/room-object-overlay.js"></script>
     <script src="js/particle-system.js"></script>
+    <script src="js/quest-content.js"></script>
+    <script src="js/achievement-system.js"></script>
+    <script src="js/quest-manager.js"></script>
     <script src="js/main.js"></script>
     
     <!-- Hobbit Companion Script -->
@@ -666,23 +700,40 @@
             }, 3000);
         }
         
-        // Function to talk to hobbit
-        function talkToHobbit(dialogueType, room = 'living-room') {
-            const dialogues = hobbitDialogues[room][dialogueType];
-            const randomDialogue = dialogues[Math.floor(Math.random() * dialogues.length)];
+        // Function to talk to hobbit - Updated for quest system integration
+        function talkToHobbit(context, room = null) {
+            console.log(`🧙‍♂️ Talking to Hobbit: ${context}`);
             
-            // Find the current room's hobbit dialogue element
-            const currentRoom = document.querySelector('.room.active');
-            if (!currentRoom) return;
+            // Get current room if not provided
+            if (!room) {
+                const currentRoomElement = document.querySelector('.room.active');
+                room = currentRoomElement ? currentRoomElement.id : 'living-room';
+            }
             
-            const roomId = currentRoom.id;
-            const dialogueElement = document.getElementById(`hobbitDialogue${roomId.charAt(0).toUpperCase() + roomId.slice(1)}`);
+            const hobbitDialogue = document.getElementById('hobbitDialogue');
+            if (!hobbitDialogue) return;
             
-            if (dialogueElement) {
-                const textElement = dialogueElement.querySelector('.hobbit-text');
-                if (textElement) {
-                    // Add bounce animation to hobbit image
-                    const hobbitImage = dialogueElement.closest('.hobbit-companion').querySelector('.hobbit-image');
+            const hobbitText = hobbitDialogue.querySelector('.hobbit-text');
+            if (!hobbitText) return;
+            
+            // Get Hobbit personality from quest manager
+            if (window.fantasyOS && window.fantasyOS.components.questManager) {
+                const questManager = window.fantasyOS.components.questManager;
+                const hobbitPersonality = questManager.hobbitPersonality;
+                
+                if (hobbitPersonality) {
+                    // Update mood based on context
+                    hobbitPersonality.updateMood(context);
+                    
+                    // Get current room
+                    const currentRoom = window.fantasyOS.getCurrentRoom();
+                    
+                    // Get dialogue
+                    const dialogue = hobbitPersonality.getDialogue(context, currentRoom);
+                    hobbitText.textContent = dialogue;
+                    
+                    // Add bounce animation to Hobbit image
+                    const hobbitImage = document.querySelector('#hobbitCharacter .hobbit-image');
                     if (hobbitImage) {
                         hobbitImage.classList.add('clicked');
                         setTimeout(() => {
@@ -690,13 +741,122 @@
                         }, 600);
                     }
                     
-                    // Update text with fade effect
-                    textElement.style.opacity = '0';
-                    setTimeout(() => {
-                        textElement.textContent = randomDialogue;
-                        textElement.style.opacity = '1';
-                    }, 150);
+                    // Show quest system if context is 'greeting'
+                    if (context === 'greeting') {
+                        window.fantasyOS.showQuestSystem();
+                    }
+                    
+                    // Show help if context is 'interaction'
+                    if (context === 'interaction') {
+                        window.fantasyOS.showHelp();
+                    }
+                    
+                    return;
                 }
+            }
+            
+            // Fallback to old dialogue system
+            const dialogues = hobbitDialogues[room] && hobbitDialogues[room][context];
+            if (dialogues && dialogues.length > 0) {
+                const randomDialogue = dialogues[Math.floor(Math.random() * dialogues.length)];
+                
+                // Add bounce animation to hobbit image
+                const hobbitImage = document.querySelector('#hobbitCharacter .hobbit-image');
+                if (hobbitImage) {
+                    hobbitImage.classList.add('clicked');
+                    setTimeout(() => {
+                        hobbitImage.classList.remove('clicked');
+                    }, 600);
+                }
+                
+                // Update text with fade effect
+                hobbitText.style.opacity = '0';
+                setTimeout(() => {
+                    hobbitText.textContent = randomDialogue;
+                    hobbitText.style.opacity = '1';
+                }, 150);
+                
+                // Show quest system if context is 'greeting'
+                if (context === 'greeting') {
+                    setTimeout(() => {
+                        if (window.fantasyOS) {
+                            window.fantasyOS.showQuestSystem();
+                        }
+                    }, 500);
+                }
+                
+                // Show help if context is 'interaction'
+                if (context === 'interaction') {
+                    setTimeout(() => {
+                        if (window.fantasyOS) {
+                            window.fantasyOS.showHelp();
+                        }
+                    }, 500);
+                }
+            } else {
+                // Ultimate fallback with better messages
+                const fallbackDialogues = {
+                    'greeting': "Hello! I'm here to help you on your quest! Click 'Quest Info' to see your current quests.",
+                    'interaction': "I can help you with spells, quests, and navigating the Fantasy OS! What do you need?",
+                    'quest-progress': "Great progress! Keep exploring and interacting with objects to advance your quest!"
+                };
+                
+                hobbitText.textContent = fallbackDialogues[context] || "🧙‍♂️ I'm here to help you on your adventure!";
+                
+                // Add bounce animation
+                const hobbitImage = document.querySelector('#hobbitCharacter .hobbit-image');
+                if (hobbitImage) {
+                    hobbitImage.classList.add('clicked');
+                    setTimeout(() => {
+                        hobbitImage.classList.remove('clicked');
+                    }, 600);
+                }
+                
+                // Show appropriate UI
+                if (context === 'greeting') {
+                    setTimeout(() => {
+                        if (window.fantasyOS) {
+                            window.fantasyOS.showQuestSystem();
+                        }
+                    }, 500);
+                }
+                
+                if (context === 'interaction') {
+                    setTimeout(() => {
+                        if (window.fantasyOS) {
+                            window.fantasyOS.showHelp();
+                        }
+                    }, 500);
+                }
+            }
+        }
+        
+        // Function to check quest progress
+        function checkQuestProgress() {
+            console.log('🎯 Checking quest progress');
+            
+            // Show quest system
+            if (window.fantasyOS) {
+                window.fantasyOS.showQuestSystem();
+            }
+            
+            // Update Hobbit dialogue
+            talkToHobbit('quest-progress');
+            
+            // Show quest progress notification
+            if (window.fantasyOS && window.fantasyOS.components.questManager) {
+                const questManager = window.fantasyOS.components.questManager;
+                const activeQuests = questManager.getActiveQuests();
+                const completedQuests = questManager.getCompletedQuests();
+                
+                let message = `Active Quests: ${activeQuests.length}\nCompleted Quests: ${completedQuests.length}`;
+                
+                if (activeQuests.length > 0) {
+                    message += `\n\nCurrent Quest: ${questManager.getQuestInfo(activeQuests[0])?.title || 'Unknown'}`;
+                }
+                
+                // Show notification
+                questManager.showQuestNotification(message);
             }
         }
         

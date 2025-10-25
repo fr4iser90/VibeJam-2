@@ -104,28 +104,28 @@
     </style>
 </head>
 <body>
-    <h1>🏠 Living Room - Objekt Identifikation</h1>
+    <h1>🏠 Living Room - Object Identification</h1>
     
     <div class="info-panel">
-        <h3>🎯 Klick-Koordinaten</h3>
-        <div class="coordinates" id="coordinates">Klicke auf das Bild</div>
+        <h3>🎯 Click Coordinates</h3>
+        <div class="coordinates" id="coordinates">Click on the image</div>
         
-        <h3>📝 Identifizierte Objekte</h3>
+        <h3>📝 Identified Objects</h3>
         <div class="object-list" id="objectList">
-            <p>Noch keine Objekte identifiziert</p>
+            <p>No objects identified yet</p>
         </div>
         
-        <button onclick="clearObjects()">🗑️ Alle löschen</button>
-        <button onclick="exportObjects()">📤 Exportieren</button>
+        <button onclick="clearObjects()">🗑️ Clear All</button>
+        <button onclick="exportObjects()">📤 Export</button>
         
         <h3>⌨️ Keyboard Shortcuts</h3>
         <div style="font-size: 12px; color: #ccc;">
-            <p><strong>WASD:</strong> Größe anpassen (wenn Objekt ausgewählt)</p>
-            <p><strong>W:</strong> Höhe +10px</p>
-            <p><strong>S:</strong> Höhe -10px</p>
-            <p><strong>A:</strong> Breite -10px</p>
-            <p><strong>D:</strong> Breite +10px</p>
-            <p><strong>Delete:</strong> Ausgewähltes Objekt löschen</p>
+            <p><strong>WASD:</strong> Adjust size (when object selected)</p>
+            <p><strong>W:</strong> Height +10px</p>
+            <p><strong>S:</strong> Height -10px</p>
+            <p><strong>A:</strong> Width -10px</p>
+            <p><strong>D:</strong> Width +10px</p>
+            <p><strong>Delete:</strong> Delete selected object</p>
         </div>
     </div>
     
@@ -189,10 +189,10 @@
                 <div class="object-item">
                     <strong>${obj.name}</strong><br>
                     Position (top-left): ${obj.x}, ${obj.y}<br>
-                    Größe: ${obj.width} x ${obj.height}<br>
-                    Mitte: ${obj.x + obj.width/2}, ${obj.y + obj.height/2}<br>
-                    <button onclick="editObject(${index})">✏️ Bearbeiten</button>
-                    <button onclick="deleteObject(${index})">🗑️ Löschen</button>
+                    Size: ${obj.width} x ${obj.height}<br>
+                    Center: ${obj.x + obj.width/2}, ${obj.y + obj.height/2}<br>
+                    <button onclick="editObject(${index})">✏️ Edit</button>
+                    <button onclick="deleteObject(${index})">🗑️ Delete</button>
                 </div>
             `).join('');
         }

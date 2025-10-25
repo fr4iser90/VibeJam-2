@@ -27,22 +27,22 @@
 - [ ] **Particle Effects** - Magische Animationen
 - [ ] **Sound System** - Audio-Feedback für Aktionen
 
-#### **Räume (Apps):**
-- [ ] **Wohnzimmer** - Haupt-Desktop mit Kamin
-- [ ] **Küche** - Datei-Manager (Speisekammer)
-- [ ] **Schlafzimmer** - Ruhemodus
-- [ ] **Werkstatt** - Tools/Apps
-- [ ] **Bibliothek** - Dokumente
-- [ ] **Garten** - Externe Verbindungen
+#### **Rooms (Apps):**
+- [ ] **Living Room** - Main desktop with fireplace
+- [ ] **Kitchen** - File manager (pantry)
+- [ ] **Bedroom** - Sleep mode
+- [ ] **Workshop** - Tools/Apps
+- [ ] **Library** - Documents
+- [ ] **Garden** - External connections
 
-#### **Gesten-System:**
-- [ ] **Kreis** - Portal öffnen (App starten)
-- [ ] **Zick-Zack** - Blitz (Licht einschalten)
-- [ ] **Spirale** - Feuer (Wärme/Energie)
-- [ ] **Gerade Linie** - Schwert (Cut/Delete)
-- [ ] **Dreieck** - Schild (Schutz/Sicherheit)
-- [ ] **Herz** - Liebe (Favoriten)
-- [ ] **Stern** - Magie (Spezial-Funktionen)
+#### **Gesture System:**
+- [ ] **Circle** - Open portal (start app)
+- [ ] **Zigzag** - Lightning (turn on light)
+- [ ] **Spiral** - Fire (heat/energy)
+- [ ] **Straight Line** - Sword (cut/delete)
+- [ ] **Triangle** - Shield (protection/security)
+- [ ] **Heart** - Love (favorites)
+- [ ] **Star** - Magic (special functions)
 
 ### **Performance Anforderungen:**
 - [ ] **Ladezeit** < 3 Sekunden
@@ -57,36 +57,36 @@
 - [ ] **Particle Effects** - Schwebende Partikel
 - [ ] **Sound Design** - Magische Klänge
 
-### **Usability Anforderungen:**
-- [ ] **Intuitive Gesten** - Einfach zu lernen
+### **Usability Requirements:**
+- [ ] **Intuitive Gestures** - Easy to learn
 - [ ] **Visual Feedback** - Klare Reaktionen auf Aktionen
 - [ ] **Error Handling** - Graceful Fallbacks
-- [ ] **Help System** - Zauberbuch mit Anleitungen
+- [ ] **Help System** - Spell book with instructions
 
 ---
 
 ## 🎨 **Asset Requirements**
 
-### **Bilder:**
-- [ ] **Hintergrund-Bilder** für alle 6 Räume
-- [ ] **Gegenstands-Icons** (Kamin, Lampe, Truhe, etc.)
-- [ ] **Portal-Animationen** (Kreise, Effekte)
-- [ ] **Partikel-Texturen** (Funken, Glitzer)
+### **Images:**
+- [ ] **Background Images** for all 6 rooms
+- [ ] **Object Icons** (fireplace, lamp, chest, etc.)
+- [ ] **Portal Animations** (circles, effects)
+- [ ] **Particle Textures** (sparks, glitter)
 
 ### **Sounds:**
 - [ ] **Ambient Sounds** - Hobbit-Höhle Atmosphäre
 - [ ] **Action Sounds** - Klick, Hover, Gesten
-- [ ] **Spell Sounds** - Magische Zaubersprüche
-- [ ] **Room Sounds** - Raum-spezifische Audio
+- [ ] **Spell Sounds** - Magical spells
+- [ ] **Room Sounds** - Room-specific audio
 
 ### **Fonts:**
-- [ ] **Fantasy Font** - Für UI-Elemente
-- [ ] **Readable Font** - Für Text-Inhalte
-- [ ] **Icon Font** - Für Symbole
+- [ ] **Fantasy Font** - For UI elements
+- [ ] **Readable Font** - For text content
+- [ ] **Icon Font** - For symbols
 
 ---
 
-## ⏰ **Zeitplan**
+## ⏰ **Timeline**
 
 ### **Phase 1: Konzept** (2h)
 - [ ] Detaillierte Raum-Planung

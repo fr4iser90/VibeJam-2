@@ -14,23 +14,23 @@
    - **Sound:** `lamp-on`
 
 3. **Chest (Truhe)** - `x: 400, y: 300, width: 120, height: 100`
-   - **Aktion:** `open` - Öffnet Datei-Manager
-   - **Effekt:** File Manager Interface
+   - **Action:** `open` - Opens file manager
+   - **Effect:** File Manager Interface
    - **Sound:** `chest-open`
 
 4. **Crystal Ball (Kristallkugel)** - `x: 500, y: 200, width: 80, height: 100`
-   - **Aktion:** `gaze` - Zeigt System-Informationen
-   - **Effekt:** System Monitor Interface
+   - **Action:** `gaze` - Shows system information
+   - **Effect:** System Monitor Interface
    - **Sound:** `crystal-ball`
 
 5. **Spell Book (Zauberbuch)** - `x: 300, y: 150, width: 100, height: 120`
-   - **Aktion:** `read` - Öffnet Dokumentation
-   - **Effekt:** Documentation Interface
+   - **Action:** `read` - Opens documentation
+   - **Effect:** Documentation Interface
    - **Sound:** `book-open`
 
 6. **Cauldron (Kessel)** - `x: 200, y: 400, width: 100, height: 120`
-   - **Aktion:** `brew` - Download Manager
-   - **Effekt:** Download Interface
+   - **Action:** `brew` - Download manager
+   - **Effect:** Download Interface
    - **Sound:** `cauldron-bubble`
 
 ## 🍳 Kitchen (kitchen.png)

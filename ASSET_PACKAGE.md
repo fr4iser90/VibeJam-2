@@ -17,93 +17,93 @@
 - **Quelle:** Unsplash
 - **URL:** https://unsplash.com/photos/cozy-fireplace-interior
 - **Suche:** "cozy fireplace", "hobbit house", "warm interior"
-- **Beschreibung:** Gemütlicher Hobbit-Wohnraum mit Kamin
+- **Description:** Cozy hobbit living room with fireplace
 - **Lizenz:** Kostenlos für kommerzielle Nutzung
 
 ### **2. Küche - Organized Pantry**
 - **Quelle:** Pixabay
 - **URL:** https://pixabay.com/photos/kitchen-cozy-interior-wooden/
 - **Suche:** "cozy kitchen", "wooden kitchen", "organized pantry"
-- **Beschreibung:** Organisierte Hobbit-Küche mit Holzmöbeln
+- **Description:** Organized hobbit kitchen with wooden furniture
 - **Lizenz:** Pixabay License (kostenlos)
 
 ### **3. Schlafzimmer - Peaceful Retreat**
 - **Quelle:** Unsplash
 - **URL:** https://unsplash.com/photos/peaceful-bedroom-interior
 - **Suche:** "peaceful bedroom", "cozy sleep", "quiet room"
-- **Beschreibung:** Ruhiger Hobbit-Schlafraum
+- **Description:** Quiet hobbit bedroom
 - **Lizenz:** Kostenlos für kommerzielle Nutzung
 
 ### **4. Werkstatt - Crafting Space**
 - **Quelle:** Pixabay
 - **URL:** https://pixabay.com/photos/workshop-crafting-wooden-tools/
 - **Suche:** "wooden workshop", "crafting tools", "hobbit workshop"
-- **Beschreibung:** Funktionale Hobbit-Werkstatt mit Werkzeugen
+- **Description:** Functional hobbit workshop with tools
 - **Lizenz:** Pixabay License (kostenlos)
 
 ### **5. Bibliothek - Reading Nook**
 - **Quelle:** Unsplash
 - **URL:** https://unsplash.com/photos/cozy-library-books
 - **Suche:** "cozy library", "books reading", "hobbit library"
-- **Beschreibung:** Gemütliche Hobbit-Bibliothek mit Büchern
+- **Description:** Cozy hobbit library with books
 - **Lizenz:** Kostenlos für kommerzielle Nutzung
 
-### **6. Garten - Nature Connection**
+### **6. Garden - Nature Connection**
 - **Quelle:** Pixabay
 - **URL:** https://pixabay.com/photos/garden-hobbit-house-nature/
 - **Suche:** "hobbit garden", "nature garden", "green landscape"
-- **Beschreibung:** Magischer Hobbit-Garten mit Natur
+- **Description:** Magical hobbit garden with nature
 - **Lizenz:** Pixabay License (kostenlos)
 
 ---
 
-## 🎯 **GEGENSTANDS-ICONS (128x128)**
+## 🎯 **OBJECT ICONS (128x128)**
 
 ### **1. Kamin - Fireplace**
 - **Quelle:** Flaticon
 - **URL:** https://www.flaticon.com/free-icon/fireplace
 - **Suche:** "fireplace", "fire", "hearth"
-- **Beschreibung:** Hobbit-Kamin mit Feuer
+- **Description:** Hobbit fireplace with fire
 - **Lizenz:** Kostenlos mit Attribution
 
 ### **2. Lampe - Oil Lamp**
 - **Quelle:** Flaticon
 - **URL:** https://www.flaticon.com/free-icon/oil-lamp
 - **Suche:** "oil lamp", "lantern", "light"
-- **Beschreibung:** Magische Öllampe
+- **Description:** Magical oil lamp
 - **Lizenz:** Kostenlos mit Attribution
 
 ### **3. Truhe - Treasure Chest**
 - **Quelle:** Flaticon
 - **URL:** https://www.flaticon.com/free-icon/treasure-chest
 - **Suche:** "treasure chest", "chest", "storage"
-- **Beschreibung:** Hobbit-Truhe für Schätze
+- **Description:** Hobbit chest for treasures
 - **Lizenz:** Kostenlos mit Attribution
 
 ### **4. Kristallkugel - Crystal Ball**
 - **Quelle:** Flaticon
 - **URL:** https://www.flaticon.com/free-icon/crystal-ball
 - **Suche:** "crystal ball", "magic orb", "divination"
-- **Beschreibung:** Magische Kristallkugel
+- **Description:** Magical crystal ball
 - **Lizenz:** Kostenlos mit Attribution
 
 ### **5. Zauberbuch - Spell Book**
 - **Quelle:** Flaticon
 - **URL:** https://www.flaticon.com/free-icon/spell-book
 - **Suche:** "spell book", "magic book", "tome"
-- **Beschreibung:** Altes Zauberbuch
+- **Description:** Old spell book
 - **Lizenz:** Kostenlos mit Attribution
 
 ### **6. Kessel - Cauldron**
 - **Quelle:** Flaticon
 - **URL:** https://www.flaticon.com/free-icon/cauldron
 - **Suche:** "cauldron", "pot", "brewing"
-- **Beschreibung:** Magischer Kessel
+- **Description:** Magical cauldron
 - **Lizenz:** Kostenlos mit Attribution
 
 ---
 
-## ✨ **EFFEKT-ANIMATIONEN (CSS)**
+## ✨ **EFFECT ANIMATIONS (CSS)**
 
 ### **1. Portal-Animation**
 ```css
@@ -133,46 +133,46 @@
 
 ---
 
-## 🎵 **SOUND-DATEIEN**
+## 🎵 **SOUND FILES**
 
 ### **Ambient Sounds (30s, Loopable):**
 
-#### **1. Wohnzimmer - Cozy Fireplace**
+#### **1. Living Room - Cozy Fireplace**
 - **Quelle:** Freesound.org
 - **URL:** https://freesound.org/people/soundmary/sounds/123456/
 - **Suche:** "fireplace crackling", "cozy fire"
 - **Format:** MP3, 30s, Loopable
 - **Lizenz:** Creative Commons
 
-#### **2. Küche - Gentle Cooking**
+#### **2. Kitchen - Gentle Cooking**
 - **Quelle:** Pixabay Sounds
 - **URL:** https://pixabay.com/sound-effects/gentle-cooking/
 - **Suche:** "gentle cooking", "kitchen ambient"
 - **Format:** MP3, 30s, Loopable
 - **Lizenz:** Pixabay License
 
-#### **3. Schlafzimmer - Peaceful Silence**
+#### **3. Bedroom - Peaceful Silence**
 - **Quelle:** Freesound.org
 - **URL:** https://freesound.org/people/peaceful/sounds/789012/
 - **Suche:** "peaceful", "quiet", "silence"
 - **Format:** MP3, 30s, Loopable
 - **Lizenz:** Creative Commons
 
-#### **4. Werkstatt - Gentle Crafting**
+#### **4. Workshop - Gentle Crafting**
 - **Quelle:** Freesound.org
 - **URL:** https://freesound.org/people/crafting/sounds/345678/
 - **Suche:** "woodworking", "gentle hammering"
 - **Format:** MP3, 30s, Loopable
 - **Lizenz:** Creative Commons
 
-#### **5. Bibliothek - Quiet Reading**
+#### **5. Library - Quiet Reading**
 - **Quelle:** Pixabay Sounds
 - **URL:** https://pixabay.com/sound-effects/quiet-reading/
 - **Suche:** "library", "quiet study"
 - **Format:** MP3, 30s, Loopable
 - **Lizenz:** Pixabay License
 
-#### **6. Garten - Nature Sounds**
+#### **6. Garden - Nature Sounds**
 - **Quelle:** Freesound.org
 - **URL:** https://freesound.org/people/nature/sounds/901234/
 - **Suche:** "nature", "birds", "gentle breeze"

@@ -9,37 +9,37 @@ class RoomManager {
         this.currentRoom = 'living-room';
         this.rooms = {
             'living-room': {
-                name: 'Wohnzimmer',
+                name: 'Living Room',
                 icon: '🏠',
                 description: 'Main living space with interactive objects',
                 objects: ['fireplace', 'lamp', 'chest', 'crystal-ball', 'spell-book', 'cauldron']
             },
             'kitchen': {
-                name: 'Küche',
+                name: 'Kitchen',
                 icon: '🍳',
                 description: 'Organized pantry for your files',
                 objects: []
             },
             'bedroom': {
-                name: 'Schlafzimmer',
+                name: 'Bedroom',
                 icon: '🛏️',
                 description: 'Quiet retreat for rest',
                 objects: []
             },
             'workshop': {
-                name: 'Werkstatt',
+                name: 'Workshop',
                 icon: '🔨',
                 description: 'Workspace with tools and applications',
                 objects: []
             },
             'library': {
-                name: 'Bibliothek',
+                name: 'Library',
                 icon: '📚',
                 description: 'Books and scrolls for your documents',
                 objects: []
             },
             'garden': {
-                name: 'Garten',
+                name: 'Garden',
                 icon: '🌿',
                 description: 'Connection to the outside world and internet',
                 objects: []
@@ -75,6 +75,12 @@ class RoomManager {
         
         // Emit room change event
         this.onRoomChange(roomId);
+        
+        // Check quest progress
+        this.checkQuestProgress(roomId);
+        
+        // Check achievement progress
+        this.checkAchievementProgress(roomId);
         
         console.log(`🏠 Switched to room: ${this.rooms[roomId].name}`);
         return true;
@@ -308,6 +314,48 @@ class RoomManager {
         });
         
         return stats;
+    }
+    
+    /**
+     * Check quest progress based on room change
+     */
+    checkQuestProgress(roomId) {
+        // Check if FantasyOS quest manager is available
+        if (typeof window.fantasyOS !== 'undefined' && window.fantasyOS.components.questManager) {
+            const questManager = window.fantasyOS.components.questManager;
+            
+            // Check active quests for progress
+            const activeQuests = questManager.getActiveQuests();
+            
+            activeQuests.forEach(questId => {
+                const quest = questManager.getQuestInfo(questId);
+                if (quest && quest.steps) {
+                    // Find steps that match this room
+                    quest.steps.forEach(step => {
+                        if (step.room === roomId && step.triggers && step.triggers.includes('room-search')) {
+                            if (!step.completed) {
+                                questManager.updateQuestProgress(questId, step.id);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+    
+    /**
+     * Check achievement progress based on room change
+     */
+    checkAchievementProgress(roomId) {
+        // Check if FantasyOS achievement system is available
+        if (typeof window.fantasyOS !== 'undefined' && window.fantasyOS.components.achievementSystem) {
+            const achievementSystem = window.fantasyOS.components.achievementSystem;
+            
+            // Check for room explorer achievement
+            achievementSystem.checkAchievementProgress('room-explorer', 'visit-rooms', {
+                roomVisited: true
+            });
+        }
     }
 }
 

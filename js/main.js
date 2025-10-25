@@ -20,7 +20,9 @@ class FantasyOS {
             spellParser: null,
             gestureRecognition: null,
             particleSystem: null,
-            soundSystem: null
+            soundSystem: null,
+            questManager: null,
+            achievementSystem: null
         };
         
         // Event handlers
@@ -105,6 +107,18 @@ class FantasyOS {
         if (typeof SoundSystem !== 'undefined') {
             this.components.soundSystem = new SoundSystem();
         }
+        
+        // Initialize quest manager
+        if (typeof QuestManager !== 'undefined') {
+            this.components.questManager = new QuestManager();
+            console.log('🎯 Quest Manager System initialized');
+        }
+        
+        // Initialize achievement system
+        if (typeof AchievementSystem !== 'undefined') {
+            this.components.achievementSystem = new AchievementSystem();
+            console.log('🏆 Achievement System initialized');
+        }
     }
     
     /**
@@ -136,11 +150,15 @@ class FantasyOS {
         // Help and settings modals
         const helpBtn = document.getElementById('helpBtn');
         const settingsBtn = document.getElementById('settingsBtn');
+        const questBtn = document.getElementById('questBtn');
+        const achievementBtn = document.getElementById('achievementBtn');
         const closeHelp = document.getElementById('closeHelp');
         const closeSettings = document.getElementById('closeSettings');
         
         if (helpBtn) helpBtn.addEventListener('click', () => this.showHelp());
         if (settingsBtn) settingsBtn.addEventListener('click', () => this.showSettings());
+        if (questBtn) questBtn.addEventListener('click', () => this.showQuestSystem());
+        if (achievementBtn) achievementBtn.addEventListener('click', () => this.showAchievementSystem());
         if (closeHelp) closeHelp.addEventListener('click', () => this.hideHelp());
         if (closeSettings) closeSettings.addEventListener('click', () => this.hideSettings());
         
@@ -332,6 +350,8 @@ class FantasyOS {
         if (event.key === 'Escape') {
             this.hideHelp();
             this.hideSettings();
+            this.hideQuestSystem();
+            this.hideAchievementSystem();
         }
         
         // Ctrl+H opens help
@@ -344,6 +364,18 @@ class FantasyOS {
         if (event.ctrlKey && event.key === 's') {
             event.preventDefault();
             this.showSettings();
+        }
+        
+        // Ctrl+Q opens quest system
+        if (event.ctrlKey && event.key === 'q') {
+            event.preventDefault();
+            this.showQuestSystem();
+        }
+        
+        // Ctrl+A opens achievement system
+        if (event.ctrlKey && event.key === 'a') {
+            event.preventDefault();
+            this.showAchievementSystem();
         }
     }
     
@@ -388,6 +420,56 @@ class FantasyOS {
     }
     
     /**
+     * Show quest system
+     */
+    showQuestSystem() {
+        const questSystem = document.getElementById('quest-system');
+        if (questSystem) {
+            questSystem.style.display = questSystem.style.display === 'none' ? 'block' : 'none';
+            
+            // Update quest progress when showing
+            if (questSystem.style.display === 'block' && this.components.questManager) {
+                this.components.questManager.updateQuestProgressUI();
+            }
+        }
+    }
+    
+    /**
+     * Show achievement system
+     */
+    showAchievementSystem() {
+        const achievementSystem = document.getElementById('achievement-system');
+        if (achievementSystem) {
+            achievementSystem.style.display = achievementSystem.style.display === 'none' ? 'block' : 'none';
+            
+            // Update achievement progress when showing
+            if (achievementSystem.style.display === 'block' && this.components.achievementSystem) {
+                this.components.achievementSystem.updateAchievementProgressUI();
+            }
+        }
+    }
+    
+    /**
+     * Hide quest system
+     */
+    hideQuestSystem() {
+        const questSystem = document.getElementById('quest-system');
+        if (questSystem) {
+            questSystem.style.display = 'none';
+        }
+    }
+    
+    /**
+     * Hide achievement system
+     */
+    hideAchievementSystem() {
+        const achievementSystem = document.getElementById('achievement-system');
+        if (achievementSystem) {
+            achievementSystem.style.display = 'none';
+        }
+    }
+    
+    /**
      * Update status bar information
      */
     updateStatusBar() {
@@ -397,12 +479,12 @@ class FantasyOS {
         
         if (currentRoomElement) {
             const roomNames = {
-                'living-room': 'Wohnzimmer',
-                'kitchen': 'Küche',
-                'bedroom': 'Schlafzimmer',
-                'workshop': 'Werkstatt',
-                'library': 'Bibliothek',
-                'garden': 'Garten'
+                'living-room': 'Living Room',
+                'kitchen': 'Kitchen',
+                'bedroom': 'Bedroom',
+                'workshop': 'Workshop',
+                'library': 'Library',
+                'garden': 'Garden'
             };
             currentRoomElement.textContent = roomNames[this.currentRoom] || this.currentRoom;
         }
@@ -412,7 +494,7 @@ class FantasyOS {
         }
         
         if (lastSpellElement) {
-            lastSpellElement.textContent = `Letzter Zauberspruch: ${this.lastSpell || '-'}`;
+            lastSpellElement.textContent = `Last Spell: ${this.lastSpell || '-'}`;
         }
     }
     
@@ -422,9 +504,17 @@ class FantasyOS {
     showWelcomeMessage() {
         console.log('🎉 Welcome to Fantasy OS!');
         console.log('📖 Use Ctrl+H for help, Ctrl+S for settings');
+        console.log('🎯 Use Ctrl+Q for quests, Ctrl+A for achievements');
         console.log('🔮 Type spells in the spell input to cast magic');
         console.log('🏠 Click room tabs to navigate between rooms');
         console.log('🎯 Click objects to interact with them');
+        
+        // Start the first quest automatically
+        if (this.components.questManager) {
+            setTimeout(() => {
+                this.startQuest('credentials-recovery');
+            }, 2000);
+        }
     }
     
     /**
@@ -530,7 +620,121 @@ class FantasyOS {
             this.components.gestureRecognition.reset();
         }
     }
+    
+    /**
+     * Get quest manager
+     */
+    getQuestManager() {
+        return this.components.questManager;
+    }
+    
+    /**
+     * Get achievement system
+     */
+    getAchievementSystem() {
+        return this.components.achievementSystem;
+    }
+    
+    /**
+     * Start a quest
+     */
+    startQuest(questId) {
+        if (this.components.questManager) {
+            return this.components.questManager.startQuest(questId);
+        }
+        return false;
+    }
+    
+    /**
+     * Update quest progress
+     */
+    updateQuestProgress(questId, stepId) {
+        if (this.components.questManager) {
+            return this.components.questManager.updateQuestProgress(questId, stepId);
+        }
+        return false;
+    }
+    
+    /**
+     * Check achievement progress
+     */
+    checkAchievementProgress(achievementId, action, data = {}) {
+        if (this.components.achievementSystem) {
+            return this.components.achievementSystem.checkAchievementProgress(achievementId, action, data);
+        }
+        return false;
+    }
+    
+    /**
+     * Get quest information
+     */
+    getQuestInfo(questId) {
+        if (this.components.questManager) {
+            return this.components.questManager.getQuestInfo(questId);
+        }
+        return null;
+    }
+    
+    /**
+     * Get achievement information
+     */
+    getAchievementInfo(achievementId) {
+        if (this.components.achievementSystem) {
+            return this.components.achievementSystem.getAchievementInfo(achievementId);
+        }
+        return null;
+    }
+    
+    /**
+     * Get active quests
+     */
+    getActiveQuests() {
+        if (this.components.questManager) {
+            return this.components.questManager.getActiveQuests();
+        }
+        return [];
+    }
+    
+    /**
+     * Get completed quests
+     */
+    getCompletedQuests() {
+        if (this.components.questManager) {
+            return this.components.questManager.getCompletedQuests();
+        }
+        return [];
+    }
+    
+    /**
+     * Get completed achievements
+     */
+    getCompletedAchievements() {
+        if (this.components.achievementSystem) {
+            return this.components.achievementSystem.getCompletedAchievements();
+        }
+        return [];
+    }
+    
+    /**
+     * Reset quest system
+     */
+    resetQuestSystem() {
+        if (this.components.questManager) {
+            this.components.questManager.resetQuestSystem();
+        }
+    }
+    
+    /**
+     * Reset achievement system
+     */
+    resetAchievementSystem() {
+        if (this.components.achievementSystem) {
+            this.components.achievementSystem.resetAchievementSystem();
+        }
+    }
 }
+
+// Hobbit Companion Functions are now defined in index.html
 
 // Initialize Fantasy OS when script loads
 const fantasyOS = new FantasyOS();
