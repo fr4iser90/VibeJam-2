@@ -472,7 +472,12 @@ class SpellParser {
         // Show hobbit dialogue
         if (typeof window.fantasyOS !== 'undefined' && 
             window.fantasyOS.components.hobbitCompanion) {
-            window.fantasyOS.components.hobbitCompanion.showDialogue(message);
+            // Update hobbit dialogue text directly
+            const hobbitText = document.querySelector('#hobbitDialogue .hobbit-text');
+            if (hobbitText) {
+                hobbitText.textContent = message;
+                console.log(`🧙‍♂️ Hobbit dialogue updated: ${message}`);
+            }
         }
         
         console.log(`🧙‍♂️ Hobbit help: ${message}`);
