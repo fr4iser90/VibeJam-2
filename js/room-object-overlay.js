@@ -358,6 +358,7 @@ class RoomObjectOverlay {
         this.currentRoom = 'living-room';
         this.fantasyOSMode = true; // Enable FantasyOS mode
         this.autoLighting = true; // Enable automatic lighting control
+        this.storageKey = 'fantasy-os-object-states';
         
         // Initialize object system
         this.initializeObjectSystem();
@@ -375,6 +376,9 @@ class RoomObjectOverlay {
         // Initialize object states
         this.initializeObjectStates();
         
+        // Load saved object states
+        this.loadObjectStates();
+        
         // Set initial dark mode for living room
         this.setInitialDarkMode();
         
@@ -382,6 +386,63 @@ class RoomObjectOverlay {
         this.addDebugLayer();
         
         console.log('✨ Room Object Overlay System initialized!');
+    }
+    
+    /**
+     * Load object states from localStorage
+     */
+    loadObjectStates() {
+        try {
+            const savedStates = localStorage.getItem(this.storageKey);
+            if (savedStates) {
+                const states = JSON.parse(savedStates);
+                console.log('📦 Loading saved object states:', states);
+                
+                // Restore object states
+                for (const [roomName, roomStates] of Object.entries(states)) {
+                    if (this.activeObjects.has(roomName)) {
+                        for (const [objectName, objectState] of Object.entries(roomStates)) {
+                            if (this.activeObjects.get(roomName).has(objectName)) {
+                                this.activeObjects.get(roomName).set(objectName, objectState);
+                            }
+                        }
+                    }
+                }
+                
+                // Restore dark mode state
+                if (states.isDarkMode !== undefined) {
+                    this.isDarkMode = states.isDarkMode;
+                    console.log(`🌙 Dark mode state restored: ${this.isDarkMode}`);
+                }
+            }
+        } catch (error) {
+            console.error('❌ Failed to load object states:', error);
+        }
+    }
+    
+    /**
+     * Save object states to localStorage
+     */
+    saveObjectStates() {
+        try {
+            const states = {};
+            
+            // Save all object states
+            for (const [roomName, roomObjects] of this.activeObjects) {
+                states[roomName] = {};
+                for (const [objectName, objectState] of roomObjects) {
+                    states[roomName][objectName] = objectState;
+                }
+            }
+            
+            // Save dark mode state
+            states.isDarkMode = this.isDarkMode;
+            
+            localStorage.setItem(this.storageKey, JSON.stringify(states));
+            console.log('💾 Object states saved to localStorage');
+        } catch (error) {
+            console.error('❌ Failed to save object states:', error);
+        }
     }
     
     /**
@@ -622,6 +683,9 @@ class RoomObjectOverlay {
         if (this.isDarkMode && roomId === 'living-room') {
             this.checkDarkModeExit(roomId);
         }
+        
+        // Save object states to localStorage
+        this.saveObjectStates();
     }
     
     /**
@@ -635,10 +699,12 @@ class RoomObjectOverlay {
         const lamp2Active = livingRoomObjects.get('lamp_2').isActive;
         const fireplaceActive = livingRoomObjects.get('fireplace').isActive;
         
-        // Exit dark mode if at least one lighting object is active
-        if (lamp1Active || lamp2Active || fireplaceActive) {
-            console.log('💡 Exiting dark mode - lighting objects activated!');
+        // Exit dark mode ONLY if ALL lighting objects are active
+        if (lamp1Active && lamp2Active && fireplaceActive) {
+            console.log('💡 Exiting dark mode - ALL lighting objects activated!');
             this.exitDarkMode();
+        } else {
+            console.log(`🌙 Dark mode still active - Lamp1: ${lamp1Active}, Lamp2: ${lamp2Active}, Fireplace: ${fireplaceActive}`);
         }
     }
     
@@ -725,8 +791,7 @@ class RoomObjectOverlay {
         if (isActive) {
             console.log(`🔥 ${objectData.name} ignited!`);
             this.showMessage(`${objectData.name} is now burning brightly!`);
-            // Automatically switch to dark mode when fireplace is lit
-            this.setDarkMode(true);
+            // Don't automatically switch to dark mode - let individual fireplace control it
         } else {
             console.log(`❄️ ${objectData.name} extinguished`);
             this.showMessage(`${objectData.name} has been extinguished.`);
@@ -743,8 +808,7 @@ class RoomObjectOverlay {
         if (isActive) {
             console.log(`💡 ${objectData.name} illuminated!`);
             this.showMessage(`${objectData.name} is now providing light!`);
-            // Automatically switch to dark mode when lamp is lit
-            this.setDarkMode(true);
+            // Don't automatically switch to dark mode - let individual lamp control it
         } else {
             console.log(`🌙 ${objectData.name} dimmed`);
             this.showMessage(`${objectData.name} has been dimmed.`);
