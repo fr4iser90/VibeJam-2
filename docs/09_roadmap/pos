@@ -1,43 +1,441 @@
-
 {
-  "living-room": {
-    "name": "Living Room",
-    "backgroundImage": "assets/images/rooms/living-room.png",
-    "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
-    "objects": {
-      "lamp": {
-        "name": "Lamp",
-        "description": "lamp object",
-        "action": "interact",
-        "effects": [
-          "interaction"
-        ],
-        "sound": "object-click",
-        "animation": "objectGlow",
-        "clickableArea": {
-          "x": 655,
-          "y": 631,
-          "width": 94,
-          "height": 170
-        }
-      },
-      "fireplace": {
-        "name": "Fireplace",
-        "description": "fireplace object",
-        "action": "interact",
-        "effects": [
-          "interaction"
-        ],
-        "sound": "object-click",
-        "animation": "objectGlow",
-        "clickableArea": {
-          "x": 156,
-          "y": 685,
-          "width": 197,
-          "height": 117
+    "living-room": {
+      "name": "Living Room",
+      "backgroundImage": "assets/images/rooms/living-room.png",
+      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+      "objects": {
+        "lamp": {
+          "name": "Lamp",
+          "description": "lamp object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 484,
+            "y": 459,
+            "width": 88,
+            "height": 146
+          }
+        },
+        "fireplace": {
+          "name": "Fireplace",
+          "description": "fireplace object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 113,
+            "y": 495,
+            "width": 154,
+            "height": 110
+          }
         }
       }
     }
   }
-}
 
+  {
+    "living-room": {
+      "name": "Living Room",
+      "backgroundImage": "assets/images/rooms/living-room.png",
+      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+      "objects": {
+        "fireplace": {
+          "name": "Fireplace",
+          "description": "fireplace object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 31,
+            "y": 534,
+            "width": 163,
+            "height": 103
+          }
+        },
+        "lamp": {
+          "name": "Lamp",
+          "description": "lamp object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 929,
+            "y": 275,
+            "width": 38,
+            "height": 112
+          }
+        },
+        "chest": {
+          "name": "Chest",
+          "description": "chest object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 1020,
+            "y": 390,
+            "width": 89,
+            "height": 67
+          }
+        },
+        "basket": {
+          "name": "Basket",
+          "description": "basket object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 1054,
+            "y": 120,
+            "width": 89,
+            "height": 60
+          }
+        }
+      }
+    }
+  }
+
+  {
+    "living-room": {
+      "name": "Living Room",
+      "backgroundImage": "assets/images/rooms/living-room.png",
+      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+      "objects": {
+        "lamp": {
+          "name": "Lamp",
+          "description": "lamp object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 490,
+            "y": 336,
+            "width": 36,
+            "height": 115
+          }
+        },
+        "drawer": {
+          "name": "Drawer",
+          "description": "drawer object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 433,
+            "y": 460,
+            "width": 83,
+            "height": 38
+          }
+        },
+        "under_bed": {
+          "name": "Under_bed",
+          "description": "under_bed object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 886,
+            "y": 610,
+            "width": 66,
+            "height": 43
+          }
+        }
+      }
+    }
+  }
+
+  {
+    "living-room": {
+      "name": "Living Room",
+      "backgroundImage": "assets/images/rooms/living-room.png",
+      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+      "objects": {
+        "hammer": {
+          "name": "Hammer",
+          "description": "hammer object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 766,
+            "y": 287,
+            "width": 54,
+            "height": 127
+          }
+        },
+        "lamp": {
+          "name": "Lamp",
+          "description": "lamp object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 79,
+            "y": 255,
+            "width": 59,
+            "height": 153
+          }
+        },
+        "workbench": {
+          "name": "Workbench",
+          "description": "workbench object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 290,
+            "y": 538,
+            "width": 527,
+            "height": 183
+          }
+        }
+      }
+    }
+  }
+  {
+    "living-room": {
+      "name": "Living Room",
+      "backgroundImage": "assets/images/rooms/living-room.png",
+      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+      "objects": {
+        "lamp": {
+          "name": "Lamp",
+          "description": "lamp object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 548,
+            "y": 457,
+            "width": 47,
+            "height": 119
+          }
+        },
+        "shelf_under": {
+          "name": "Shelf_under",
+          "description": "shelf_under object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 915,
+            "y": 689,
+            "width": 160,
+            "height": 33
+          }
+        },
+        "book_1": {
+          "name": "Book_1",
+          "description": "book_1 object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 233,
+            "y": 370,
+            "width": 20,
+            "height": 74
+          }
+        },
+        "book_2": {
+          "name": "Book_2",
+          "description": "book_2 object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 989,
+            "y": 426,
+            "width": 46,
+            "height": 20
+          }
+        },
+        "vase": {
+          "name": "Vase",
+          "description": "vase object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": -1,
+            "y": 351,
+            "width": 35,
+            "height": 96
+          }
+        },
+        "shelf_top": {
+          "name": "Shelf_top",
+          "description": "shelf_top object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 420,
+            "y": 180,
+            "width": 49,
+            "height": 26
+          }
+        }
+      }
+    }
+  }
+  {
+    "living-room": {
+      "name": "Living Room",
+      "backgroundImage": "assets/images/rooms/living-room.png",
+      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+      "objects": {
+        "Door": {
+          "name": "Door",
+          "description": "Door object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 231,
+            "y": 225,
+            "width": 265,
+            "height": 372
+          }
+        },
+        "fence": {
+          "name": "Fence",
+          "description": "fence object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 1008,
+            "y": 415,
+            "width": 398,
+            "height": 171
+          }
+        },
+        "flowers_red": {
+          "name": "Flowers_red",
+          "description": "flowers_red object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 1221,
+            "y": 589,
+            "width": 302,
+            "height": 386
+          }
+        },
+        "flowers_white": {
+          "name": "Flowers_white",
+          "description": "flowers_white object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 802,
+            "y": 544,
+            "width": 150,
+            "height": 107
+          }
+        },
+        "flowers_white_2": {
+          "name": "Flowers_white_2",
+          "description": "flowers_white_2 object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 177,
+            "y": 651,
+            "width": 223,
+            "height": 239
+          }
+        },
+        "far_far_away": {
+          "name": "Far_far_away",
+          "description": "far_far_away object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 964,
+            "y": 246,
+            "width": 355,
+            "height": 58
+          }
+        }
+      }
+    }
+  }
