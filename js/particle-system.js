@@ -175,6 +175,12 @@ class ParticleSystem {
     animate() {
         if (!this.isRunning) return;
         
+        // Check if context is available
+        if (!this.context || !this.canvas) {
+            console.warn('Particle system context not available');
+            return;
+        }
+        
         // Clear canvas
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         

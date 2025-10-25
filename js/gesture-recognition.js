@@ -620,31 +620,36 @@ class GestureRecognition {
      * Draw magic sparkle effect
      */
     drawMagicSparkle(x, y) {
-        this.context.save();
-        this.context.fillStyle = '#FFD700';
-        this.context.shadowColor = '#FFD700';
-        this.context.shadowBlur = 15;
-        
-        // Draw sparkle
-        this.context.beginPath();
-        this.context.arc(x, y, 3, 0, Math.PI * 2);
-        this.context.fill();
-        
-        // Draw sparkle rays
+        // Create multiple sparkles
         for (let i = 0; i < 8; i++) {
-            const angle = (i / 8) * Math.PI * 2;
-            const startX = x + Math.cos(angle) * 5;
-            const startY = y + Math.sin(angle) * 5;
-            const endX = x + Math.cos(angle) * 12;
-            const endY = y + Math.sin(angle) * 12;
+            const angle = (Math.PI * 2 * i) / 8;
+            const distance = 15 + Math.random() * 10;
+            const sparkleX = x + Math.cos(angle) * distance;
+            const sparkleY = y + Math.sin(angle) * distance;
             
+            this.context.save();
+            this.context.globalAlpha = 0.8 + Math.random() * 0.2;
+            this.context.fillStyle = this.rainbowColors[i % this.rainbowColors.length];
+            this.context.shadowColor = this.rainbowColors[i % this.rainbowColors.length];
+            this.context.shadowBlur = 15;
+            
+            // Draw sparkle as a star
             this.context.beginPath();
-            this.context.moveTo(startX, startY);
-            this.context.lineTo(endX, endY);
-            this.context.stroke();
+            const size = 3 + Math.random() * 3;
+            for (let j = 0; j < 5; j++) {
+                const starAngle = (Math.PI * 2 * j) / 5;
+                const starX = sparkleX + Math.cos(starAngle) * size;
+                const starY = sparkleY + Math.sin(starAngle) * size;
+                if (j === 0) {
+                    this.context.moveTo(starX, starY);
+                } else {
+                    this.context.lineTo(starX, starY);
+                }
+            }
+            this.context.closePath();
+            this.context.fill();
+            this.context.restore();
         }
-        
-        this.context.restore();
     }
     
     /**
@@ -652,15 +657,19 @@ class GestureRecognition {
      */
     drawMagicParticles(x, y) {
         // Add random particles around the drawing point
-        if (Math.random() < 0.3) { // 30% chance to add particles
+        if (Math.random() < 0.5) { // 50% chance to add particles
             this.context.save();
-            this.context.fillStyle = this.rainbowColors[this.currentColorIndex];
-            this.context.globalAlpha = 0.6;
             
-            for (let i = 0; i < 3; i++) {
-                const particleX = x + (Math.random() - 0.5) * 20;
-                const particleY = y + (Math.random() - 0.5) * 20;
-                const size = Math.random() * 3 + 1;
+            for (let i = 0; i < 5; i++) {
+                const particleX = x + (Math.random() - 0.5) * 30;
+                const particleY = y + (Math.random() - 0.5) * 30;
+                const size = Math.random() * 4 + 2;
+                const colorIndex = Math.floor(Math.random() * this.rainbowColors.length);
+                
+                this.context.fillStyle = this.rainbowColors[colorIndex];
+                this.context.globalAlpha = 0.7 + Math.random() * 0.3;
+                this.context.shadowColor = this.rainbowColors[colorIndex];
+                this.context.shadowBlur = 8;
                 
                 this.context.beginPath();
                 this.context.arc(particleX, particleY, size, 0, Math.PI * 2);

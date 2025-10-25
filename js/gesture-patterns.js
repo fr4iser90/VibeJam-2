@@ -11,13 +11,13 @@ class GesturePatterns {
                 name: 'Circle',
                 description: 'Portal opening gesture',
                 spell: 'open portal',
-                threshold: 0.8,
-                minPoints: 20,
+                threshold: 0.4, // Lowered from 0.8
+                minPoints: 15, // Lowered from 20
                 features: {
                     isClosed: true,
-                    aspectRatioRange: [0.7, 1.3],
-                    curvatureRange: [0.1, 0.5],
-                    directionChangesMax: 4
+                    aspectRatioRange: [0.5, 1.5], // Wider range
+                    curvatureRange: [0.05, 0.6], // Wider range
+                    directionChangesMax: 6 // Increased
                 },
                 visual: {
                     color: '#D4AF37',
@@ -47,13 +47,13 @@ class GesturePatterns {
                 name: 'Spiral',
                 description: 'Fire gesture',
                 spell: 'ignite fireplace',
-                threshold: 0.6,
-                minPoints: 25,
+                threshold: 0.3, // Lowered from 0.6
+                minPoints: 15, // Lowered from 25
                 features: {
                     isClosed: true,
-                    aspectRatioRange: [0.8, 1.2],
-                    curvatureRange: [0.2, 0.8],
-                    pathLengthMin: 20
+                    aspectRatioRange: [0.6, 1.4], // Wider range
+                    curvatureRange: [0.1, 0.9], // Wider range
+                    pathLengthMin: 10 // Lowered from 20
                 },
                 visual: {
                     color: '#DC143C',
@@ -65,13 +65,13 @@ class GesturePatterns {
                 name: 'Heart',
                 description: 'Favorites gesture',
                 spell: 'cast protection spell',
-                threshold: 0.5,
-                minPoints: 20,
+                threshold: 0.2, // Lowered from 0.5
+                minPoints: 12, // Lowered from 20
                 features: {
                     isClosed: true,
-                    aspectRatioRange: [0.5, 1.2],
-                    curvatureRange: [0.1, 0.6],
-                    directionChangesMax: 8
+                    aspectRatioRange: [0.3, 1.5], // Much wider range
+                    curvatureRange: [0.05, 0.8], // Much wider range
+                    directionChangesMax: 12 // Increased
                 },
                 visual: {
                     color: '#FF69B4',
