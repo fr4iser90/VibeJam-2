@@ -166,42 +166,227 @@
 
             <!-- Other Rooms (Hidden by default) -->
             <div class="room" id="kitchen">
-                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');"></div>
-                <div class="room-content-text">
-                    <h2>Küche - Datei-Manager</h2>
-                    <p>Organisierte Speisekammer für deine Dateien</p>
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputKitchen" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellKitchen" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Küchen-Sprüche:</h4>
+                        <ul>
+                            <li>"brew potion"</li>
+                            <li>"summon ingredients"</li>
+                            <li>"clean cauldron"</li>
+                            <li>"heat water"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');">
+                    <div class="room-content-text">
+                        <h2>Küche - Datei-Manager</h2>
+                        <p>Organisierte Speisekammer für deine Dateien</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Gesten</h3>
+                    <div class="gesture-canvas-container">
+                        <canvas id="gestureCanvasKitchen" class="gesture-canvas"></canvas>
+                    </div>
+                    <div class="gesture-instructions">
+                        <h4>Küchen-Gesten:</h4>
+                        <ul>
+                            <li>Kreis = Kessel rühren</li>
+                            <li>Zick-Zack = Hitze</li>
+                            <li>Spirale = Brauen</li>
+                            <li>Herz = Favoriten</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="room" id="bedroom">
-                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');"></div>
-                <div class="room-content-text">
-                    <h2>Schlafzimmer - Ruhemodus</h2>
-                    <p>Ruhiger Rückzugsort für Pausen</p>
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputBedroom" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellBedroom" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Schlafzimmer-Sprüche:</h4>
+                        <ul>
+                            <li>"rest mode"</li>
+                            <li>"sleep timer"</li>
+                            <li>"dream portal"</li>
+                            <li>"wake up"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');">
+                    <div class="room-content-text">
+                        <h2>Schlafzimmer - Ruhemodus</h2>
+                        <p>Ruhiger Rückzugsort für Pausen</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Gesten</h3>
+                    <div class="gesture-canvas-container">
+                        <canvas id="gestureCanvasBedroom" class="gesture-canvas"></canvas>
+                    </div>
+                    <div class="gesture-instructions">
+                        <h4>Schlafzimmer-Gesten:</h4>
+                        <ul>
+                            <li>Kreis = Ruhe</li>
+                            <li>Zick-Zack = Wecker</li>
+                            <li>Spirale = Träume</li>
+                            <li>Herz = Favoriten</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="room" id="workshop">
-                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');"></div>
-                <div class="room-content-text">
-                    <h2>Werkstatt - Tools/Apps</h2>
-                    <p>Arbeitsplatz mit Werkzeugen und Anwendungen</p>
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputWorkshop" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellWorkshop" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Werkstatt-Sprüche:</h4>
+                        <ul>
+                            <li>"craft tool"</li>
+                            <li>"repair item"</li>
+                            <li>"upgrade system"</li>
+                            <li>"forge weapon"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');">
+                    <div class="room-content-text">
+                        <h2>Werkstatt - Tools/Apps</h2>
+                        <p>Arbeitsplatz mit Werkzeugen und Anwendungen</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Gesten</h3>
+                    <div class="gesture-canvas-container">
+                        <canvas id="gestureCanvasWorkshop" class="gesture-canvas"></canvas>
+                    </div>
+                    <div class="gesture-instructions">
+                        <h4>Werkstatt-Gesten:</h4>
+                        <ul>
+                            <li>Kreis = Werkzeug</li>
+                            <li>Zick-Zack = Reparatur</li>
+                            <li>Spirale = Schmieden</li>
+                            <li>Herz = Favoriten</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="room" id="library">
-                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');"></div>
-                <div class="room-content-text">
-                    <h2>Bibliothek - Dokumente</h2>
-                    <p>Bücher und Schriftrollen für deine Dokumente</p>
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputLibrary" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellLibrary" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Bibliothek-Sprüche:</h4>
+                        <ul>
+                            <li>"open book"</li>
+                            <li>"search knowledge"</li>
+                            <li>"save document"</li>
+                            <li>"archive scroll"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
+                    <div class="room-content-text">
+                        <h2>Bibliothek - Dokumente</h2>
+                        <p>Bücher und Schriftrollen für deine Dokumente</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Gesten</h3>
+                    <div class="gesture-canvas-container">
+                        <canvas id="gestureCanvasLibrary" class="gesture-canvas"></canvas>
+                    </div>
+                    <div class="gesture-instructions">
+                        <h4>Bibliothek-Gesten:</h4>
+                        <ul>
+                            <li>Kreis = Buch öffnen</li>
+                            <li>Zick-Zack = Suchen</li>
+                            <li>Spirale = Archivieren</li>
+                            <li>Herz = Favoriten</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="room" id="garden">
-                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');"></div>
-                <div class="room-content-text">
-                    <h2>Garten - Externe Verbindungen</h2>
-                    <p>Verbindung zur Außenwelt und Internet</p>
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputGarden" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellGarden" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Garten-Sprüche:</h4>
+                        <ul>
+                            <li>"connect internet"</li>
+                            <li>"open portal"</li>
+                            <li>"grow network"</li>
+                            <li>"harvest data"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
+                    <div class="room-content-text">
+                        <h2>Garten - Externe Verbindungen</h2>
+                        <p>Verbindung zur Außenwelt und Internet</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Gesten</h3>
+                    <div class="gesture-canvas-container">
+                        <canvas id="gestureCanvasGarden" class="gesture-canvas"></canvas>
+                    </div>
+                    <div class="gesture-instructions">
+                        <h4>Garten-Gesten:</h4>
+                        <ul>
+                            <li>Kreis = Portal</li>
+                            <li>Zick-Zack = Netzwerk</li>
+                            <li>Spirale = Wachstum</li>
+                            <li>Herz = Favoriten</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </main>
