@@ -87,6 +87,7 @@ class GestureRecognition {
             this.hasMoved = false;
             this.startTime = Date.now();
             console.log('🖱️ Mouse down - starting gesture detection');
+            // DON'T prevent default - let clicks pass through
         });
         
         this.canvas.addEventListener('mousemove', (e) => {
@@ -94,6 +95,7 @@ class GestureRecognition {
                 this.hasMoved = true;
                 if (!this.isDrawing) {
                     this.isDrawing = true;
+                    this.activateGestureMode();
                     console.log('🎨 Mouse moved - starting gesture drawing');
                     e.preventDefault();
                     e.stopPropagation();
@@ -110,11 +112,21 @@ class GestureRecognition {
             const clickDuration = Date.now() - this.startTime;
             
             if (clickDuration < 200 && !this.hasMoved) {
-                // Kurzer Klick - durchlassen
+                // Kurzer Klick - durchlassen mit Event Delegation
                 console.log('👆 Short click detected - passing through to objects');
                 this.isMouseDown = false;
                 this.hasMoved = false;
                 this.isDrawing = false;
+                
+                // Event Delegation: Klick an darunterliegende Elemente weiterleiten
+                // Temporär Canvas deaktivieren um Element darunter zu finden
+                this.canvas.style.pointerEvents = 'none';
+                const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
+                this.canvas.style.pointerEvents = 'auto';
+                
+                if (elementBelow) {
+                    elementBelow.click();
+                }
                 return;
             }
             
@@ -971,6 +983,26 @@ class GestureRecognition {
         this.clearCanvas();
         
         console.log('🔄 Gesture system reset');
+    }
+    
+    /**
+     * Activate gesture mode (enable canvas pointer events)
+     */
+    activateGestureMode() {
+        const container = document.querySelector('.gesture-canvas-container');
+        if (container) {
+            container.classList.add('gesture-active');
+        }
+    }
+    
+    /**
+     * Deactivate gesture mode (disable canvas pointer events)
+     */
+    deactivateGestureMode() {
+        const container = document.querySelector('.gesture-canvas-container');
+        if (container) {
+            container.classList.remove('gesture-active');
+        }
     }
 }
 

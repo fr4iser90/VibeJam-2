@@ -359,8 +359,13 @@ class RoomObjectOverlay {
      */
     handleRoomClick(event) {
         console.log('🎯 Room click detected!');
-        const roomElement = event.target;
-        const roomId = roomElement.closest('.room').id;
+        // Find the active room element, not the canvas
+        const activeRoom = document.querySelector('.room.active');
+        if (!activeRoom) {
+            console.log('❌ No active room found');
+            return;
+        }
+        const roomId = activeRoom.id;
         const roomData = this.rooms[roomId];
         
         if (!roomData) {
@@ -369,13 +374,18 @@ class RoomObjectOverlay {
         }
         
         // Get click coordinates relative to the room background
-        const rect = roomElement.getBoundingClientRect();
+        const roomBackground = activeRoom.querySelector('.room-background');
+        if (!roomBackground) {
+            console.log('❌ No room background found');
+            return;
+        }
+        const rect = roomBackground.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         
         // Scale coordinates to match the original image dimensions
-        const scaleX = roomElement.offsetWidth / 800; // Assuming original image width
-        const scaleY = roomElement.offsetHeight / 600; // Assuming original image height
+        const scaleX = roomBackground.offsetWidth / 800; // Assuming original image width
+        const scaleY = roomBackground.offsetHeight / 600; // Assuming original image height
         
         const scaledX = x / scaleX;
         const scaledY = y / scaleY;

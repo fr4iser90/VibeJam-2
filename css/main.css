@@ -421,7 +421,7 @@ body {
 }
 
 .gesture-canvas-container .gesture-canvas {
-    pointer-events: none; /* Canvas blocks nothing by default */
+    pointer-events: auto; /* Canvas can receive events */
 }
 
 .gesture-canvas-container::before {
