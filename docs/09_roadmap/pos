@@ -4,6 +4,22 @@
       "backgroundImage": "assets/images/rooms/living-room.png",
       "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
       "objects": {
+        "lamp_1": {
+          "name": "Lamp_1",
+          "description": "lamp_1 object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 722,
+            "y": 455,
+            "width": 70,
+            "height": 131
+          }
+        },
         "fireplace": {
           "name": "Fireplace",
           "description": "fireplace object",
@@ -14,58 +30,10 @@
           "sound": "object-click",
           "animation": "objectGlow",
           "clickableArea": {
-            "x": 166,
-            "y": 819,
-            "width": 225,
-            "height": 100
-          }
-        },
-        "lamp_1": {
-          "name": "Lamp_1",
-          "description": "lamp object",
-          "action": "interact",
-          "effects": [
-            "interaction"
-          ],
-          "sound": "object-click",
-          "animation": "objectGlow",
-          "clickableArea": {
-            "x": 726,
-            "y": 414,
-            "width": 53,
-            "height": 176
-          }
-        },
-        "lamp_2": {
-            "name": "Lamp",
-          "description": "lamp_2 object",
-          "action": "interact",
-          "effects": [
-            "interaction"
-          ],
-          "sound": "object-click",
-          "animation": "objectGlow",
-          "clickableArea": {
-            "x": 729,
-            "y": 443,
-            "width": 52,
-            "height": 149
-          }
-        },
-        "door": {
-          "name": "Door",
-          "description": "door object",
-          "action": "interact",
-          "effects": [
-            "interaction"
-          ],
-          "sound": "object-click",
-          "animation": "objectGlow",
-          "clickableArea": {
-            "x": 1043,
-            "y": 551,
-            "width": 151,
-            "height": 134
+            "x": 160,
+            "y": 816,
+            "width": 229,
+            "height": 112
           }
         },
         "vase": {
@@ -78,10 +46,42 @@
           "sound": "object-click",
           "animation": "objectGlow",
           "clickableArea": {
-            "x": -3,
+            "x": -4,
             "y": 763,
-            "width": 73,
-            "height": 132
+            "width": 75,
+            "height": 125
+          }
+        },
+        "lamp_2": {
+          "name": "Lamp_2",
+          "description": "lamp_2 object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 706,
+            "y": 760,
+            "width": 89,
+            "height": 172
+          }
+        },
+        "door": {
+          "name": "Door",
+          "description": "door object",
+          "action": "interact",
+          "effects": [
+            "interaction"
+          ],
+          "sound": "object-click",
+          "animation": "objectGlow",
+          "clickableArea": {
+            "x": 1038,
+            "y": 537,
+            "width": 158,
+            "height": 146
           }
         },
         "book": {
@@ -94,9 +94,9 @@
           "sound": "object-click",
           "animation": "objectGlow",
           "clickableArea": {
-            "x": 515,
-            "y": 427,
-            "width": 25,
+            "x": 538,
+            "y": 433,
+            "width": 22,
             "height": 80
           }
         }

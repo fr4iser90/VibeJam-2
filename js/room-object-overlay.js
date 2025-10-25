@@ -12,6 +12,16 @@ class RoomObjectOverlay {
                 backgroundImage: 'assets/images/rooms/living-room.png',
                 darkBackgroundImage: 'assets/images/rooms/living-room-dark.png',
                 objects: {
+                    'lamp_1': {
+                        name: 'Lamp_1',
+                        description: 'lamp_1 object',
+                        action: 'illuminate',
+                        effects: ['light', 'ambient'],
+                        sound: 'lamp-on',
+                        animation: 'lightGlow',
+                        clickableArea: { x: 722, y: 455, width: 70, height: 131 },
+                        type: 'lighting'
+                    },
                     'fireplace': {
                         name: 'Fireplace',
                         description: 'fireplace object',
@@ -19,27 +29,27 @@ class RoomObjectOverlay {
                         effects: ['fire', 'warmth', 'light'],
                         sound: 'fireplace-ignite',
                         animation: 'fireFlicker',
-                        clickableArea: { x: 166, y: 819, width: 225, height: 100 },
+                        clickableArea: { x: 160, y: 816, width: 229, height: 112 },
                         type: 'lighting'
                     },
-                    'lamp_1': {
-                        name: 'Lamp_1',
-                        description: 'lamp object',
-                        action: 'illuminate',
-                        effects: ['light', 'ambient'],
-                        sound: 'lamp-on',
-                        animation: 'lightGlow',
-                        clickableArea: { x: 726, y: 414, width: 53, height: 176 },
-                        type: 'lighting'
+                    'vase': {
+                        name: 'Vase',
+                        description: 'vase object',
+                        action: 'examine',
+                        effects: ['decoration', 'beauty'],
+                        sound: 'object-click',
+                        animation: 'decorationGlow',
+                        clickableArea: { x: -4, y: 763, width: 75, height: 125 },
+                        type: 'interactive'
                     },
                     'lamp_2': {
-                        name: 'Lamp',
+                        name: 'Lamp_2',
                         description: 'lamp_2 object',
                         action: 'illuminate',
                         effects: ['light', 'ambient'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        clickableArea: { x: 729, y: 443, width: 52, height: 149 },
+                        clickableArea: { x: 706, y: 760, width: 89, height: 172 },
                         type: 'lighting'
                     },
                     'door': {
@@ -49,17 +59,7 @@ class RoomObjectOverlay {
                         effects: ['portal', 'interaction'],
                         sound: 'room-change',
                         animation: 'portalGlow',
-                        clickableArea: { x: 1043, y: 551, width: 151, height: 134 },
-                        type: 'interactive'
-                    },
-                    'vase': {
-                        name: 'Vase',
-                        description: 'vase object',
-                        action: 'examine',
-                        effects: ['decoration', 'beauty'],
-                        sound: 'object-click',
-                        animation: 'decorationGlow',
-                        clickableArea: { x: -3, y: 763, width: 73, height: 132 },
+                        clickableArea: { x: 1038, y: 537, width: 158, height: 146 },
                         type: 'interactive'
                     },
                     'book': {
@@ -69,7 +69,7 @@ class RoomObjectOverlay {
                         effects: ['knowledge', 'reading'],
                         sound: 'book-open',
                         animation: 'bookGlow',
-                        clickableArea: { x: 515, y: 427, width: 25, height: 80 },
+                        clickableArea: { x: 538, y: 433, width: 22, height: 80 },
                         type: 'interactive'
                     }
                 }
@@ -375,6 +375,9 @@ class RoomObjectOverlay {
         // Initialize object states
         this.initializeObjectStates();
         
+        // Add debug layer for development
+        this.addDebugLayer();
+        
         console.log('✨ Room Object Overlay System initialized!');
     }
     
@@ -447,14 +450,12 @@ class RoomObjectOverlay {
         console.log(`Room rect: ${rect.left}, ${rect.top}, ${rect.width}, ${rect.height}`);
         console.log(`Relative click: ${x}, ${y}`);
         
-        // Scale coordinates to match the original image dimensions
-        const scaleX = roomBackground.offsetWidth / 800; // Assuming original image width
-        const scaleY = roomBackground.offsetHeight / 600; // Assuming original image height
+        // The coordinates from the editor are already relative to the CSS background container
+        // No scaling needed - use them directly
+        const scaledX = x;
+        const scaledY = y;
         
-        const scaledX = x / scaleX;
-        const scaledY = y / scaleY;
-        
-        console.log(`Click at: ${x}, ${y} -> Scaled: ${scaledX}, ${scaledY} in room: ${roomId}`);
+        console.log(`Click at: ${x}, ${y} -> Using directly: ${scaledX}, ${scaledY} in room: ${roomId}`);
         
         // Check which object was clicked
         const clickedObject = this.findClickedObject(roomData, scaledX, scaledY);
@@ -1101,6 +1102,139 @@ class RoomObjectOverlay {
             console.log('☀️ FantasyOS: Day time detected, switching to light mode');
             this.setDarkMode(false);
         }
+    }
+    
+    /**
+     * Add debug layer to visualize object areas
+     */
+    addDebugLayer() {
+        console.log('🔍 Adding debug layer for object visualization...');
+        
+        // Create debug toggle button
+        const debugToggle = document.createElement('button');
+        debugToggle.id = 'debug-toggle';
+        debugToggle.textContent = '🔍 Debug Objects';
+        debugToggle.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 10000;
+            background: var(--magic-purple);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 12px;
+        `;
+        
+        debugToggle.addEventListener('click', () => {
+            this.toggleDebugLayer();
+        });
+        
+        document.body.appendChild(debugToggle);
+        
+        // Initially show debug layer
+        this.showDebugLayer();
+    }
+    
+    /**
+     * Toggle debug layer visibility
+     */
+    toggleDebugLayer() {
+        const activeRoom = document.querySelector('.room.active');
+        if (!activeRoom) return;
+        
+        const existingOverlay = activeRoom.querySelector('.room-debug-overlay');
+        if (existingOverlay) {
+            existingOverlay.remove();
+            console.log('🔍 Debug overlay removed');
+        } else {
+            this.showDebugLayer();
+        }
+    }
+    
+    /**
+     * Show debug layer with object areas
+     */
+    showDebugLayer() {
+        const activeRoom = document.querySelector('.room.active');
+        if (!activeRoom) return;
+        
+        const roomId = activeRoom.id;
+        const roomData = this.rooms[roomId];
+        if (!roomData) return;
+        
+        const roomBackground = activeRoom.querySelector('.room-background');
+        if (!roomBackground) return;
+        
+        // Remove existing debug overlay
+        const existingOverlay = roomBackground.querySelector('.room-debug-overlay');
+        if (existingOverlay) {
+            existingOverlay.remove();
+        }
+        
+        // Create debug overlay
+        const roomDebugOverlay = document.createElement('div');
+        roomDebugOverlay.className = 'room-debug-overlay';
+        roomDebugOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        `;
+        
+        roomBackground.appendChild(roomDebugOverlay);
+        
+        // Add debug rectangles for each object
+        for (const [objectName, objectData] of Object.entries(roomData.objects)) {
+            const area = objectData.clickableArea;
+            
+            // The coordinates from the editor are already relative to the CSS background container
+            // No scaling needed - use them directly
+            const scaleX = 1;
+            const scaleY = 1;
+            
+            const debugRect = document.createElement('div');
+            debugRect.className = 'object-debug-rect';
+            debugRect.style.cssText = `
+                position: absolute;
+                left: ${area.x * scaleX}px;
+                top: ${area.y * scaleY}px;
+                width: ${area.width * scaleX}px;
+                height: ${area.height * scaleY}px;
+                border: 2px solid #ff00ff;
+                background: rgba(255, 0, 255, 0.2);
+                pointer-events: none;
+                z-index: 1001;
+            `;
+            
+            // Add object name label
+            const label = document.createElement('div');
+            label.textContent = objectName;
+            label.style.cssText = `
+                position: absolute;
+                top: -20px;
+                left: 0;
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 2px 5px;
+                font-size: 10px;
+                font-family: monospace;
+                border-radius: 2px;
+            `;
+            
+            debugRect.appendChild(label);
+            roomDebugOverlay.appendChild(debugRect);
+            
+            console.log(`🎯 Added debug rect for ${objectName}: ${area.x},${area.y} ${area.width}x${area.height}`);
+        }
+        
+        console.log('🔍 Debug overlay added - object areas are now visible!');
     }
 }
 
