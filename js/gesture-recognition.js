@@ -542,8 +542,101 @@ class GestureRecognition {
      * Show gesture recognition feedback
      */
     showGestureFeedback(gesture) {
+        // Create gesture-specific visual feedback
+        this.createGestureEffect(gesture);
+        
         const message = `🎨 ${gesture.gesture.name} recognized! (${(gesture.score * 100).toFixed(0)}%)`;
         this.showMessage(message);
+    }
+    
+    /**
+     * Create visual effect for recognized gesture
+     */
+    createGestureEffect(gesture) {
+        // Get gesture center point
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        
+        // Create burst effect at center
+        this.createMagicBurst(centerX, centerY, gesture.gesture.name);
+        
+        // Add gesture-specific particles
+        this.addGestureParticles(centerX, centerY, gesture.gesture.name);
+    }
+    
+    /**
+     * Create magic burst effect
+     */
+    createMagicBurst(x, y, gestureName) {
+        const colors = {
+            'Circle': '#D4AF37',
+            'Zigzag': '#FFD700', 
+            'Spiral': '#DC143C',
+            'Heart': '#FF69B4',
+            'Star': '#9370DB',
+            'Triangle': '#228B22',
+            'Square': '#4169E1',
+            'Infinity': '#00CED1'
+        };
+        
+        const color = colors[gestureName] || '#9370DB';
+        
+        // Create expanding circles
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                this.context.save();
+                this.context.strokeStyle = color;
+                this.context.lineWidth = 3;
+                this.context.globalAlpha = 0.8 - (i * 0.2);
+                this.context.shadowColor = color;
+                this.context.shadowBlur = 20;
+                
+                const radius = 20 + (i * 30);
+                this.context.beginPath();
+                this.context.arc(x, y, radius, 0, Math.PI * 2);
+                this.context.stroke();
+                this.context.restore();
+            }, i * 100);
+        }
+    }
+    
+    /**
+     * Add gesture-specific particles
+     */
+    addGestureParticles(x, y, gestureName) {
+        const particleCounts = {
+            'Circle': 12,
+            'Zigzag': 8,
+            'Spiral': 15,
+            'Heart': 10,
+            'Star': 20,
+            'Triangle': 6,
+            'Square': 8,
+            'Infinity': 16
+        };
+        
+        const count = particleCounts[gestureName] || 10;
+        
+        for (let i = 0; i < count; i++) {
+            setTimeout(() => {
+                const angle = (Math.PI * 2 * i) / count;
+                const distance = 50 + Math.random() * 30;
+                const particleX = x + Math.cos(angle) * distance;
+                const particleY = y + Math.sin(angle) * distance;
+                
+                this.context.save();
+                this.context.fillStyle = this.rainbowColors[i % this.rainbowColors.length];
+                this.context.globalAlpha = 0.9;
+                this.context.shadowColor = this.rainbowColors[i % this.rainbowColors.length];
+                this.context.shadowBlur = 15;
+                
+                const size = 4 + Math.random() * 3;
+                this.context.beginPath();
+                this.context.arc(particleX, particleY, size, 0, Math.PI * 2);
+                this.context.fill();
+                this.context.restore();
+            }, i * 50);
+        }
     }
     
     /**
@@ -556,18 +649,21 @@ class GestureRecognition {
         messageElement.textContent = message;
         messageElement.style.cssText = `
             position: fixed;
-            top: 50%;
+            top: 20px;
             left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--magic-purple);
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--magic-purple), var(--magic-gold));
             color: white;
-            padding: 15px 25px;
-            border-radius: 15px;
+            padding: 15px 30px;
+            border-radius: 25px;
             font-family: 'MedievalSharp', cursive;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
             z-index: 3000;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 8px 25px rgba(147, 112, 219, 0.4);
+            border: 2px solid var(--magic-gold);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: gestureMessageSlideIn 0.5s ease-out;
         `;
         
         document.body.appendChild(messageElement);
@@ -575,12 +671,12 @@ class GestureRecognition {
         // Remove after duration
         setTimeout(() => {
             if (messageElement.parentNode) {
-                messageElement.style.animation = 'fadeOut 0.3s ease-in';
+                messageElement.style.animation = 'gestureMessageSlideOut 0.5s ease-in';
                 setTimeout(() => {
                     if (messageElement.parentNode) {
                         messageElement.parentNode.removeChild(messageElement);
                     }
-                }, 300);
+                }, 500);
             }
         }, duration);
     }
