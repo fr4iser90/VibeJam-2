@@ -8,35 +8,120 @@
     border-radius: 50%;
 }
 
-/* Hobbit Character Styles */
-.hobbit-character {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-image: url('../assets/images/objects/hobbit.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 200;
-    border-radius: 50%;
+/* Hobbit Sidebar Styles */
+.hobbit-companion {
+    margin-top: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--fantasy-bg-secondary) 0%, var(--fantasy-bg-primary) 100%);
+    border: 2px solid var(--fantasy-warm-gold);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px var(--fantasy-shadow-dark);
 }
 
-.hobbit-character:hover {
+.hobbit-character-sidebar {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.hobbit-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--fantasy-warm-gold);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hobbit-image:hover {
     transform: scale(1.1);
     filter: brightness(1.2);
+    box-shadow: 0 4px 8px var(--fantasy-shadow-magic);
 }
 
-.hobbit-character.clicked {
-    animation: hobbitBounce 0.6s ease-in-out;
+.hobbit-dialogue-sidebar {
+    text-align: center;
 }
 
-@keyframes hobbitBounce {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.2) translateY(-5px); }
-    50% { transform: scale(1.1) translateY(-10px); }
-    75% { transform: scale(1.15) translateY(-5px); }
+.hobbit-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 14px;
+    color: var(--fantasy-text-primary);
+    margin-bottom: 10px;
+    line-height: 1.4;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hobbit-options {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hobbit-btn {
+    background: var(--fantasy-magic-purple);
+    color: var(--fantasy-cool-white);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.hobbit-btn:hover {
+    background: var(--fantasy-warm-gold);
+    color: var(--fantasy-bg-primary);
+    transform: translateY(-1px);
+}
+
+.hobbit-btn:active {
+    transform: translateY(0);
+}
+
+/* Quest Message Animations */
+@keyframes questMessageAppear {
+    0% { 
+        opacity: 0; 
+        transform: translate(-50%, -50%) scale(0.8); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1); 
+    }
+}
+
+@keyframes questMessageDisappear {
+    0% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1); 
+    }
+    100% { 
+        opacity: 0; 
+        transform: translate(-50%, -50%) scale(0.8); 
+    }
+}
+
+.quest-message {
+    animation: questMessageAppear 0.5s ease-out;
+}
+
+.quest-success {
+    background: linear-gradient(135deg, var(--fantasy-earth-green) 0%, var(--fantasy-warm-gold) 100%) !important;
+}
+
+.quest-victory {
+    background: linear-gradient(135deg, var(--fantasy-magic-purple) 0%, var(--fantasy-warm-gold) 100%) !important;
+    font-size: 18px !important;
+    animation: questMessageAppear 0.5s ease-out, questVictoryGlow 2s ease-in-out infinite !important;
+}
+
+@keyframes questVictoryGlow {
+    0%, 100% { box-shadow: 0 8px 16px var(--fantasy-shadow-dark); }
+    50% { box-shadow: 0 8px 32px var(--fantasy-magic-purple), 0 0 20px var(--fantasy-warm-gold); }
 }
 
 /* Hobbit Dialog System */
