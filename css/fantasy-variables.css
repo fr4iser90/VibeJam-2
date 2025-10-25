@@ -1,0 +1,237 @@
+/**
+ * Fantasy OS - CSS Variables and Theme System
+ * Centralized fantasy theme variables and color system
+ * Created: 2025-10-25T12:06:33.000Z
+ */
+
+:root {
+    /* Fantasy Color Palette - Warm Colors */
+    --fantasy-warm-gold: #D4AF37;
+    --fantasy-warm-orange: #FF8C00;
+    --fantasy-warm-red: #DC143C;
+    --fantasy-warm-copper: #B87333;
+    --fantasy-warm-amber: #FFBF00;
+    
+    /* Fantasy Color Palette - Cool Colors */
+    --fantasy-cool-blue: #4169E1;
+    --fantasy-cool-silver: #C0C0C0;
+    --fantasy-cool-white: #F8F8FF;
+    --fantasy-cool-ice: #B0E0E6;
+    --fantasy-cool-steel: #4682B4;
+    
+    /* Fantasy Color Palette - Earth Colors */
+    --fantasy-earth-brown: #8B4513;
+    --fantasy-earth-green: #228B22;
+    --fantasy-earth-beige: #F5DEB3;
+    --fantasy-earth-moss: #8FBC8F;
+    --fantasy-earth-stone: #A9A9A9;
+    
+    /* Fantasy Color Palette - Magic Colors */
+    --fantasy-magic-purple: #9370DB;
+    --fantasy-magic-pink: #FF69B4;
+    --fantasy-magic-cyan: #00CED1;
+    --fantasy-magic-indigo: #4B0082;
+    --fantasy-magic-emerald: #50C878;
+    
+    /* UI Color System */
+    --fantasy-bg-primary: #2C1810;
+    --fantasy-bg-secondary: #3D2817;
+    --fantasy-bg-tertiary: #4A2C1A;
+    --fantasy-bg-accent: #5D3A1F;
+    
+    --fantasy-text-primary: var(--fantasy-earth-beige);
+    --fantasy-text-secondary: var(--fantasy-warm-gold);
+    --fantasy-text-accent: var(--fantasy-magic-purple);
+    --fantasy-text-muted: #B8860B;
+    
+    --fantasy-border-primary: var(--fantasy-warm-gold);
+    --fantasy-border-secondary: var(--fantasy-earth-brown);
+    --fantasy-border-accent: var(--fantasy-magic-purple);
+    
+    /* Shadow System */
+    --fantasy-shadow-light: rgba(212, 175, 55, 0.3);
+    --fantasy-shadow-medium: rgba(212, 175, 55, 0.5);
+    --fantasy-shadow-dark: rgba(0, 0, 0, 0.5);
+    --fantasy-shadow-magic: rgba(147, 112, 219, 0.4);
+    --fantasy-shadow-fire: rgba(255, 140, 0, 0.4);
+    --fantasy-shadow-ice: rgba(0, 206, 209, 0.4);
+    
+    /* Fantasy Typography */
+    --fantasy-font-header: 'Cinzel', serif;
+    --fantasy-font-ui: 'MedievalSharp', cursive;
+    --fantasy-font-text: 'Crimson Text', serif;
+    --fantasy-font-mono: 'Courier New', monospace;
+    
+    /* Font Sizes */
+    --fantasy-font-xs: 0.75rem;
+    --fantasy-font-sm: 0.875rem;
+    --fantasy-font-base: 1rem;
+    --fantasy-font-lg: 1.125rem;
+    --fantasy-font-xl: 1.25rem;
+    --fantasy-font-2xl: 1.5rem;
+    --fantasy-font-3xl: 1.875rem;
+    --fantasy-font-4xl: 2.25rem;
+    
+    /* Spacing System */
+    --fantasy-space-xs: 0.25rem;
+    --fantasy-space-sm: 0.5rem;
+    --fantasy-space-md: 1rem;
+    --fantasy-space-lg: 1.5rem;
+    --fantasy-space-xl: 2rem;
+    --fantasy-space-2xl: 3rem;
+    --fantasy-space-3xl: 4rem;
+    
+    /* Border Radius */
+    --fantasy-radius-sm: 0.25rem;
+    --fantasy-radius-md: 0.5rem;
+    --fantasy-radius-lg: 0.75rem;
+    --fantasy-radius-xl: 1rem;
+    --fantasy-radius-2xl: 1.5rem;
+    --fantasy-radius-full: 9999px;
+    
+    /* Animation Durations */
+    --fantasy-duration-fast: 0.15s;
+    --fantasy-duration-normal: 0.3s;
+    --fantasy-duration-slow: 0.5s;
+    --fantasy-duration-slower: 1s;
+    
+    /* Animation Easing */
+    --fantasy-ease-linear: linear;
+    --fantasy-ease-in: ease-in;
+    --fantasy-ease-out: ease-out;
+    --fantasy-ease-in-out: ease-in-out;
+    --fantasy-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Z-Index Scale */
+    --fantasy-z-dropdown: 1000;
+    --fantasy-z-sticky: 1020;
+    --fantasy-z-fixed: 1030;
+    --fantasy-z-modal-backdrop: 1040;
+    --fantasy-z-modal: 1050;
+    --fantasy-z-popover: 1060;
+    --fantasy-z-tooltip: 1070;
+    --fantasy-z-toast: 1080;
+    
+    /* Breakpoints */
+    --fantasy-breakpoint-sm: 640px;
+    --fantasy-breakpoint-md: 768px;
+    --fantasy-breakpoint-lg: 1024px;
+    --fantasy-breakpoint-xl: 1280px;
+    --fantasy-breakpoint-2xl: 1536px;
+}
+
+/* Dark Theme Overrides */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fantasy-bg-primary: #1A0F08;
+        --fantasy-bg-secondary: #2A1A0F;
+        --fantasy-bg-tertiary: #3A2518;
+        --fantasy-bg-accent: #4A2F1F;
+        
+        --fantasy-text-primary: #F5DEB3;
+        --fantasy-text-secondary: #D4AF37;
+        --fantasy-text-muted: #CD853F;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --fantasy-border-primary: #FFFFFF;
+        --fantasy-border-secondary: #CCCCCC;
+        --fantasy-text-primary: #FFFFFF;
+        --fantasy-text-secondary: #FFFF00;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --fantasy-duration-fast: 0.01ms;
+        --fantasy-duration-normal: 0.01ms;
+        --fantasy-duration-slow: 0.01ms;
+        --fantasy-duration-slower: 0.01ms;
+    }
+}
+
+/* Fantasy Theme Utilities */
+.fantasy-theme-warm {
+    --fantasy-accent: var(--fantasy-warm-gold);
+    --fantasy-accent-secondary: var(--fantasy-warm-orange);
+}
+
+.fantasy-theme-cool {
+    --fantasy-accent: var(--fantasy-cool-blue);
+    --fantasy-accent-secondary: var(--fantasy-cool-silver);
+}
+
+.fantasy-theme-magic {
+    --fantasy-accent: var(--fantasy-magic-purple);
+    --fantasy-accent-secondary: var(--fantasy-magic-pink);
+}
+
+.fantasy-theme-earth {
+    --fantasy-accent: var(--fantasy-earth-green);
+    --fantasy-accent-secondary: var(--fantasy-earth-brown);
+}
+
+/* Fantasy Color Classes */
+.fantasy-text-warm { color: var(--fantasy-warm-gold); }
+.fantasy-text-cool { color: var(--fantasy-cool-blue); }
+.fantasy-text-magic { color: var(--fantasy-magic-purple); }
+.fantasy-text-earth { color: var(--fantasy-earth-green); }
+
+.fantasy-bg-warm { background-color: var(--fantasy-warm-gold); }
+.fantasy-bg-cool { background-color: var(--fantasy-cool-blue); }
+.fantasy-bg-magic { background-color: var(--fantasy-magic-purple); }
+.fantasy-bg-earth { background-color: var(--fantasy-earth-green); }
+
+.fantasy-border-warm { border-color: var(--fantasy-warm-gold); }
+.fantasy-border-cool { border-color: var(--fantasy-cool-blue); }
+.fantasy-border-magic { border-color: var(--fantasy-magic-purple); }
+.fantasy-border-earth { border-color: var(--fantasy-earth-green); }
+
+/* Fantasy Shadow Classes */
+.fantasy-shadow-light { box-shadow: 0 2px 4px var(--fantasy-shadow-light); }
+.fantasy-shadow-medium { box-shadow: 0 4px 8px var(--fantasy-shadow-medium); }
+.fantasy-shadow-dark { box-shadow: 0 8px 16px var(--fantasy-shadow-dark); }
+.fantasy-shadow-magic { box-shadow: 0 0 20px var(--fantasy-shadow-magic); }
+.fantasy-shadow-fire { box-shadow: 0 0 20px var(--fantasy-shadow-fire); }
+.fantasy-shadow-ice { box-shadow: 0 0 20px var(--fantasy-shadow-ice); }
+
+/* Fantasy Typography Classes */
+.fantasy-font-header { font-family: var(--fantasy-font-header); }
+.fantasy-font-ui { font-family: var(--fantasy-font-ui); }
+.fantasy-font-text { font-family: var(--fantasy-font-text); }
+.fantasy-font-mono { font-family: var(--fantasy-font-mono); }
+
+/* Fantasy Size Classes */
+.fantasy-text-xs { font-size: var(--fantasy-font-xs); }
+.fantasy-text-sm { font-size: var(--fantasy-font-sm); }
+.fantasy-text-base { font-size: var(--fantasy-font-base); }
+.fantasy-text-lg { font-size: var(--fantasy-font-lg); }
+.fantasy-text-xl { font-size: var(--fantasy-font-xl); }
+.fantasy-text-2xl { font-size: var(--fantasy-font-2xl); }
+.fantasy-text-3xl { font-size: var(--fantasy-font-3xl); }
+.fantasy-text-4xl { font-size: var(--fantasy-font-4xl); }
+
+/* Fantasy Spacing Classes */
+.fantasy-p-xs { padding: var(--fantasy-space-xs); }
+.fantasy-p-sm { padding: var(--fantasy-space-sm); }
+.fantasy-p-md { padding: var(--fantasy-space-md); }
+.fantasy-p-lg { padding: var(--fantasy-space-lg); }
+.fantasy-p-xl { padding: var(--fantasy-space-xl); }
+
+.fantasy-m-xs { margin: var(--fantasy-space-xs); }
+.fantasy-m-sm { margin: var(--fantasy-space-sm); }
+.fantasy-m-md { margin: var(--fantasy-space-md); }
+.fantasy-m-lg { margin: var(--fantasy-space-lg); }
+.fantasy-m-xl { margin: var(--fantasy-space-xl); }
+
+/* Fantasy Border Radius Classes */
+.fantasy-rounded-sm { border-radius: var(--fantasy-radius-sm); }
+.fantasy-rounded-md { border-radius: var(--fantasy-radius-md); }
+.fantasy-rounded-lg { border-radius: var(--fantasy-radius-lg); }
+.fantasy-rounded-xl { border-radius: var(--fantasy-radius-xl); }
+.fantasy-rounded-2xl { border-radius: var(--fantasy-radius-2xl); }
+.fantasy-rounded-full { border-radius: var(--fantasy-radius-full); }

@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/fantasy-variables.css">
+    <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/rooms.css">
     <link rel="stylesheet" href="css/objects.css">
@@ -56,10 +58,28 @@
             
             <!-- Living Room (Default) -->
             <div class="room active" id="living-room">
-                <div class="room-background" style="background-image: url('assets/images/rooms/living-room.jpg');"></div>
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInput" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpell" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Bekannte Sprüche:</h4>
+                        <ul>
+                            <li>"ignite fireplace"</li>
+                            <li>"summon light"</li>
+                            <li>"open portal to kitchen"</li>
+                            <li>"store treasure in chest"</li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <!-- Interactive Objects -->
-                <div class="interactive-objects">
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');">
+                    <!-- Interactive Objects -->
+                    <div class="interactive-objects">
                     
                     <!-- Fireplace -->
                     <div class="object fireplace" data-object="fireplace">
@@ -114,21 +134,39 @@
                             <div class="brew-effect"></div>
                         </div>
                     </div>
+                    </div>
+                    
+                    <!-- Magical Particles -->
+                    <div class="particle-system">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
                 </div>
                 
-                <!-- Magical Particles -->
-                <div class="particle-system">
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Gesten</h3>
+                    <div class="gesture-canvas-container">
+                        <canvas id="gestureCanvas" class="gesture-canvas"></canvas>
+                    </div>
+                    <div class="gesture-instructions">
+                        <h4>Gesten-Zaubersprüche:</h4>
+                        <ul>
+                            <li>Kreis = Portal öffnen</li>
+                            <li>Zick-Zack = Blitz</li>
+                            <li>Spirale = Feuer</li>
+                            <li>Herz = Favoriten</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <!-- Other Rooms (Hidden by default) -->
             <div class="room" id="kitchen">
-                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.jpg');"></div>
+                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');"></div>
                 <div class="room-content-text">
                     <h2>Küche - Datei-Manager</h2>
                     <p>Organisierte Speisekammer für deine Dateien</p>
@@ -136,7 +174,7 @@
             </div>
 
             <div class="room" id="bedroom">
-                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.jpg');"></div>
+                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');"></div>
                 <div class="room-content-text">
                     <h2>Schlafzimmer - Ruhemodus</h2>
                     <p>Ruhiger Rückzugsort für Pausen</p>
@@ -144,7 +182,7 @@
             </div>
 
             <div class="room" id="workshop">
-                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.jpg');"></div>
+                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');"></div>
                 <div class="room-content-text">
                     <h2>Werkstatt - Tools/Apps</h2>
                     <p>Arbeitsplatz mit Werkzeugen und Anwendungen</p>
@@ -152,7 +190,7 @@
             </div>
 
             <div class="room" id="library">
-                <div class="room-background" style="background-image: url('assets/images/rooms/library.jpg');"></div>
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');"></div>
                 <div class="room-content-text">
                     <h2>Bibliothek - Dokumente</h2>
                     <p>Bücher und Schriftrollen für deine Dokumente</p>
@@ -160,7 +198,7 @@
             </div>
 
             <div class="room" id="garden">
-                <div class="room-background" style="background-image: url('assets/images/rooms/garden.jpg');"></div>
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');"></div>
                 <div class="room-content-text">
                     <h2>Garten - Externe Verbindungen</h2>
                     <p>Verbindung zur Außenwelt und Internet</p>

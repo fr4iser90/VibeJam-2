@@ -1,38 +1,35 @@
 /* Fantasy OS - Main CSS */
 
-/* Fantasy Color Palette */
+/* Fantasy Color Palette - Using CSS Variables */
 :root {
-    /* Warm Colors */
-    --warm-gold: #D4AF37;
-    --warm-orange: #FF8C00;
-    --warm-red: #DC143C;
+    /* Legacy color mappings for backward compatibility */
+    --warm-gold: var(--fantasy-warm-gold);
+    --warm-orange: var(--fantasy-warm-orange);
+    --warm-red: var(--fantasy-warm-red);
     
-    /* Cool Colors */
-    --cool-blue: #4169E1;
-    --cool-silver: #C0C0C0;
-    --cool-white: #F8F8FF;
+    --cool-blue: var(--fantasy-cool-blue);
+    --cool-silver: var(--fantasy-cool-silver);
+    --cool-white: var(--fantasy-cool-white);
     
-    /* Earth Colors */
-    --earth-brown: #8B4513;
-    --earth-green: #228B22;
-    --earth-beige: #F5DEB3;
+    --earth-brown: var(--fantasy-earth-brown);
+    --earth-green: var(--fantasy-earth-green);
+    --earth-beige: var(--fantasy-earth-beige);
     
-    /* Magic Colors */
-    --magic-purple: #9370DB;
-    --magic-pink: #FF69B4;
-    --magic-cyan: #00CED1;
+    --magic-purple: var(--fantasy-magic-purple);
+    --magic-pink: var(--fantasy-magic-pink);
+    --magic-cyan: var(--fantasy-magic-cyan);
     
     /* UI Colors */
-    --bg-primary: #2C1810;
-    --bg-secondary: #3D2817;
-    --text-primary: var(--earth-beige);
-    --text-secondary: var(--warm-gold);
-    --accent: var(--magic-purple);
+    --bg-primary: var(--fantasy-bg-primary);
+    --bg-secondary: var(--fantasy-bg-secondary);
+    --text-primary: var(--fantasy-text-primary);
+    --text-secondary: var(--fantasy-text-secondary);
+    --accent: var(--fantasy-magic-purple);
     
     /* Shadows */
-    --shadow-light: rgba(212, 175, 55, 0.3);
-    --shadow-dark: rgba(0, 0, 0, 0.5);
-    --shadow-magic: rgba(147, 112, 219, 0.4);
+    --shadow-light: var(--fantasy-shadow-light);
+    --shadow-dark: var(--fantasy-shadow-dark);
+    --shadow-magic: var(--fantasy-shadow-magic);
 }
 
 /* Fantasy Typography */
@@ -143,6 +140,9 @@ body {
     position: relative;
     margin-top: 80px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .room {
@@ -154,6 +154,9 @@ body {
     opacity: 0;
     transform: scale(0.9);
     transition: all 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .room.active {
@@ -162,13 +165,14 @@ body {
 }
 
 .room-background {
-    width: 100%;
+    width: 60%;
     height: 100%;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
     filter: brightness(0.8) contrast(1.1);
+    flex-shrink: 0;
 }
 
 .room-background::before {
@@ -322,6 +326,30 @@ body {
 .particle:nth-child(4) { left: 70%; animation-delay: 6s; }
 .particle:nth-child(5) { left: 90%; animation-delay: 8s; }
 
+/* Room Side Panels */
+.room-side-panel {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(145deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    border: 2px solid var(--warm-gold);
+    border-radius: 15px;
+    margin: 0 10px;
+    box-shadow: 0 8px 16px var(--shadow-dark);
+}
+
+.room-side-panel.left {
+    margin-right: 20px;
+}
+
+.room-side-panel.right {
+    margin-left: 20px;
+}
+
 /* Spell System */
 .spell-system {
     position: fixed;
@@ -334,6 +362,7 @@ body {
     border-radius: 15px;
     padding: 15px;
     box-shadow: 0 8px 16px var(--shadow-dark);
+    display: none; /* Hide the old spell system */
 }
 
 .spell-input-container {
@@ -381,13 +410,15 @@ body {
 
 .gesture-canvas-container {
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    gap: 10px;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .gesture-canvas {
-    width: 200px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border: 2px solid var(--earth-brown);
     border-radius: 10px;
     background: var(--bg-primary);
@@ -395,9 +426,36 @@ body {
 }
 
 .gesture-instructions {
-    flex: 1;
     font-size: 14px;
     color: var(--text-secondary);
+    text-align: center;
+}
+
+.spell-list {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.spell-list h4 {
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-family: var(--fantasy-font-ui);
+}
+
+.spell-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.spell-list li {
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background: var(--bg-primary);
+    border-radius: 5px;
+    border-left: 3px solid var(--magic-purple);
+    font-family: var(--fantasy-font-text);
+    font-size: 12px;
+    color: var(--text-primary);
 }
 
 .gesture-instructions ul {

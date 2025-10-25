@@ -1,0 +1,39 @@
+{
+  "name": "fantasy-os",
+  "version": "1.0.0",
+  "description": "Fantasy OS - Hobbit-Höhle Desktop Environment",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "npx serve . -p 3000",
+    "build": "echo 'No build step needed for static files'",
+    "serve": "npx serve . -p 8000",
+    "preview": "npx serve . -p 4000"
+  },
+  "keywords": [
+    "fantasy",
+    "desktop",
+    "hobbit",
+    "magic",
+    "interactive",
+    "web"
+  ],
+  "author": "Fantasy OS Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fantasy-os/vibejam-2"
+  },
+  "homepage": ".",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
