@@ -139,7 +139,58 @@ class HobbitCompanion {
             this.onObjectInteraction(objectType, room);
         });
         
+        // Set up hobbit image click handlers
+        this.setupHobbitClickHandlers();
+        
         console.log('🎯 Hobbit Companion event handlers set up');
+    }
+    
+    /**
+     * Set up click handlers for hobbit images
+     */
+    setupHobbitClickHandlers() {
+        // Wait for DOM to be ready
+        const setupHandlers = () => {
+            // Add click handlers to all hobbit images
+            const hobbitImages = document.querySelectorAll('.hobbit-image');
+            hobbitImages.forEach(image => {
+                // Remove existing listeners to avoid duplicates
+                image.removeEventListener('click', this.handleHobbitImageClick);
+                
+                // Add new listener
+                image.addEventListener('click', this.handleHobbitImageClick.bind(this));
+                
+                // Add cursor pointer style
+                image.style.cursor = 'pointer';
+            });
+            
+            console.log(`🧙‍♂️ Set up click handlers for ${hobbitImages.length} hobbit images`);
+        };
+        
+        // Try immediately, then retry if DOM not ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupHandlers);
+        } else {
+            setupHandlers();
+        }
+    }
+    
+    /**
+     * Handle hobbit image click
+     */
+    handleHobbitImageClick(e) {
+        console.log('🧙‍♂️ Hobbit image clicked!');
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Handle hobbit click
+        this.handleHobbitClick();
+        
+        // Add visual feedback
+        e.target.classList.add('clicked');
+        setTimeout(() => {
+            e.target.classList.remove('clicked');
+        }, 600);
     }
     
     /**
@@ -169,8 +220,77 @@ class HobbitCompanion {
         // Update personality based on interaction
         this.personality.updateFromInteraction(action);
         
+        // Check quest progress for hobbit interaction
+        this.checkQuestProgress('hobbit-interaction');
+        
         // Save state
         this.saveState();
+    }
+    
+    /**
+     * Handle hobbit click (when hobbit character is clicked)
+     */
+    handleHobbitClick() {
+        console.log('🧙‍♂️ Hobbit character clicked!');
+        
+        // Update interaction count
+        this.interactionCount++;
+        this.lastInteraction = new Date().toISOString();
+        
+        // Check quest progress for hobbit interaction
+        this.checkQuestProgress('hobbit-interaction');
+        
+        // Update personality based on interaction
+        this.personality.updateFromInteraction('click');
+        
+        // Save state
+        this.saveState();
+    }
+    
+    /**
+     * Check quest progress based on hobbit interaction
+     */
+    checkQuestProgress(trigger) {
+        console.log(`🎯 Checking quest progress for hobbit interaction: ${trigger}`);
+        
+        // Check if FantasyOS quest manager is available
+        if (typeof window.fantasyOS !== 'undefined' && window.fantasyOS.components.questManager) {
+            const questManager = window.fantasyOS.components.questManager;
+            
+            // Check active quests for progress
+            const activeQuests = questManager.getActiveQuests();
+            console.log(`🎯 Active quests: ${activeQuests.length}`);
+            
+            activeQuests.forEach(questId => {
+                const quest = questManager.getQuestInfo(questId);
+                if (quest && quest.steps) {
+                    console.log(`🎯 Checking quest: ${questId}`);
+                    
+                    // Find steps that match this hobbit interaction
+                    quest.steps.forEach(step => {
+                        if (step.room === 'living-room' && step.triggers && step.triggers.includes(trigger)) {
+                            if (!step.completed) {
+                                console.log(`✅ Quest step completed: ${step.id} (${step.title})`);
+                                questManager.updateQuestProgress(questId, step.id);
+                                
+                                // Update Hobbit dialogue if available
+                                if (step.hobbitDialogue) {
+                                    const hobbitText = document.querySelector('#hobbitDialogue .hobbit-text');
+                                    if (hobbitText) {
+                                        hobbitText.textContent = step.hobbitDialogue;
+                                        console.log(`🧙‍♂️ Hobbit dialogue updated: ${step.hobbitDialogue}`);
+                                    }
+                                }
+                            } else {
+                                console.log(`⏭️ Quest step already completed: ${step.id}`);
+                            }
+                        }
+                    });
+                }
+            });
+        } else {
+            console.log('❌ Quest manager not available');
+        }
     }
     
     /**

@@ -382,8 +382,8 @@ class RoomObjectOverlay {
         // Set initial dark mode for living room
         this.setInitialDarkMode();
         
-        // Add debug layer for development
-        this.addDebugLayer();
+        // Debug layer removed for production
+        // this.addDebugLayer();
         
         console.log('✨ Room Object Overlay System initialized!');
     }
@@ -823,7 +823,19 @@ class RoomObjectOverlay {
     handleBrowseAction(roomId, objectName, isActive) {
         const objectData = this.rooms[roomId].objects[objectName];
         console.log(`📖 Browsing ${objectData.name}...`);
-        this.showMessage(`Exploring ${objectData.name}...`);
+        
+        // Special handling for book in living room
+        if (roomId === 'living-room' && objectName === 'book') {
+            console.log('📖 Opening book window for living room book...');
+            if (window.bookWindow) {
+                window.bookWindow.showBookWindow();
+            } else {
+                console.log('❌ Book window system not available');
+                this.showMessage(`Exploring ${objectData.name}...`);
+            }
+        } else {
+            this.showMessage(`Exploring ${objectData.name}...`);
+        }
     }
     
     /**
@@ -1401,8 +1413,9 @@ class RoomObjectOverlay {
     }
     
     /**
-     * Add debug layer to visualize object areas
+     * Add debug layer to visualize object areas - DISABLED FOR PRODUCTION
      */
+    /*
     addDebugLayer() {
         console.log('🔍 Adding debug layer for object visualization...');
         
@@ -1434,10 +1447,12 @@ class RoomObjectOverlay {
         // Initially show debug layer
         this.showDebugLayer();
     }
+    */
     
     /**
-     * Toggle debug layer visibility
+     * Toggle debug layer visibility - DISABLED FOR PRODUCTION
      */
+    /*
     toggleDebugLayer() {
         const activeRoom = document.querySelector('.room.active');
         if (!activeRoom) return;
@@ -1450,10 +1465,12 @@ class RoomObjectOverlay {
             this.showDebugLayer();
         }
     }
+    */
     
     /**
-     * Show debug layer with object areas
+     * Show debug layer with object areas - DISABLED FOR PRODUCTION
      */
+    /*
     showDebugLayer() {
         const activeRoom = document.querySelector('.room.active');
         if (!activeRoom) return;
@@ -1529,6 +1546,7 @@ class RoomObjectOverlay {
         
         console.log('🔍 Debug overlay added - object areas are now visible!');
     }
+    */
 }
 
 // Export for module systems
