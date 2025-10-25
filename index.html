@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy OS - Hobbit-Höhle Desktop</title>
+    
+    <!-- Fantasy Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/rooms.css">
+    <link rel="stylesheet" href="css/objects.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Fantasy Desktop Container -->
+    <div class="fantasy-desktop" id="fantasyDesktop">
+        
+        <!-- Room Navigation -->
+        <nav class="room-navigation">
+            <div class="room-tabs">
+                <button class="room-tab active" data-room="living-room">
+                    <span class="room-icon">🏠</span>
+                    <span class="room-name">Wohnzimmer</span>
+                </button>
+                <button class="room-tab" data-room="kitchen">
+                    <span class="room-icon">🍳</span>
+                    <span class="room-name">Küche</span>
+                </button>
+                <button class="room-tab" data-room="bedroom">
+                    <span class="room-icon">🛏️</span>
+                    <span class="room-name">Schlafzimmer</span>
+                </button>
+                <button class="room-tab" data-room="workshop">
+                    <span class="room-icon">🔨</span>
+                    <span class="room-name">Werkstatt</span>
+                </button>
+                <button class="room-tab" data-room="library">
+                    <span class="room-icon">📚</span>
+                    <span class="room-name">Bibliothek</span>
+                </button>
+                <button class="room-tab" data-room="garden">
+                    <span class="room-icon">🌿</span>
+                    <span class="room-name">Garten</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Room Content -->
+        <main class="room-content">
+            
+            <!-- Living Room (Default) -->
+            <div class="room active" id="living-room">
+                <div class="room-background" style="background-image: url('assets/images/rooms/living-room.jpg');"></div>
+                
+                <!-- Interactive Objects -->
+                <div class="interactive-objects">
+                    
+                    <!-- Fireplace -->
+                    <div class="object fireplace" data-object="fireplace">
+                        <img src="assets/images/objects/fireplace.png" alt="Kamin" class="object-icon">
+                        <div class="object-tooltip">Kamin - Helligkeit/Energie</div>
+                        <div class="object-effects">
+                            <div class="fire-effect"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lamp -->
+                    <div class="object lamp" data-object="lamp">
+                        <img src="assets/images/objects/lamp.png" alt="Lampe" class="object-icon">
+                        <div class="object-tooltip">Lampe - Beleuchtung</div>
+                        <div class="object-effects">
+                            <div class="light-effect"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chest -->
+                    <div class="object chest" data-object="chest">
+                        <img src="assets/images/objects/chest.png" alt="Truhe" class="object-icon">
+                        <div class="object-tooltip">Truhe - Dateien speichern</div>
+                        <div class="object-effects">
+                            <div class="treasure-effect"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Crystal Ball -->
+                    <div class="object crystal-ball" data-object="crystal-ball">
+                        <img src="assets/images/objects/crystal-ball.png" alt="Kristallkugel" class="object-icon">
+                        <div class="object-tooltip">Kristallkugel - Monitor/Display</div>
+                        <div class="object-effects">
+                            <div class="magic-effect"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Spell Book -->
+                    <div class="object spell-book" data-object="spell-book">
+                        <img src="assets/images/objects/spell-book.png" alt="Zauberbuch" class="object-icon">
+                        <div class="object-tooltip">Zauberbuch - Hilfe/Dokumentation</div>
+                        <div class="object-effects">
+                            <div class="book-effect"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cauldron -->
+                    <div class="object cauldron" data-object="cauldron">
+                        <img src="assets/images/objects/cauldron.png" alt="Kessel" class="object-icon">
+                        <div class="object-tooltip">Kessel - Downloads/Verarbeitung</div>
+                        <div class="object-effects">
+                            <div class="brew-effect"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Magical Particles -->
+                <div class="particle-system">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+            </div>
+
+            <!-- Other Rooms (Hidden by default) -->
+            <div class="room" id="kitchen">
+                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.jpg');"></div>
+                <div class="room-content-text">
+                    <h2>Küche - Datei-Manager</h2>
+                    <p>Organisierte Speisekammer für deine Dateien</p>
+                </div>
+            </div>
+
+            <div class="room" id="bedroom">
+                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.jpg');"></div>
+                <div class="room-content-text">
+                    <h2>Schlafzimmer - Ruhemodus</h2>
+                    <p>Ruhiger Rückzugsort für Pausen</p>
+                </div>
+            </div>
+
+            <div class="room" id="workshop">
+                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.jpg');"></div>
+                <div class="room-content-text">
+                    <h2>Werkstatt - Tools/Apps</h2>
+                    <p>Arbeitsplatz mit Werkzeugen und Anwendungen</p>
+                </div>
+            </div>
+
+            <div class="room" id="library">
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.jpg');"></div>
+                <div class="room-content-text">
+                    <h2>Bibliothek - Dokumente</h2>
+                    <p>Bücher und Schriftrollen für deine Dokumente</p>
+                </div>
+            </div>
+
+            <div class="room" id="garden">
+                <div class="room-background" style="background-image: url('assets/images/rooms/garden.jpg');"></div>
+                <div class="room-content-text">
+                    <h2>Garten - Externe Verbindungen</h2>
+                    <p>Verbindung zur Außenwelt und Internet</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Spell System -->
+        <div class="spell-system">
+            <div class="spell-input-container">
+                <input type="text" id="spellInput" placeholder="Zauberspruch eingeben..." class="spell-input">
+                <button id="castSpell" class="cast-spell-btn">Zaubern</button>
+            </div>
+            
+            <div class="gesture-canvas-container">
+                <canvas id="gestureCanvas" class="gesture-canvas"></canvas>
+                <div class="gesture-instructions">
+                    <p>Zeichne Gesten für Zaubersprüche:</p>
+                    <ul>
+                        <li>Kreis = Portal öffnen</li>
+                        <li>Zick-Zack = Blitz</li>
+                        <li>Spirale = Feuer</li>
+                        <li>Herz = Favoriten</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span class="current-room">Wohnzimmer</span>
+                <span class="magic-level">Magie: 100%</span>
+            </div>
+            <div class="status-center">
+                <div class="spell-history">
+                    <span class="last-spell">Letzter Zauberspruch: -</span>
+                </div>
+            </div>
+            <div class="status-right">
+                <button class="help-btn" id="helpBtn">Hilfe</button>
+                <button class="settings-btn" id="settingsBtn">Einstellungen</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Zauberbuch - Hilfe</h2>
+                <button class="close-btn" id="closeHelp">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Zaubersprüche:</h3>
+                <ul>
+                    <li><code>"ignite fireplace"</code> - Kamin entzünden</li>
+                    <li><code>"summon light"</code> - Lampe einschalten</li>
+                    <li><code>"open portal to kitchen"</code> - Küche öffnen</li>
+                    <li><code>"store treasure in chest"</code> - Datei speichern</li>
+                    <li><code>"cast protection spell"</code> - Sicherheitsmodus</li>
+                    <li><code>"brew potion"</code> - Download starten</li>
+                    <li><code>"read ancient tome"</code> - Dokument öffnen</li>
+                </ul>
+                
+                <h3>Gesten:</h3>
+                <ul>
+                    <li>Kreis zeichnen - Portal öffnen</li>
+                    <li>Zick-Zack - Blitz (Licht)</li>
+                    <li>Spirale - Feuer (Wärme)</li>
+                    <li>Herz - Favoriten hinzufügen</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Einstellungen</h2>
+                <button class="close-btn" id="closeSettings">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="soundVolume">Sound-Lautstärke:</label>
+                    <input type="range" id="soundVolume" min="0" max="100" value="50">
+                </div>
+                <div class="setting-group">
+                    <label for="particleEffects">Partikel-Effekte:</label>
+                    <input type="checkbox" id="particleEffects" checked>
+                </div>
+                <div class="setting-group">
+                    <label for="gestureRecognition">Gesten-Erkennung:</label>
+                    <input type="checkbox" id="gestureRecognition" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/sound-system.js"></script>
+    <script src="js/gesture-recognition.js"></script>
+    <script src="js/spell-parser.js"></script>
+    <script src="js/room-manager.js"></script>
+    <script src="js/object-interaction.js"></script>
+    <script src="js/particle-system.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
