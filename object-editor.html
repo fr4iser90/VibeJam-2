@@ -480,7 +480,13 @@
         }
         
         function updateObjectList() {
-            const list = document.getElementById('objectList');
+            // Find the active room's object list
+            const activeRoom = document.querySelector('.room.active');
+            if (!activeRoom) return;
+            
+            const list = activeRoom.querySelector('.object-list');
+            if (!list) return;
+            
             if (objects.length === 0) {
                 list.innerHTML = '<p>Noch keine Objekte identifiziert</p>';
                 return;
@@ -499,8 +505,15 @@
         }
         
         function drawObjectAreas() {
+            // Find the active room's image container
+            const activeRoom = document.querySelector('.room.active');
+            if (!activeRoom) return;
+            
+            const imageContainer = activeRoom.querySelector('.image-container');
+            if (!imageContainer) return;
+            
             // Remove existing areas
-            document.querySelectorAll('.click-area').forEach(area => area.remove());
+            imageContainer.querySelectorAll('.click-area').forEach(area => area.remove());
             
             // Draw new areas
             objects.forEach((obj, index) => {
@@ -535,9 +548,10 @@
                     selectObject(index);
                 });
                 
-                document.querySelector('.image-container').appendChild(area);
+                imageContainer.appendChild(area);
             });
         }
+        
         
         let selectedObject = null;
         let isResizing = false;
