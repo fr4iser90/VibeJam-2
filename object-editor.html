@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy OS - Hobbit-Höhle Desktop</title>
+    
+    <!-- Fantasy Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/fantasy-variables.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/rooms.css">
+    <link rel="stylesheet" href="css/objects.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/room-object-overlay.css">
+    
+    <!-- Object Editor Styles -->
+    <style>
+        /* Object Editor Styles */
+        .object-editor-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100vh;
+            background: rgba(0,0,0,0.9);
+            border-left: 2px solid var(--magic-gold);
+            z-index: 10000;
+            padding: 20px;
+            overflow-y: auto;
+            display: none;
+            font-family: 'MedievalSharp', cursive;
+        }
+        
+        .object-editor-sidebar.active {
+            display: block;
+        }
+        
+        .object-editor-sidebar h3 {
+            color: var(--magic-gold);
+            margin-top: 0;
+            font-family: 'MedievalSharp', cursive;
+        }
+        
+        .object-editor-sidebar button {
+            background: var(--magic-purple);
+            color: white;
+            border: 2px solid var(--magic-gold);
+            padding: 8px 12px;
+            margin: 5px 5px 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 12px;
+        }
+        
+        .object-editor-sidebar button:hover {
+            background: var(--magic-gold);
+            color: var(--magic-purple);
+        }
+        
+        .editor-coordinates {
+            font-family: monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid var(--magic-gold);
+        }
+        
+        .editor-object-list {
+            margin-top: 20px;
+        }
+        
+        .editor-object-item {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid var(--magic-gold);
+        }
+        
+        .editor-click-area {
+            position: absolute;
+            border: 2px solid rgba(212, 175, 55, 0.7);
+            background: rgba(212, 175, 55, 0.2);
+            pointer-events: none;
+            z-index: 1000;
+            cursor: move;
+        }
+        
+        .editor-click-area.active {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.3);
+        }
+        
+        .editor-resize-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #D4AF37;
+            border: 1px solid white;
+            pointer-events: all;
+            cursor: nw-resize;
+        }
+        
+        .editor-resize-handle.se {
+            bottom: -5px;
+            right: -5px;
+            cursor: se-resize;
+        }
+        
+        .editor-resize-handle.sw {
+            bottom: -5px;
+            left: -5px;
+            cursor: sw-resize;
+        }
+        
+        .editor-resize-handle.ne {
+            top: -5px;
+            right: -5px;
+            cursor: ne-resize;
+        }
+        
+        .editor-resize-handle.nw {
+            top: -5px;
+            left: -5px;
+            cursor: nw-resize;
+        }
+        
+        .editor-click-indicator {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+            border: 2px solid white;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1001;
+        }
+        
+        /* Disable gesture system when editor is active */
+        .fantasy-desktop.editor-mode .gesture-canvas-container {
+            display: none !important;
+        }
+        
+        .fantasy-desktop.editor-mode .room-object-overlay {
+            display: none !important;
+        }
+        
+        .fantasy-desktop.editor-mode .room-background {
+            cursor: crosshair !important;
+            pointer-events: auto !important;
+        }
+        
+        /* Hide side panels in editor mode */
+        .fantasy-desktop.editor-mode .room-side-panel {
+            display: none !important;
+        }
+        
+        /* Make room background full width in editor mode */
+        .fantasy-desktop.editor-mode .room-background {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Fantasy Desktop Container -->
+    <div class="fantasy-desktop" id="fantasyDesktop">
+        
+        <!-- Room Navigation -->
+        <nav class="room-navigation">
+            <div class="room-tabs">
+                <button class="room-tab active" data-room="living-room">
+                    <span class="room-icon">🏠</span>
+                    <span class="room-name">Living Room</span>
+                </button>
+                <button class="room-tab" data-room="kitchen">
+                    <span class="room-icon">🍳</span>
+                    <span class="room-name">Kitchen</span>
+                </button>
+                <button class="room-tab" data-room="bedroom">
+                    <span class="room-icon">🛏️</span>
+                    <span class="room-name">Bedroom</span>
+                </button>
+                <button class="room-tab" data-room="workshop">
+                    <span class="room-icon">🔨</span>
+                    <span class="room-name">Workshop</span>
+                </button>
+                <button class="room-tab" data-room="library">
+                    <span class="room-icon">📚</span>
+                    <span class="room-name">Library</span>
+                </button>
+                <button class="room-tab" data-room="garden">
+                    <span class="room-icon">🌿</span>
+                    <span class="room-name">Garden</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Room Content -->
+        <main class="room-content">
+            
+            <!-- Living Room (Default) -->
+            <div class="room active" id="living-room">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Spells</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInput" placeholder="Enter spell..." class="spell-input">
+                        <button id="castSpell" class="cast-spell-btn">Cast</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Known Spells:</h4>
+                        <ul>
+                            <li>"ignite fireplace"</li>
+                            <li>"summon light"</li>
+                            <li>"open portal to kitchen"</li>
+                            <li>"store treasure in chest"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');">
+                    <!-- Interactive Objects are now handled by RoomObjectOverlay system -->
+                    <!-- No need for separate object elements - clicks are detected on the background -->
+                    
+                    <!-- Magical Particles -->
+                    <div class="particle-system">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="gesture-instructions">
+                        <h4>Click Coordinates:</h4>
+                        <div id="coordinates" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
+                        <p><strong>Click anywhere on the room to add objects!</strong></p>
+                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
+                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Rooms (Hidden by default) -->
+            <div class="room" id="kitchen">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Spells</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputKitchen" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellKitchen" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Kitchen Spells:</h4>
+                        <ul>
+                            <li>"brew potion"</li>
+                            <li>"summon ingredients"</li>
+                            <li>"clean cauldron"</li>
+                            <li>"heat water"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');">
+                    <div class="room-content-text">
+                        <h2>Kitchen - File Manager</h2>
+                        <p>Organized pantry for your files</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="gesture-instructions">
+                        <h4>Click Coordinates:</h4>
+                        <div id="coordinatesKitchen" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
+                        <p><strong>Click anywhere on the room to add objects!</strong></p>
+                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
+                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room" id="bedroom">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Spells</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputBedroom" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellBedroom" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Bedroom Spells:</h4>
+                        <ul>
+                            <li>"rest mode"</li>
+                            <li>"sleep timer"</li>
+                            <li>"dream portal"</li>
+                            <li>"wake up"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');">
+                    <div class="room-content-text">
+                        <h2>Bedroom - Rest Mode</h2>
+                        <p>Quiet retreat for breaks</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="gesture-instructions">
+                        <h4>Click Coordinates:</h4>
+                        <div id="coordinatesBedroom" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
+                        <p><strong>Click anywhere on the room to add objects!</strong></p>
+                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
+                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room" id="workshop">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Spells</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputWorkshop" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellWorkshop" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Workshop Spells:</h4>
+                        <ul>
+                            <li>"craft tool"</li>
+                            <li>"repair item"</li>
+                            <li>"upgrade system"</li>
+                            <li>"forge weapon"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');">
+                    <div class="room-content-text">
+                        <h2>Workshop - Tools/Apps</h2>
+                        <p>Workplace with tools and applications</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="gesture-instructions">
+                        <h4>Click Coordinates:</h4>
+                        <div id="coordinatesWorkshop" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
+                        <p><strong>Click anywhere on the room to add objects!</strong></p>
+                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
+                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room" id="library">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Spells</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputLibrary" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellLibrary" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Library Spells:</h4>
+                        <ul>
+                            <li>"open book"</li>
+                            <li>"search knowledge"</li>
+                            <li>"save document"</li>
+                            <li>"archive scroll"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
+                    <div class="room-content-text">
+                        <h2>Library - Documents</h2>
+                        <p>Books and scrolls for your documents</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="gesture-instructions">
+                        <h4>Click Coordinates:</h4>
+                        <div id="coordinatesLibrary" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
+                        <p><strong>Click anywhere on the room to add objects!</strong></p>
+                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
+                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room" id="garden">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Spells</h3>
+                    <div class="spell-input-container">
+                        <input type="text" id="spellInputGarden" placeholder="Zauberspruch eingeben..." class="spell-input">
+                        <button id="castSpellGarden" class="cast-spell-btn">Zaubern</button>
+                    </div>
+                    <div class="spell-list">
+                        <h4>Garden Spells:</h4>
+                        <ul>
+                            <li>"connect internet"</li>
+                            <li>"open portal"</li>
+                            <li>"grow network"</li>
+                            <li>"harvest data"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
+                    <div class="room-content-text">
+                        <h2>Garden - External Connections</h2>
+                        <p>Connection to the outside world and internet</p>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="gesture-instructions">
+                        <h4>Click Coordinates:</h4>
+                        <div id="coordinatesGarden" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
+                        <p><strong>Click anywhere on the room to add objects!</strong></p>
+                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
+                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span class="current-room">Living Room</span>
+                <span class="magic-level">Magic: 100%</span>
+            </div>
+            <div class="status-center">
+                <div class="spell-history">
+                    <span class="last-spell">Last Spell: -</span>
+                </div>
+            </div>
+            <div class="status-right">
+                <button class="help-btn" id="helpBtn">Help</button>
+                <button class="settings-btn" id="settingsBtn">Settings</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Object Editor Sidebar -->
+    <div class="object-editor-sidebar" id="objectEditorSidebar">
+        <h3>🎯 Object Editor - <span id="currentRoomName">Living Room</span></h3>
+        
+        <div class="editor-coordinates" id="editorCoordinates">Click on the image</div>
+        
+        <h3>📝 Identified Objects</h3>
+        <div class="editor-object-list" id="editorObjectList">
+            <p>No objects identified yet</p>
+        </div>
+        
+        <button onclick="clearCurrentRoom()">🗑️ Clear All</button>
+        <button onclick="exportCurrentRoom()">📤 Export</button>
+        
+        <h3>⌨️ Keyboard Shortcuts</h3>
+        <div style="font-size: 12px; color: #ccc;">
+            <p><strong>WASD:</strong> Resize (when object selected)</p>
+            <p><strong>W:</strong> Height +10px</p>
+            <p><strong>S:</strong> Height -10px</p>
+            <p><strong>A:</strong> Width -10px</p>
+            <p><strong>D:</strong> Width +10px</p>
+            <p><strong>Delete:</strong> Delete selected object</p>
+            <p><strong>ESC:</strong> Close editor</p>
+        </div>
+    </div>
+    
+    <div class="editor-click-indicator" id="editorClickIndicator" style="display: none;"></div>
+
+    <!-- JavaScript -->
+    <script src="js/sound-system.js"></script>
+    <script src="js/utils/gesture-helpers.js"></script>
+    <script src="js/gesture-patterns.js"></script>
+    <script src="js/gesture-analysis.js"></script>
+    <script src="js/gesture-actions.js"></script>
+    <script src="js/gesture-recognition.js"></script>
+    <script src="js/spell-parser.js"></script>
+    <script src="js/room-manager.js"></script>
+    <script src="js/object-interaction.js"></script>
+    <script src="js/room-object-overlay.js"></script>
+    <script src="js/particle-system.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Editor functionality
+        let objects = {};
+        let currentRoom = 'living-room';
+        let selectedObject = null;
+        let isResizing = false;
+        
+        // Initialize room data
+        const roomData = {
+            'living-room': { name: 'Living Room', image: 'assets/images/rooms/living-room.png' },
+            'kitchen': { name: 'Kitchen', image: 'assets/images/rooms/kitchen.png' },
+            'bedroom': { name: 'Bedroom', image: 'assets/images/rooms/bedroom.png' },
+            'workshop': { name: 'Workshop', image: 'assets/images/rooms/workshop.png' },
+            'library': { name: 'Library', image: 'assets/images/rooms/library.png' },
+            'garden': { name: 'Garden', image: 'assets/images/rooms/garden.png' }
+        };
+        
+        function toggleEditor() {
+            const editorSidebar = document.getElementById('objectEditorSidebar');
+            const fantasyDesktop = document.getElementById('fantasyDesktop');
+            const isVisible = editorSidebar.classList.contains('active');
+            
+            if (isVisible) {
+                editorSidebar.classList.remove('active');
+                fantasyDesktop.classList.remove('editor-mode');
+                removeClickListeners();
+            } else {
+                editorSidebar.classList.add('active');
+                fantasyDesktop.classList.add('editor-mode');
+                addClickListeners();
+                updateCurrentRoomDisplay();
+            }
+        }
+        
+        function addClickListeners() {
+            const roomBackground = document.querySelector(`#${currentRoom} .room-background`);
+            if (roomBackground) {
+                roomBackground.addEventListener('click', handleRoomClick);
+            }
+        }
+        
+        function removeClickListeners() {
+            const roomBackground = document.querySelector(`#${currentRoom} .room-background`);
+            if (roomBackground) {
+                roomBackground.removeEventListener('click', handleRoomClick);
+            }
+        }
+        
+        function handleRoomClick(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Show click indicator
+            const indicator = document.getElementById('editorClickIndicator');
+            indicator.style.display = 'block';
+            indicator.style.left = e.clientX + 'px';
+            indicator.style.top = e.clientY + 'px';
+            
+            // Update coordinates display in right panel
+            const coordinatesElement = document.getElementById(`coordinates${currentRoom.charAt(0).toUpperCase() + currentRoom.slice(1)}`);
+            if (coordinatesElement) {
+                coordinatesElement.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+            
+            // Update editor coordinates
+            document.getElementById('editorCoordinates').textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            
+            // Ask for object name
+            const objectName = prompt('What object is this? (e.g. "fireplace", "lamp", "chest")');
+            if (objectName) {
+                addObject(objectName, x, y);
+            }
+            
+            // Hide indicator after 1 second
+            setTimeout(() => {
+                indicator.style.display = 'none';
+            }, 1000);
+        }
+        
+        function addObject(name, x, y) {
+            if (!objects[currentRoom]) {
+                objects[currentRoom] = [];
+            }
+            
+            const object = {
+                name: name,
+                x: Math.round(x - 50), // Convert center to top-left corner
+                y: Math.round(y - 50), // Convert center to top-left corner
+                width: 100, // Default width
+                height: 100 // Default height
+            };
+            
+            objects[currentRoom].push(object);
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function updateObjectList() {
+            const list = document.getElementById('editorObjectList');
+            const roomObjects = objects[currentRoom] || [];
+            
+            if (roomObjects.length === 0) {
+                list.innerHTML = '<p>No objects identified yet</p>';
+                return;
+            }
+            
+            list.innerHTML = roomObjects.map((obj, index) => `
+                <div class="editor-object-item">
+                    <strong>${obj.name}</strong><br>
+                    Position (top-left): ${obj.x}, ${obj.y}<br>
+                    Size: ${obj.width} x ${obj.height}<br>
+                    Center: ${obj.x + obj.width/2}, ${obj.y + obj.height/2}<br>
+                    <button onclick="editObject(${index})">✏️ Edit</button>
+                    <button onclick="deleteObject(${index})">🗑️ Delete</button>
+                </div>
+            `).join('');
+        }
+        
+        function drawObjectAreas() {
+            // Remove existing areas
+            document.querySelectorAll('.editor-click-area').forEach(area => area.remove());
+            
+            const roomObjects = objects[currentRoom] || [];
+            
+            // Draw new areas
+            roomObjects.forEach((obj, index) => {
+                const area = document.createElement('div');
+                area.className = 'editor-click-area';
+                area.style.left = obj.x + 'px';
+                area.style.top = obj.y + 'px';
+                area.style.width = obj.width + 'px';
+                area.style.height = obj.height + 'px';
+                area.title = obj.name;
+                area.dataset.index = index;
+                
+                // Add resize handles
+                const handles = ['nw', 'ne', 'sw', 'se'];
+                handles.forEach(handle => {
+                    const resizeHandle = document.createElement('div');
+                    resizeHandle.className = `editor-resize-handle ${handle}`;
+                    resizeHandle.dataset.index = index;
+                    resizeHandle.dataset.handle = handle;
+                    
+                    resizeHandle.addEventListener('mousedown', (e) => {
+                        e.stopPropagation();
+                        startResize(index, handle, e);
+                    });
+                    
+                    area.appendChild(resizeHandle);
+                });
+                
+                // Add click to select
+                area.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectObject(index);
+                });
+                
+                document.querySelector(`#${currentRoom}`).appendChild(area);
+            });
+        }
+        
+        function selectObject(index) {
+            // Remove previous selection
+            document.querySelectorAll('.editor-click-area').forEach(area => {
+                area.classList.remove('active');
+            });
+            
+            // Select new object
+            const areas = document.querySelectorAll('.editor-click-area');
+            if (areas[index]) {
+                areas[index].classList.add('active');
+                selectedObject = index;
+            }
+        }
+        
+        function startResize(index, handle, e) {
+            isResizing = true;
+            const roomObjects = objects[currentRoom] || [];
+            const obj = roomObjects[index];
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startWidth = obj.width;
+            const startHeight = obj.height;
+            const startX_pos = obj.x;
+            const startY_pos = obj.y;
+            
+            function doResize(e) {
+                if (!isResizing) return;
+                
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                switch(handle) {
+                    case 'se': // Bottom-right
+                        obj.width = Math.max(20, startWidth + deltaX);
+                        obj.height = Math.max(20, startHeight + deltaY);
+                        break;
+                    case 'sw': // Bottom-left
+                        obj.width = Math.max(20, startWidth - deltaX);
+                        obj.height = Math.max(20, startHeight + deltaY);
+                        obj.x = startX_pos + deltaX;
+                        break;
+                    case 'ne': // Top-right
+                        obj.width = Math.max(20, startWidth + deltaX);
+                        obj.height = Math.max(20, startHeight - deltaY);
+                        obj.y = startY_pos + deltaY;
+                        break;
+                    case 'nw': // Top-left
+                        obj.width = Math.max(20, startWidth - deltaX);
+                        obj.height = Math.max(20, startHeight - deltaY);
+                        obj.x = startX_pos + deltaX;
+                        obj.y = startY_pos + deltaY;
+                        break;
+                }
+                
+                updateObjectList();
+                drawObjectAreas();
+                if (selectedObject === index) {
+                    selectObject(index);
+                }
+            }
+            
+            function stopResize() {
+                isResizing = false;
+                document.removeEventListener('mousemove', doResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+            
+            document.addEventListener('mousemove', doResize);
+            document.addEventListener('mouseup', stopResize);
+        }
+        
+        function editObject(index) {
+            const roomObjects = objects[currentRoom] || [];
+            const obj = roomObjects[index];
+            const newName = prompt('New name:', obj.name);
+            if (newName) obj.name = newName;
+            
+            const newWidth = prompt('New width:', obj.width);
+            if (newWidth) obj.width = parseInt(newWidth);
+            
+            const newHeight = prompt('New height:', obj.height);
+            if (newHeight) obj.height = parseInt(newHeight);
+            
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function deleteObject(index) {
+            const roomObjects = objects[currentRoom] || [];
+            roomObjects.splice(index, 1);
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function clearCurrentRoom() {
+            objects[currentRoom] = [];
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function exportObjects() {
+            exportCurrentRoom();
+        }
+        
+        function exportCurrentRoom() {
+            const roomObjects = objects[currentRoom] || [];
+            const exportData = {
+                [currentRoom]: {
+                    name: roomData[currentRoom].name,
+                    backgroundImage: roomData[currentRoom].image,
+                    darkBackgroundImage: roomData[currentRoom].image.replace('.png', '-dark.png'),
+                    objects: {}
+                }
+            };
+            
+            roomObjects.forEach(obj => {
+                exportData[currentRoom].objects[obj.name] = {
+                    name: obj.name.charAt(0).toUpperCase() + obj.name.slice(1),
+                    description: `${obj.name} object`,
+                    action: 'interact',
+                    effects: ['interaction'],
+                    sound: 'object-click',
+                    animation: 'objectGlow',
+                    clickableArea: {
+                        x: obj.x,
+                        y: obj.y,
+                        width: obj.width,
+                        height: obj.height
+                    }
+                };
+            });
+            
+            console.log('Export Data:', JSON.stringify(exportData, null, 2));
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(JSON.stringify(exportData, null, 2)).then(() => {
+                alert('Data copied to clipboard!');
+            });
+        }
+        
+        function updateCurrentRoomDisplay() {
+            document.getElementById('currentRoomName').textContent = roomData[currentRoom].name;
+        }
+        
+        // Room switching
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.room-tab')) {
+                const roomTab = e.target.closest('.room-tab');
+                const roomId = roomTab.dataset.room;
+                
+                // Update active tab
+                document.querySelectorAll('.room-tab').forEach(tab => tab.classList.remove('active'));
+                roomTab.classList.add('active');
+                
+                // Update active room
+                document.querySelectorAll('.room').forEach(room => room.classList.remove('active'));
+                document.getElementById(roomId).classList.add('active');
+                
+                // Update current room
+                currentRoom = roomId;
+                document.querySelector('.current-room').textContent = roomData[roomId].name;
+                
+                // Update editor if open
+                if (document.getElementById('objectEditorSidebar').classList.contains('active')) {
+                    updateCurrentRoomDisplay();
+                    updateObjectList();
+                    drawObjectAreas();
+                }
+            }
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('objectEditorSidebar').classList.contains('active')) {
+                if (selectedObject !== null) {
+                    const roomObjects = objects[currentRoom] || [];
+                    const obj = roomObjects[selectedObject];
+                    
+                    switch(e.key.toLowerCase()) {
+                        case 'w':
+                            obj.height = Math.max(20, obj.height + 10);
+                            updateObjectList();
+                            drawObjectAreas();
+                            selectObject(selectedObject);
+                            break;
+                        case 's':
+                            obj.height = Math.max(20, obj.height - 10);
+                            updateObjectList();
+                            drawObjectAreas();
+                            selectObject(selectedObject);
+                            break;
+                        case 'a':
+                            obj.width = Math.max(20, obj.width - 10);
+                            updateObjectList();
+                            drawObjectAreas();
+                            selectObject(selectedObject);
+                            break;
+                        case 'd':
+                            obj.width = Math.max(20, obj.width + 10);
+                            updateObjectList();
+                            drawObjectAreas();
+                            selectObject(selectedObject);
+                            break;
+                        case 'delete':
+                            deleteObject(selectedObject);
+                            selectedObject = null;
+                            break;
+                    }
+                }
+                
+                if (e.key === 'Escape') {
+                    toggleEditor();
+                }
+            }
+        });
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            console.log('🎯 Fantasy OS Object Editor initialized');
+            
+            // Update time display
+            function updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('de-DE', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                const timeElement = document.querySelector('.status-right');
+                if (timeElement) {
+                    timeElement.innerHTML = `<span class="current-time">${timeString}</span><button class="help-btn" id="helpBtn">Help</button><button class="settings-btn" id="settingsBtn">Settings</button>`;
+                }
+            }
+            
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>

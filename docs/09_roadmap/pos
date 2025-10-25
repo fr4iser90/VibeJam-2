@@ -1,0 +1,43 @@
+
+{
+  "living-room": {
+    "name": "Living Room",
+    "backgroundImage": "assets/images/rooms/living-room.png",
+    "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+    "objects": {
+      "lamp": {
+        "name": "Lamp",
+        "description": "lamp object",
+        "action": "interact",
+        "effects": [
+          "interaction"
+        ],
+        "sound": "object-click",
+        "animation": "objectGlow",
+        "clickableArea": {
+          "x": 655,
+          "y": 631,
+          "width": 94,
+          "height": 170
+        }
+      },
+      "fireplace": {
+        "name": "Fireplace",
+        "description": "fireplace object",
+        "action": "interact",
+        "effects": [
+          "interaction"
+        ],
+        "sound": "object-click",
+        "animation": "objectGlow",
+        "clickableArea": {
+          "x": 156,
+          "y": 685,
+          "width": 197,
+          "height": 117
+        }
+      }
+    }
+  }
+}
+
