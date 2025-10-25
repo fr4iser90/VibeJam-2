@@ -111,6 +111,11 @@
             left: -5px;
             cursor: nw-resize;
         }
+        
+        /* Force room visibility */
+        .room:not(.active) {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -201,6 +206,216 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Kitchen -->
+            <div class="room" id="kitchen">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="info-panel">
+                        <h3>🎯 Klick-Koordinaten</h3>
+                        <div class="coordinates" id="coordinatesKitchen">Klicke auf das Bild</div>
+                        
+                        <h3>📝 Identifizierte Objekte</h3>
+                        <div class="object-list" id="objectListKitchen">
+                            <p>Noch keine Objekte identifiziert</p>
+                        </div>
+                        
+                        <button onclick="clearObjects()">🗑️ Alle löschen</button>
+                        <button onclick="exportObjects()">📤 Exportieren</button>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');">
+                    <div class="image-container">
+                        <img src="assets/images/rooms/kitchen.png" alt="Kitchen" class="room-image" id="roomImageKitchen">
+                        <div class="click-indicator" id="clickIndicatorKitchen" style="display: none;"></div>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Instructions</h3>
+                    <div class="gesture-instructions">
+                        <h4>Kitchen Objects:</h4>
+                        <ul>
+                            <li>Cauldron</li>
+                            <li>Ingredients</li>
+                            <li>Utensils</li>
+                            <li>Storage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bedroom -->
+            <div class="room" id="bedroom">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="info-panel">
+                        <h3>🎯 Klick-Koordinaten</h3>
+                        <div class="coordinates" id="coordinatesBedroom">Klicke auf das Bild</div>
+                        
+                        <h3>📝 Identifizierte Objekte</h3>
+                        <div class="object-list" id="objectListBedroom">
+                            <p>Noch keine Objekte identifiziert</p>
+                        </div>
+                        
+                        <button onclick="clearObjects()">🗑️ Alle löschen</button>
+                        <button onclick="exportObjects()">📤 Exportieren</button>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');">
+                    <div class="image-container">
+                        <img src="assets/images/rooms/bedroom.png" alt="Bedroom" class="room-image" id="roomImageBedroom">
+                        <div class="click-indicator" id="clickIndicatorBedroom" style="display: none;"></div>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Instructions</h3>
+                    <div class="gesture-instructions">
+                        <h4>Bedroom Objects:</h4>
+                        <ul>
+                            <li>Bed</li>
+                            <li>Nightstand</li>
+                            <li>Wardrobe</li>
+                            <li>Mirror</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workshop -->
+            <div class="room" id="workshop">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="info-panel">
+                        <h3>🎯 Klick-Koordinaten</h3>
+                        <div class="coordinates" id="coordinatesWorkshop">Klicke auf das Bild</div>
+                        
+                        <h3>📝 Identifizierte Objekte</h3>
+                        <div class="object-list" id="objectListWorkshop">
+                            <p>Noch keine Objekte identifiziert</p>
+                        </div>
+                        
+                        <button onclick="clearObjects()">🗑️ Alle löschen</button>
+                        <button onclick="exportObjects()">📤 Exportieren</button>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');">
+                    <div class="image-container">
+                        <img src="assets/images/rooms/workshop.png" alt="Workshop" class="room-image" id="roomImageWorkshop">
+                        <div class="click-indicator" id="clickIndicatorWorkshop" style="display: none;"></div>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Instructions</h3>
+                    <div class="gesture-instructions">
+                        <h4>Workshop Objects:</h4>
+                        <ul>
+                            <li>Workbench</li>
+                            <li>Tools</li>
+                            <li>Forge</li>
+                            <li>Materials</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library -->
+            <div class="room" id="library">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="info-panel">
+                        <h3>🎯 Klick-Koordinaten</h3>
+                        <div class="coordinates" id="coordinatesLibrary">Klicke auf das Bild</div>
+                        
+                        <h3>📝 Identifizierte Objekte</h3>
+                        <div class="object-list" id="objectListLibrary">
+                            <p>Noch keine Objekte identifiziert</p>
+                        </div>
+                        
+                        <button onclick="clearObjects()">🗑️ Alle löschen</button>
+                        <button onclick="exportObjects()">📤 Exportieren</button>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
+                    <div class="image-container">
+                        <img src="assets/images/rooms/library.png" alt="Library" class="room-image" id="roomImageLibrary">
+                        <div class="click-indicator" id="clickIndicatorLibrary" style="display: none;"></div>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Instructions</h3>
+                    <div class="gesture-instructions">
+                        <h4>Library Objects:</h4>
+                        <ul>
+                            <li>Bookshelf</li>
+                            <li>Reading Desk</li>
+                            <li>Scrolls</li>
+                            <li>Crystal Ball</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Garden -->
+            <div class="room" id="garden">
+                <!-- Left Side Panel -->
+                <div class="room-side-panel left">
+                    <h3 class="fantasy-header">Object Editor</h3>
+                    <div class="info-panel">
+                        <h3>🎯 Klick-Koordinaten</h3>
+                        <div class="coordinates" id="coordinatesGarden">Klicke auf das Bild</div>
+                        
+                        <h3>📝 Identifizierte Objekte</h3>
+                        <div class="object-list" id="objectListGarden">
+                            <p>Noch keine Objekte identifiziert</p>
+                        </div>
+                        
+                        <button onclick="clearObjects()">🗑️ Alle löschen</button>
+                        <button onclick="exportObjects()">📤 Exportieren</button>
+                    </div>
+                </div>
+                
+                <!-- Center Background -->
+                <div class="room-background" style="background-image: url('assets/images/rooms/garden.png');">
+                    <div class="image-container">
+                        <img src="assets/images/rooms/garden.png" alt="Garden" class="room-image" id="roomImageGarden">
+                        <div class="click-indicator" id="clickIndicatorGarden" style="display: none;"></div>
+                    </div>
+                </div>
+                
+                <!-- Right Side Panel -->
+                <div class="room-side-panel right">
+                    <h3 class="fantasy-header">Instructions</h3>
+                    <div class="gesture-instructions">
+                        <h4>Garden Objects:</h4>
+                        <ul>
+                            <li>Plants</li>
+                            <li>Fountain</li>
+                            <li>Portal</li>
+                            <li>Nature Magic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
     
@@ -208,30 +423,46 @@
         let objects = [];
         let imageRect = null;
         
-        document.getElementById('roomImage').addEventListener('click', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Show click indicator
-            const indicator = document.getElementById('clickIndicator');
-            indicator.style.display = 'block';
-            indicator.style.left = e.clientX + 'px';
-            indicator.style.top = e.clientY + 'px';
-            
-            // Update coordinates display
-            document.getElementById('coordinates').textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
-            
-            // Ask for object name
-            const objectName = prompt('Welches Objekt ist das? (z.B. "fireplace", "lamp", "chest")');
-            if (objectName) {
-                addObject(objectName, x, y);
-            }
-            
-            // Hide indicator after 1 second
-            setTimeout(() => {
-                indicator.style.display = 'none';
-            }, 1000);
+        
+        // Add click listeners to all room images
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.room-image').forEach(image => {
+                image.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Find the corresponding indicator and coordinates in the same room
+                    const room = this.closest('.room');
+                    const indicator = room.querySelector('.click-indicator');
+                    const coordinates = room.querySelector('.coordinates');
+                    
+                    // Show click indicator
+                    if (indicator) {
+                        indicator.style.display = 'block';
+                        indicator.style.left = e.clientX + 'px';
+                        indicator.style.top = e.clientY + 'px';
+                    }
+                    
+                    // Update coordinates display
+                    if (coordinates) {
+                        coordinates.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+                    }
+                    
+                    // Ask for object name
+                    const objectName = prompt('Welches Objekt ist das? (z.B. "fireplace", "lamp", "chest")');
+                    if (objectName) {
+                        addObject(objectName, x, y);
+                    }
+                    
+                    // Hide indicator after 1 second
+                    setTimeout(() => {
+                        if (indicator) {
+                            indicator.style.display = 'none';
+                        }
+                    }, 1000);
+                });
+            });
         });
         
         function addObject(name, x, y) {
@@ -479,6 +710,24 @@
                         break;
                 }
             }
+        });
+    </script>
+    
+    <!-- Room Manager -->
+    <script src="js/room-manager.js"></script>
+    
+    <script>
+        // Initialize Room Manager
+        document.addEventListener('DOMContentLoaded', function() {
+            window.roomManager = new RoomManager();
+            
+            // Add click listeners to room tabs
+            document.querySelectorAll('.room-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const roomId = this.getAttribute('data-room');
+                    window.roomManager.switchToRoom(roomId);
+                });
+            });
         });
     </script>
 </body>
