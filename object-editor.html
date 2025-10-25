@@ -186,10 +186,7 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');">
-                    <div class="image-container">
-                        <img src="assets/images/rooms/living-room.png" alt="Living Room" class="room-image" id="roomImage">
-                        <div class="click-indicator" id="clickIndicator" style="display: none;"></div>
-                    </div>
+                    <div class="click-indicator" id="clickIndicator" style="display: none;"></div>
                 </div>
                 
                 <!-- Right Side Panel -->
@@ -228,10 +225,7 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');">
-                    <div class="image-container">
-                        <img src="assets/images/rooms/kitchen.png" alt="Kitchen" class="room-image" id="roomImageKitchen">
-                        <div class="click-indicator" id="clickIndicatorKitchen" style="display: none;"></div>
-                    </div>
+                    <div class="click-indicator" id="clickIndicatorKitchen" style="display: none;"></div>
                 </div>
                 
                 <!-- Right Side Panel -->
@@ -270,10 +264,7 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');">
-                    <div class="image-container">
-                        <img src="assets/images/rooms/bedroom.png" alt="Bedroom" class="room-image" id="roomImageBedroom">
-                        <div class="click-indicator" id="clickIndicatorBedroom" style="display: none;"></div>
-                    </div>
+                    <div class="click-indicator" id="clickIndicatorBedroom" style="display: none;"></div>
                 </div>
                 
                 <!-- Right Side Panel -->
@@ -312,10 +303,7 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');">
-                    <div class="image-container">
-                        <img src="assets/images/rooms/workshop.png" alt="Workshop" class="room-image" id="roomImageWorkshop">
-                        <div class="click-indicator" id="clickIndicatorWorkshop" style="display: none;"></div>
-                    </div>
+                    <div class="click-indicator" id="clickIndicatorWorkshop" style="display: none;"></div>
                 </div>
                 
                 <!-- Right Side Panel -->
@@ -354,10 +342,7 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
-                    <div class="image-container">
-                        <img src="assets/images/rooms/library.png" alt="Library" class="room-image" id="roomImageLibrary">
-                        <div class="click-indicator" id="clickIndicatorLibrary" style="display: none;"></div>
-                    </div>
+                    <div class="click-indicator" id="clickIndicatorLibrary" style="display: none;"></div>
                 </div>
                 
                 <!-- Right Side Panel -->
@@ -396,10 +381,7 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/garden.png');">
-                    <div class="image-container">
-                        <img src="assets/images/rooms/garden.png" alt="Garden" class="room-image" id="roomImageGarden">
-                        <div class="click-indicator" id="clickIndicatorGarden" style="display: none;"></div>
-                    </div>
+                    <div class="click-indicator" id="clickIndicatorGarden" style="display: none;"></div>
                 </div>
                 
                 <!-- Right Side Panel -->
@@ -424,10 +406,10 @@
         let imageRect = null;
         
         
-        // Add click listeners to all room images
+        // Add click listeners to all room backgrounds
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.room-image').forEach(image => {
-                image.addEventListener('click', function(e) {
+            document.querySelectorAll('.room-background').forEach(background => {
+                background.addEventListener('click', function(e) {
                     const rect = this.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
@@ -505,15 +487,15 @@
         }
         
         function drawObjectAreas() {
-            // Find the active room's image container
+            // Find the active room's background
             const activeRoom = document.querySelector('.room.active');
             if (!activeRoom) return;
             
-            const imageContainer = activeRoom.querySelector('.image-container');
-            if (!imageContainer) return;
+            const roomBackground = activeRoom.querySelector('.room-background');
+            if (!roomBackground) return;
             
             // Remove existing areas
-            imageContainer.querySelectorAll('.click-area').forEach(area => area.remove());
+            roomBackground.querySelectorAll('.click-area').forEach(area => area.remove());
             
             // Draw new areas
             objects.forEach((obj, index) => {
@@ -548,7 +530,7 @@
                     selectObject(index);
                 });
                 
-                imageContainer.appendChild(area);
+                roomBackground.appendChild(area);
             });
         }
         

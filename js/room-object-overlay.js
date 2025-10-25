@@ -12,25 +12,65 @@ class RoomObjectOverlay {
                 backgroundImage: 'assets/images/rooms/living-room.png',
                 darkBackgroundImage: 'assets/images/rooms/living-room-dark.png',
                 objects: {
-                    'lamp': {
-                        name: 'Lamp',
-                        description: 'Oil lamp for ambient lighting',
-                        action: 'illuminate',
-                        effects: ['light', 'ambient'],
-                        sound: 'lamp-on',
-                        animation: 'lightGlow',
-                        clickableArea: { x: 484, y: 459, width: 88, height: 146 },
-                        type: 'lighting'
-                    },
                     'fireplace': {
                         name: 'Fireplace',
-                        description: 'Warm hearth for energy and light',
+                        description: 'fireplace object',
                         action: 'ignite',
                         effects: ['fire', 'warmth', 'light'],
                         sound: 'fireplace-ignite',
                         animation: 'fireFlicker',
-                        clickableArea: { x: 113, y: 495, width: 154, height: 110 },
+                        clickableArea: { x: 166, y: 819, width: 225, height: 100 },
                         type: 'lighting'
+                    },
+                    'lamp_1': {
+                        name: 'Lamp_1',
+                        description: 'lamp object',
+                        action: 'illuminate',
+                        effects: ['light', 'ambient'],
+                        sound: 'lamp-on',
+                        animation: 'lightGlow',
+                        clickableArea: { x: 726, y: 414, width: 53, height: 176 },
+                        type: 'lighting'
+                    },
+                    'lamp_2': {
+                        name: 'Lamp',
+                        description: 'lamp_2 object',
+                        action: 'illuminate',
+                        effects: ['light', 'ambient'],
+                        sound: 'lamp-on',
+                        animation: 'lightGlow',
+                        clickableArea: { x: 729, y: 443, width: 52, height: 149 },
+                        type: 'lighting'
+                    },
+                    'door': {
+                        name: 'Door',
+                        description: 'door object',
+                        action: 'open',
+                        effects: ['portal', 'interaction'],
+                        sound: 'room-change',
+                        animation: 'portalGlow',
+                        clickableArea: { x: 1043, y: 551, width: 151, height: 134 },
+                        type: 'interactive'
+                    },
+                    'vase': {
+                        name: 'Vase',
+                        description: 'vase object',
+                        action: 'examine',
+                        effects: ['decoration', 'beauty'],
+                        sound: 'object-click',
+                        animation: 'decorationGlow',
+                        clickableArea: { x: -3, y: 763, width: 73, height: 132 },
+                        type: 'interactive'
+                    },
+                    'book': {
+                        name: 'Book',
+                        description: 'book object',
+                        action: 'browse',
+                        effects: ['knowledge', 'reading'],
+                        sound: 'book-open',
+                        animation: 'bookGlow',
+                        clickableArea: { x: 515, y: 427, width: 25, height: 80 },
+                        type: 'interactive'
                     }
                 }
             },
@@ -41,42 +81,62 @@ class RoomObjectOverlay {
                 objects: {
                     'fireplace': {
                         name: 'Fireplace',
-                        description: 'Cooking hearth',
+                        description: 'fireplace object',
                         action: 'ignite',
                         effects: ['fire', 'cooking'],
                         sound: 'fireplace-ignite',
                         animation: 'fireFlicker',
-                        clickableArea: { x: 31, y: 534, width: 163, height: 103 },
+                        clickableArea: { x: 58, y: 848, width: 213, height: 135 },
                         type: 'lighting'
                     },
-                    'lamp': {
-                        name: 'Lamp',
-                        description: 'Kitchen lighting',
+                    'lamp_1': {
+                        name: 'Lamp_1',
+                        description: 'lamp_1 object',
                         action: 'illuminate',
                         effects: ['light', 'cooking'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        clickableArea: { x: 929, y: 275, width: 38, height: 112 },
+                        clickableArea: { x: 155, y: 393, width: 61, height: 173 },
                         type: 'lighting'
                     },
-                    'chest': {
-                        name: 'Chest',
-                        description: 'Storage chest',
-                        action: 'open',
-                        effects: ['storage', 'items'],
-                        sound: 'chest-open',
-                        animation: 'storageGlow',
-                        clickableArea: { x: 1020, y: 390, width: 89, height: 67 },
-                        type: 'interactive'
+                    'lamp_2': {
+                        name: 'Lamp_2',
+                        description: 'lamp_2 object',
+                        action: 'illuminate',
+                        effects: ['light', 'cooking'],
+                        sound: 'lamp-on',
+                        animation: 'lightGlow',
+                        clickableArea: { x: 1336, y: 468, width: 58, height: 151 },
+                        type: 'lighting'
                     },
                     'basket': {
                         name: 'Basket',
-                        description: 'Storage basket',
+                        description: 'basket object',
                         action: 'examine',
                         effects: ['storage', 'items'],
                         sound: 'object-click',
                         animation: 'storageGlow',
-                        clickableArea: { x: 1054, y: 120, width: 89, height: 60 },
+                        clickableArea: { x: 1507, y: 248, width: 143, height: 82 },
+                        type: 'interactive'
+                    },
+                    'drawer': {
+                        name: 'Drawer',
+                        description: 'drawer object',
+                        action: 'open',
+                        effects: ['storage', 'items'],
+                        sound: 'chest-open',
+                        animation: 'storageGlow',
+                        clickableArea: { x: 1249, y: 771, width: 148, height: 48 },
+                        type: 'interactive'
+                    },
+                    'chest': {
+                        name: 'Chest',
+                        description: 'chest object',
+                        action: 'open',
+                        effects: ['storage', 'items'],
+                        sound: 'chest-open',
+                        animation: 'storageGlow',
+                        clickableArea: { x: 1472, y: 631, width: 125, height: 98 },
                         type: 'interactive'
                     }
                 }
@@ -382,6 +442,10 @@ class RoomObjectOverlay {
         const rect = roomBackground.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
+        
+        console.log(`Raw click: ${event.clientX}, ${event.clientY}`);
+        console.log(`Room rect: ${rect.left}, ${rect.top}, ${rect.width}, ${rect.height}`);
+        console.log(`Relative click: ${x}, ${y}`);
         
         // Scale coordinates to match the original image dimensions
         const scaleX = roomBackground.offsetWidth / 800; // Assuming original image width
