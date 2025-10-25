@@ -213,34 +213,44 @@ class RoomObjectOverlay {
                 backgroundImage: 'assets/images/rooms/workshop.png',
                 darkBackgroundImage: 'assets/images/rooms/workshop-dark.png',
                 objects: {
-                    'hammer': {
-                        name: 'Hammer',
-                        description: 'Crafting hammer',
-                        action: 'use',
-                        effects: ['tools', 'crafting'],
+                    'lamp_1': {
+                        name: 'Lamp_1',
+                        description: 'lamp_1 object',
+                        action: 'interact',
+                        effects: ['interaction'],
                         sound: 'object-click',
-                        animation: 'toolGlow',
-                        clickableArea: { x: 766, y: 287, width: 54, height: 127 },
+                        animation: 'objectGlow',
+                        clickableArea: { x: 117, y: 446, width: 77, height: 215 },
                         type: 'interactive'
                     },
-                    'lamp': {
-                        name: 'Lamp',
-                        description: 'Workshop lighting',
-                        action: 'illuminate',
-                        effects: ['light', 'workspace'],
-                        sound: 'lamp-on',
-                        animation: 'lightGlow',
-                        clickableArea: { x: 79, y: 255, width: 59, height: 153 },
-                        type: 'lighting'
+                    'lamp_2': {
+                        name: 'Lamp_2',
+                        description: 'lamp_2 object',
+                        action: 'interact',
+                        effects: ['interaction'],
+                        sound: 'object-click',
+                        animation: 'objectGlow',
+                        clickableArea: { x: 1313, y: 559, width: 53, height: 196 },
+                        type: 'interactive'
+                    },
+                    'hammer': {
+                        name: 'Hammer',
+                        description: 'hammer object',
+                        action: 'interact',
+                        effects: ['interaction'],
+                        sound: 'object-click',
+                        animation: 'objectGlow',
+                        clickableArea: { x: 1108, y: 496, width: 66, height: 162 },
+                        type: 'interactive'
                     },
                     'workbench': {
                         name: 'Workbench',
-                        description: 'Main crafting station',
-                        action: 'craft',
-                        effects: ['crafting', 'creation'],
+                        description: 'workbench object',
+                        action: 'interact',
+                        effects: ['interaction'],
                         sound: 'object-click',
-                        animation: 'craftGlow',
-                        clickableArea: { x: 290, y: 538, width: 527, height: 183 },
+                        animation: 'objectGlow',
+                        clickableArea: { x: 41, y: 772, width: 531, height: 102 },
                         type: 'interactive'
                     }
                 }
