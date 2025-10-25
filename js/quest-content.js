@@ -39,7 +39,8 @@ const mainQuestline = {
                         completed: false,
                         triggers: ['lamp1-illuminate'],
                         objectCoords: { x: 722, y: 455 },
-                        spell: 'illuminate'
+                        spell: 'illuminate',
+                        hobbitDialogue: "Great! Now I can see better! Please search in the shelf or maybe the vase somewhere for my credentials!"
                     },
                     { 
                         id: 'light-lamp2', 
@@ -49,7 +50,8 @@ const mainQuestline = {
                         completed: false,
                         triggers: ['lamp2-illuminate'],
                         objectCoords: { x: 706, y: 760 },
-                        spell: 'illuminate'
+                        spell: 'illuminate',
+                        hobbitDialogue: "Excellent! Both lamps are lit! The room is much brighter now. Check the vase or bookshelf for clues!"
                     },
                     { 
                         id: 'ignite-fireplace', 

@@ -28,8 +28,8 @@ class QuestManager {
         try {
             console.log('🎯 Initializing Quest Manager...');
             
-            // Load quest state from storage
-            await this.loadQuestState();
+            // Clear quest state to restart fresh
+            this.clearQuestState();
             
             // Initialize quest content
             this.initializeQuestContent();
@@ -48,15 +48,36 @@ class QuestManager {
     }
     
     /**
+     * Clear quest state to restart fresh
+     */
+    clearQuestState() {
+        console.log('🔄 Clearing quest state to restart fresh...');
+        
+        // Clear all quest data
+        this.activeQuests.clear();
+        this.completedQuests.clear();
+        this.questProgress.clear();
+        
+        // Clear from localStorage
+        localStorage.removeItem(this.storageKey);
+        
+        console.log('✅ Quest state cleared successfully!');
+    }
+    
+    /**
      * Initialize quest content and dependencies
      */
     initializeQuestContent() {
         // Load quest content from quest-content.js
         if (typeof questContent !== 'undefined') {
             this.questContent = questContent;
+            console.log('🎯 Quest content loaded from quest-content.js');
+            console.log('🎯 Available quests:', Object.keys(this.questContent));
         } else {
             console.warn('Quest content not loaded. Using default content.');
             this.questContent = this.getDefaultQuestContent();
+            console.log('🎯 Using default quest content');
+            console.log('🎯 Available quests:', Object.keys(this.questContent));
         }
         
         // Initialize quest dependencies

@@ -63,6 +63,13 @@ class FantasyOS {
             console.log('✨ Fantasy OS initialized successfully!');
             this.showWelcomeMessage();
             
+            // Start the first quest automatically
+            if (this.components.questManager) {
+                setTimeout(() => {
+                    this.startQuest('credentials-recovery');
+                }, 2000);
+            }
+            
         } catch (error) {
             console.error('💥 Failed to initialize Fantasy OS:', error);
             this.showErrorMessage('Failed to initialize Fantasy OS. Please refresh the page.');
@@ -1067,6 +1074,9 @@ class FantasyOS {
 
 // Initialize Fantasy OS when script loads
 const fantasyOS = new FantasyOS();
+
+// Make FantasyOS globally available
+window.fantasyOS = fantasyOS;
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
