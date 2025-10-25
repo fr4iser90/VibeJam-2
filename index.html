@@ -149,9 +149,6 @@
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
                     <h3 class="fantasy-header">Gesten</h3>
-                    <div class="gesture-canvas-container">
-                        <canvas id="gestureCanvas" class="gesture-canvas"></canvas>
-                    </div>
                     <div class="gesture-instructions">
                         <h4>Gesten-Zaubersprüche:</h4>
                         <ul>
@@ -160,6 +157,7 @@
                             <li>Spirale = Feuer</li>
                             <li>Herz = Favoriten</li>
                         </ul>
+                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
                     </div>
                 </div>
             </div>
@@ -195,9 +193,6 @@
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
                     <h3 class="fantasy-header">Gesten</h3>
-                    <div class="gesture-canvas-container">
-                        <canvas id="gestureCanvasKitchen" class="gesture-canvas"></canvas>
-                    </div>
                     <div class="gesture-instructions">
                         <h4>Küchen-Gesten:</h4>
                         <ul>
@@ -206,6 +201,7 @@
                             <li>Spirale = Brauen</li>
                             <li>Herz = Favoriten</li>
                         </ul>
+                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
                     </div>
                 </div>
             </div>
@@ -240,9 +236,6 @@
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
                     <h3 class="fantasy-header">Gesten</h3>
-                    <div class="gesture-canvas-container">
-                        <canvas id="gestureCanvasBedroom" class="gesture-canvas"></canvas>
-                    </div>
                     <div class="gesture-instructions">
                         <h4>Schlafzimmer-Gesten:</h4>
                         <ul>
@@ -251,6 +244,7 @@
                             <li>Spirale = Träume</li>
                             <li>Herz = Favoriten</li>
                         </ul>
+                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
                     </div>
                 </div>
             </div>
@@ -285,9 +279,6 @@
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
                     <h3 class="fantasy-header">Gesten</h3>
-                    <div class="gesture-canvas-container">
-                        <canvas id="gestureCanvasWorkshop" class="gesture-canvas"></canvas>
-                    </div>
                     <div class="gesture-instructions">
                         <h4>Werkstatt-Gesten:</h4>
                         <ul>
@@ -296,6 +287,7 @@
                             <li>Spirale = Schmieden</li>
                             <li>Herz = Favoriten</li>
                         </ul>
+                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
                     </div>
                 </div>
             </div>
@@ -330,9 +322,6 @@
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
                     <h3 class="fantasy-header">Gesten</h3>
-                    <div class="gesture-canvas-container">
-                        <canvas id="gestureCanvasLibrary" class="gesture-canvas"></canvas>
-                    </div>
                     <div class="gesture-instructions">
                         <h4>Bibliothek-Gesten:</h4>
                         <ul>
@@ -341,6 +330,7 @@
                             <li>Spirale = Archivieren</li>
                             <li>Herz = Favoriten</li>
                         </ul>
+                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
                     </div>
                 </div>
             </div>
@@ -375,9 +365,6 @@
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
                     <h3 class="fantasy-header">Gesten</h3>
-                    <div class="gesture-canvas-container">
-                        <canvas id="gestureCanvasGarden" class="gesture-canvas"></canvas>
-                    </div>
                     <div class="gesture-instructions">
                         <h4>Garten-Gesten:</h4>
                         <ul>
@@ -386,10 +373,16 @@
                             <li>Spirale = Wachstum</li>
                             <li>Herz = Favoriten</li>
                         </ul>
+                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
                     </div>
                 </div>
             </div>
         </main>
+
+        <!-- Global Gesture Canvas - Full Screen -->
+        <div class="gesture-canvas-container">
+            <canvas id="gestureCanvas" class="gesture-canvas"></canvas>
+        </div>
 
         <!-- Spell System -->
         <div class="spell-system">
@@ -398,17 +391,15 @@
                 <button id="castSpell" class="cast-spell-btn">Zaubern</button>
             </div>
             
-            <div class="gesture-canvas-container">
-                <canvas id="gestureCanvas" class="gesture-canvas"></canvas>
-                <div class="gesture-instructions">
-                    <p>Zeichne Gesten für Zaubersprüche:</p>
-                    <ul>
-                        <li>Kreis = Portal öffnen</li>
-                        <li>Zick-Zack = Blitz</li>
-                        <li>Spirale = Feuer</li>
-                        <li>Herz = Favoriten</li>
-                    </ul>
-                </div>
+            <div class="gesture-instructions">
+                <p><strong>🎨 Gesten-Erkennung aktiviert!</strong></p>
+                <p>Zeichne Gesten überall auf dem Bildschirm:</p>
+                <ul>
+                    <li>Kreis = Portal öffnen</li>
+                    <li>Zick-Zack = Blitz</li>
+                    <li>Spirale = Feuer</li>
+                    <li>Herz = Favoriten</li>
+                </ul>
             </div>
         </div>
 
@@ -486,6 +477,10 @@
 
     <!-- JavaScript -->
     <script src="js/sound-system.js"></script>
+    <script src="js/utils/gesture-helpers.js"></script>
+    <script src="js/gesture-patterns.js"></script>
+    <script src="js/gesture-analysis.js"></script>
+    <script src="js/gesture-actions.js"></script>
     <script src="js/gesture-recognition.js"></script>
     <script src="js/spell-parser.js"></script>
     <script src="js/room-manager.js"></script>

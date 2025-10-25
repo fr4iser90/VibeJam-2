@@ -2,6 +2,7 @@
  * Fantasy OS - Gesture Recognition System
  * Recognizes and processes magical gestures for spell casting
  * Created: 2025-10-25T12:04:17.000Z
+ * Updated: 2025-10-25T12:22:24.000Z
  */
 
 class GestureRecognition {
@@ -10,39 +11,17 @@ class GestureRecognition {
         this.context = null;
         this.isDrawing = false;
         this.path = [];
-        this.gestures = {
-            circle: {
-                name: 'Circle',
-                description: 'Portal opening gesture',
-                spell: 'open portal',
-                threshold: 0.8,
-                minPoints: 20
-            },
-            zigzag: {
-                name: 'Zigzag',
-                description: 'Lightning gesture',
-                spell: 'summon light',
-                threshold: 0.7,
-                minPoints: 15
-            },
-            spiral: {
-                name: 'Spiral',
-                description: 'Fire gesture',
-                spell: 'ignite fireplace',
-                threshold: 0.6,
-                minPoints: 25
-            },
-            heart: {
-                name: 'Heart',
-                description: 'Favorites gesture',
-                spell: 'cast protection spell',
-                threshold: 0.5,
-                minPoints: 20
-            }
-        };
+        
+        // Initialize gesture modules
+        this.patterns = new GesturePatterns();
+        this.analysis = new GestureAnalysis();
+        this.actions = new GestureActions();
+        this.helpers = new GestureHelpers();
         
         this.recognitionHistory = [];
         this.maxHistorySize = 30;
+        this.isEnabled = true;
+        this.debugMode = false;
     }
     
     /**
@@ -56,6 +35,11 @@ class GestureRecognition {
         }
         
         this.context = this.canvas.getContext('2d');
+        
+        // Set canvas size to full screen
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        
         this.setupCanvas();
         this.setupEventListeners();
         
@@ -71,6 +55,21 @@ class GestureRecognition {
         this.context.lineWidth = 3;
         this.context.lineCap = 'round';
         this.context.lineJoin = 'round';
+        
+        // Magic rainbow trail properties
+        this.rainbowColors = [
+            '#FF0000', // Red
+            '#FF7F00', // Orange
+            '#FFFF00', // Yellow
+            '#00FF00', // Green
+            '#0000FF', // Blue
+            '#4B0082', // Indigo
+            '#9400D3'  // Violet
+        ];
+        this.currentColorIndex = 0;
+        this.trailPoints = [];
+        this.maxTrailLength = 20;
+        this.trailOpacity = 0.8;
         
         // Clear canvas
         this.clearCanvas();
@@ -99,6 +98,12 @@ class GestureRecognition {
             e.preventDefault();
             this.stopDrawing();
         });
+        
+        // Window resize handler
+        window.addEventListener('resize', () => {
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+        });
     }
     
     /**
@@ -107,6 +112,7 @@ class GestureRecognition {
     startDrawing(e) {
         this.isDrawing = true;
         this.path = [];
+        this.trailPoints = [];
         
         const rect = this.canvas.getBoundingClientRect();
         const point = {
@@ -116,10 +122,17 @@ class GestureRecognition {
         };
         
         this.path.push(point);
+        this.trailPoints.push(point);
         
-        // Start drawing
+        // Reset color index for new gesture
+        this.currentColorIndex = 0;
+        
+        // Start drawing with magic trail
         this.context.beginPath();
         this.context.moveTo(point.x, point.y);
+        
+        // Add magic sparkle effect at start
+        this.drawMagicSparkle(point.x, point.y);
     }
     
     /**
@@ -136,10 +149,31 @@ class GestureRecognition {
         };
         
         this.path.push(point);
+        this.trailPoints.push(point);
         
-        // Draw line
+        // Limit trail length
+        if (this.trailPoints.length > this.maxTrailLength) {
+            this.trailPoints.shift();
+        }
+        
+        // Draw magic rainbow trail
+        this.drawMagicTrail();
+        
+        // Draw main line with current rainbow color
+        this.context.save();
+        this.context.strokeStyle = this.rainbowColors[this.currentColorIndex];
+        this.context.lineWidth = 4;
+        this.context.lineCap = 'round';
+        this.context.lineJoin = 'round';
         this.context.lineTo(point.x, point.y);
         this.context.stroke();
+        this.context.restore();
+        
+        // Cycle through rainbow colors
+        this.currentColorIndex = (this.currentColorIndex + 1) % this.rainbowColors.length;
+        
+        // Add magic particles along the path
+        this.drawMagicParticles(point.x, point.y);
     }
     
     /**
@@ -168,32 +202,52 @@ class GestureRecognition {
     recognizeGesture() {
         if (this.path.length < 5) return null;
         
-        // Calculate gesture features
-        const features = this.calculateFeatures();
-        
-        // Compare with known gestures
-        let bestMatch = null;
-        let bestScore = 0;
-        
-        for (const [gestureType, gesture] of Object.entries(this.gestures)) {
-            const score = this.compareGesture(features, gestureType);
-            if (score > gesture.threshold && score > bestScore) {
-                bestScore = score;
-                bestMatch = gestureType;
+        try {
+            // Validate path
+            const validation = this.helpers.validatePath(this.path);
+            if (!validation.valid) {
+                console.warn(`Path validation failed: ${validation.error}`);
+                return null;
             }
+            
+            // Optimize path for recognition
+            const optimizedPath = this.analysis.optimizePath(this.path);
+            
+            // Calculate gesture features
+            const features = this.analysis.calculateFeatures(optimizedPath);
+            
+            // Get pattern suggestions
+            const suggestions = this.patterns.getPatternSuggestions(features);
+            
+            if (suggestions.length === 0) {
+                console.log('❓ Unknown gesture');
+                return null;
+            }
+            
+            const bestMatch = suggestions[0];
+            const pattern = this.patterns.getPattern(bestMatch.type);
+            
+            if (bestMatch.matchScore > pattern.threshold) {
+                console.log(`🎯 Recognized gesture: ${pattern.name} (${bestMatch.matchScore.toFixed(2)})`);
+                
+                // Add to pattern usage history
+                this.patterns.addPatternUsage(bestMatch.type, bestMatch.matchScore);
+                
+                return {
+                    type: bestMatch.type,
+                    gesture: pattern, // Fix: Add 'gesture' property
+                    pattern: pattern,
+                    score: bestMatch.matchScore,
+                    features: features
+                };
+            }
+            
+            console.log('❓ Gesture confidence too low');
+            return null;
+        } catch (error) {
+            console.error('Error in gesture recognition:', error);
+            return null;
         }
-        
-        if (bestMatch) {
-            console.log(`🎯 Recognized gesture: ${this.gestures[bestMatch].name} (${bestScore.toFixed(2)})`);
-            return {
-                type: bestMatch,
-                gesture: this.gestures[bestMatch],
-                score: bestScore
-            };
-        }
-        
-        console.log('❓ Unknown gesture');
-        return null;
     }
     
     /**
@@ -418,20 +472,48 @@ class GestureRecognition {
      * Execute recognized gesture
      */
     executeGesture(gesture) {
-        // Add to recognition history
-        this.addToHistory(gesture);
-        
-        // Show gesture feedback
-        this.showGestureFeedback(gesture);
-        
-        // Execute associated spell
-        if (gesture.gesture.spell) {
-            this.castGestureSpell(gesture.gesture.spell);
+        if (!this.isEnabled) {
+            console.warn('Gesture recognition is disabled');
+            return;
         }
         
-        // Play gesture sound
-        if (typeof FantasySounds !== 'undefined') {
-            FantasySounds.play('gestureRecognized');
+        try {
+            // Add to recognition history
+            this.addToHistory(gesture);
+            
+            // Show gesture feedback
+            this.showGestureFeedback(gesture);
+            
+            // Map gesture to action
+            const action = this.actions.mapGestureToAction(
+                gesture.type, 
+                gesture.score, 
+                { features: gesture.features }
+            );
+            
+            if (action) {
+                // Execute the action
+                const success = this.actions.executeAction(action);
+                
+                if (success) {
+                    console.log(`✨ Gesture action executed: ${action.action}`);
+                } else {
+                    console.warn(`⚠️ Gesture action failed: ${action.action}`);
+                }
+            } else {
+                console.warn('No action mapped for gesture');
+            }
+            
+            // Play gesture sound
+            if (typeof FantasySounds !== 'undefined') {
+                try {
+                    FantasySounds.play('gestureRecognized');
+                } catch (error) {
+                    console.warn('Could not play gesture sound:', error);
+                }
+            }
+        } catch (error) {
+            console.error('Error executing gesture:', error);
         }
     }
     
@@ -504,11 +586,98 @@ class GestureRecognition {
     }
     
     /**
+     * Draw magic rainbow trail
+     */
+    drawMagicTrail() {
+        if (this.trailPoints.length < 2) return;
+        
+        // Draw fading trail behind the main line
+        for (let i = 0; i < this.trailPoints.length - 1; i++) {
+            const point1 = this.trailPoints[i];
+            const point2 = this.trailPoints[i + 1];
+            
+            // Calculate opacity based on position in trail
+            const opacity = (i / this.trailPoints.length) * this.trailOpacity;
+            const colorIndex = (this.currentColorIndex - i) % this.rainbowColors.length;
+            const color = this.rainbowColors[colorIndex < 0 ? colorIndex + this.rainbowColors.length : colorIndex];
+            
+            // Draw trail segment
+            this.context.save();
+            this.context.strokeStyle = color;
+            this.context.globalAlpha = opacity;
+            this.context.lineWidth = 8 - (i * 0.3); // Decreasing width
+            this.context.lineCap = 'round';
+            this.context.lineJoin = 'round';
+            this.context.beginPath();
+            this.context.moveTo(point1.x, point1.y);
+            this.context.lineTo(point2.x, point2.y);
+            this.context.stroke();
+            this.context.restore();
+        }
+    }
+    
+    /**
+     * Draw magic sparkle effect
+     */
+    drawMagicSparkle(x, y) {
+        this.context.save();
+        this.context.fillStyle = '#FFD700';
+        this.context.shadowColor = '#FFD700';
+        this.context.shadowBlur = 15;
+        
+        // Draw sparkle
+        this.context.beginPath();
+        this.context.arc(x, y, 3, 0, Math.PI * 2);
+        this.context.fill();
+        
+        // Draw sparkle rays
+        for (let i = 0; i < 8; i++) {
+            const angle = (i / 8) * Math.PI * 2;
+            const startX = x + Math.cos(angle) * 5;
+            const startY = y + Math.sin(angle) * 5;
+            const endX = x + Math.cos(angle) * 12;
+            const endY = y + Math.sin(angle) * 12;
+            
+            this.context.beginPath();
+            this.context.moveTo(startX, startY);
+            this.context.lineTo(endX, endY);
+            this.context.stroke();
+        }
+        
+        this.context.restore();
+    }
+    
+    /**
+     * Draw magic particles
+     */
+    drawMagicParticles(x, y) {
+        // Add random particles around the drawing point
+        if (Math.random() < 0.3) { // 30% chance to add particles
+            this.context.save();
+            this.context.fillStyle = this.rainbowColors[this.currentColorIndex];
+            this.context.globalAlpha = 0.6;
+            
+            for (let i = 0; i < 3; i++) {
+                const particleX = x + (Math.random() - 0.5) * 20;
+                const particleY = y + (Math.random() - 0.5) * 20;
+                const size = Math.random() * 3 + 1;
+                
+                this.context.beginPath();
+                this.context.arc(particleX, particleY, size, 0, Math.PI * 2);
+                this.context.fill();
+            }
+            
+            this.context.restore();
+        }
+    }
+    
+    /**
      * Clear the canvas
      */
     clearCanvas() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.path = [];
+        this.trailPoints = [];
     }
     
     /**
@@ -541,23 +710,97 @@ class GestureRecognition {
      * Get all available gestures
      */
     getAllGestures() {
-        return Object.keys(this.gestures).map(type => ({
-            type,
-            ...this.gestures[type]
-        }));
+        return this.patterns.getAllPatterns();
+    }
+    
+    /**
+     * Get gesture statistics
+     */
+    getGestureStats() {
+        return {
+            patterns: this.patterns.getPatternStats(),
+            actions: this.actions.getActionStats(),
+            history: this.getRecognitionHistory(),
+            cooldowns: this.actions.getCooldownStatus()
+        };
     }
     
     /**
      * Enable/disable gesture recognition
      */
     setEnabled(enabled) {
-        if (enabled) {
-            this.canvas.style.pointerEvents = 'auto';
-            this.canvas.style.opacity = '1';
-        } else {
-            this.canvas.style.pointerEvents = 'none';
-            this.canvas.style.opacity = '0.5';
+        this.isEnabled = enabled;
+        
+        if (this.canvas) {
+            if (enabled) {
+                this.canvas.style.pointerEvents = 'auto';
+                this.canvas.style.opacity = '1';
+            } else {
+                this.canvas.style.pointerEvents = 'none';
+                this.canvas.style.opacity = '0.5';
+            }
         }
+        
+        console.log(`🎨 Gesture recognition ${enabled ? 'enabled' : 'disabled'}`);
+    }
+    
+    /**
+     * Set debug mode
+     */
+    setDebugMode(enabled) {
+        this.debugMode = enabled;
+        console.log(`🐛 Debug mode ${enabled ? 'enabled' : 'disabled'}`);
+    }
+    
+    /**
+     * Add custom gesture pattern
+     */
+    addCustomPattern(type, pattern) {
+        this.patterns.addCustomPattern(type, pattern);
+        console.log(`✨ Custom pattern added: ${type}`);
+    }
+    
+    /**
+     * Remove custom gesture pattern
+     */
+    removeCustomPattern(type) {
+        this.patterns.removeCustomPattern(type);
+        console.log(`🗑️ Custom pattern removed: ${type}`);
+    }
+    
+    /**
+     * Export gesture data
+     */
+    exportData() {
+        return {
+            patterns: this.patterns.exportPatterns(),
+            actions: this.actions.getActionHistory(),
+            recognition: this.getRecognitionHistory(),
+            exportedAt: new Date().toISOString()
+        };
+    }
+    
+    /**
+     * Import gesture data
+     */
+    importData(data) {
+        if (data.patterns) {
+            this.patterns.importPatterns(data.patterns);
+        }
+        
+        console.log('📥 Gesture data imported successfully');
+    }
+    
+    /**
+     * Reset gesture system
+     */
+    reset() {
+        this.patterns.resetPatterns();
+        this.actions.clearHistory();
+        this.recognitionHistory = [];
+        this.clearCanvas();
+        
+        console.log('🔄 Gesture system reset');
     }
 }
 

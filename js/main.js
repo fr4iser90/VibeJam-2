@@ -83,6 +83,7 @@ class FantasyOS {
         // Initialize gesture recognition
         if (typeof GestureRecognition !== 'undefined') {
             this.components.gestureRecognition = new GestureRecognition();
+            this.components.gestureRecognition.init();
         }
         
         // Initialize particle system
@@ -156,6 +157,11 @@ class FantasyOS {
         // Initialize particle effects
         if (this.components.particleSystem) {
             this.components.particleSystem.start();
+        }
+        
+        // Initialize gesture recognition for all rooms
+        if (this.components.gestureRecognition) {
+            this.initializeGestureRecognition();
         }
     }
     
@@ -444,6 +450,73 @@ class FantasyOS {
     setMagicLevel(level) {
         this.magicLevel = Math.max(0, Math.min(100, level));
         this.updateStatusBar();
+    }
+    
+    /**
+     * Initialize gesture recognition for all rooms
+     */
+    initializeGestureRecognition() {
+        // Initialize the main gesture canvas
+        if (this.components.gestureRecognition) {
+            this.components.gestureRecognition.init();
+            console.log('🎨 Global gesture recognition initialized');
+        }
+    }
+    
+    /**
+     * Get gesture recognition statistics
+     */
+    getGestureStats() {
+        if (this.components.gestureRecognition) {
+            return this.components.gestureRecognition.getGestureStats();
+        }
+        return null;
+    }
+    
+    /**
+     * Enable/disable gesture recognition
+     */
+    setGestureRecognitionEnabled(enabled) {
+        if (this.components.gestureRecognition) {
+            this.components.gestureRecognition.setEnabled(enabled);
+        }
+    }
+    
+    /**
+     * Add custom gesture pattern
+     */
+    addCustomGesturePattern(type, pattern) {
+        if (this.components.gestureRecognition) {
+            this.components.gestureRecognition.addCustomPattern(type, pattern);
+        }
+    }
+    
+    /**
+     * Export gesture data
+     */
+    exportGestureData() {
+        if (this.components.gestureRecognition) {
+            return this.components.gestureRecognition.exportData();
+        }
+        return null;
+    }
+    
+    /**
+     * Import gesture data
+     */
+    importGestureData(data) {
+        if (this.components.gestureRecognition) {
+            this.components.gestureRecognition.importData(data);
+        }
+    }
+    
+    /**
+     * Reset gesture system
+     */
+    resetGestureSystem() {
+        if (this.components.gestureRecognition) {
+            this.components.gestureRecognition.reset();
+        }
     }
 }
 
