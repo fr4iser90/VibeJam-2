@@ -412,9 +412,12 @@ class RoomObjectOverlay {
                 clickStartTime = Date.now();
                 clickStartX = e.clientX;
                 clickStartY = e.clientY;
+                
+                // Store mouse coordinates for feedback
+                window.lastClickX = e.clientX;
+                window.lastClickY = e.clientY;
+                
                 console.log('🎯 Mouse down on room background:', clickStartX, clickStartY);
-                console.log('🎯 Target element:', e.target);
-                console.log('🎯 Current target:', e.currentTarget);
             });
             
             background.addEventListener('mouseup', (e) => {
@@ -497,21 +500,22 @@ class RoomObjectOverlay {
         console.log(`Room rect: ${rect.left}, ${rect.top}, ${rect.width}, ${rect.height}`);
         console.log(`Relative click: ${x}, ${y}`);
         
-        // The coordinates from the editor are already relative to the CSS background container
-        // No scaling needed - use them directly
-        const scaledX = x;
-        const scaledY = y;
+        // Use coordinates directly - NO SCALING!
+        console.log(`Click at: ${x}, ${y} in room: ${roomId}`);
         
-        console.log(`Click at: ${x}, ${y} -> Using directly: ${scaledX}, ${scaledY} in room: ${roomId}`);
-        
-        // Check which object was clicked
-        const clickedObject = this.findClickedObject(roomData, scaledX, scaledY);
+        // Check which object was clicked using object data directly
+        const clickedObject = this.findClickedObject(roomData, x, y);
         
         if (clickedObject) {
             console.log('✅ Object clicked:', clickedObject.name);
+            
+            // Store mouse coordinates for feedback
+            window.lastClickX = event.clientX;
+            window.lastClickY = event.clientY;
+            
             this.handleObjectClick(clickedObject, roomId);
         } else {
-            console.log('❌ No object found at coordinates:', scaledX, scaledY);
+            console.log('❌ No object found at coordinates:', x, y);
         }
     }
     
@@ -806,28 +810,36 @@ class RoomObjectOverlay {
     }
     
     /**
-     * Create animation overlay for object
+     * Create animation overlay for object using object data directly
      */
     createAnimationOverlay(objectData, roomId) {
-        const roomElement = document.getElementById(roomId);
-        if (!roomElement) return;
+        const activeRoom = document.querySelector('.room.active');
+        if (!activeRoom) return;
+        
+        const roomBackground = activeRoom.querySelector('.room-background');
+        if (!roomBackground) return;
+        
+        // Use object data directly - NO CALCULATIONS!
+        const area = objectData.clickableArea;
         
         const overlay = document.createElement('div');
         overlay.className = `object-animation-overlay animate-${objectData.animation}`;
+        overlay.setAttribute('data-object', objectData.name);
         overlay.style.cssText = `
             position: absolute;
-            top: ${objectData.clickableArea.y}px;
-            left: ${objectData.clickableArea.x}px;
-            width: ${objectData.clickableArea.width}px;
-            height: ${objectData.clickableArea.height}px;
+            left: ${area.x}px;
+            top: ${area.y}px;
+            width: ${area.width}px;
+            height: ${area.height}px;
             pointer-events: none;
             z-index: 100;
             background: radial-gradient(circle, var(--magic-purple) 0%, transparent 70%);
             opacity: 0.7;
             animation: ${objectData.animation} 2s ease-out forwards;
+            border-radius: 50%;
         `;
         
-        roomElement.appendChild(overlay);
+        roomBackground.appendChild(overlay);
         
         // Remove overlay after animation
         setTimeout(() => {
@@ -861,14 +873,68 @@ class RoomObjectOverlay {
         if (!objectData) return;
         
         const message = `Interacting with ${objectData.name}: ${objectData.description}`;
-        this.showMessageAtMouse(message);
+        this.showMessageAtObjectDirect(objectName, roomId, message);
+    }
+    
+    /**
+     * Show a message directly at the object position using object data
+     */
+    showMessageAtObjectDirect(objectName, roomId, message, duration = 2000) {
+        const objectData = this.rooms[roomId].objects[objectName];
+        if (!objectData) return;
+        
+        const activeRoom = document.querySelector('.room.active');
+        if (!activeRoom) return;
+        
+        const roomBackground = activeRoom.querySelector('.room-background');
+        if (!roomBackground) return;
+        
+        // Use object data directly - NO CALCULATIONS!
+        const area = objectData.clickableArea;
+        
+        // Create feedback overlay directly on the object
+        const feedbackOverlay = document.createElement('div');
+        feedbackOverlay.className = 'object-feedback-overlay';
+        feedbackOverlay.setAttribute('data-object', objectName);
+        feedbackOverlay.textContent = message;
+        feedbackOverlay.style.cssText = `
+            position: absolute;
+            left: ${area.x}px;
+            top: ${area.y}px;
+            width: ${area.width}px;
+            height: ${area.height}px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #D4AF37;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 12px;
+            z-index: 10000;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: fadeInOut ${duration}ms ease-in-out;
+            border: 2px solid #D4AF37;
+        `;
+        
+        roomBackground.appendChild(feedbackOverlay);
+        
+        setTimeout(() => {
+            if (feedbackOverlay.parentNode) {
+                feedbackOverlay.parentNode.removeChild(feedbackOverlay);
+            }
+        }, duration);
     }
     
     /**
      * Show a message directly at mouse position
      */
     showMessageAtMouse(message, duration = 2000) {
-        // Get the last click coordinates from the global mousedown event
+        // Debug: Check if coordinates are set
+        console.log('🎯 Mouse coordinates:', window.lastClickX, window.lastClickY);
+        
         const messageElement = document.createElement('div');
         messageElement.className = 'interaction-message-at-mouse';
         messageElement.textContent = message;
@@ -1270,23 +1336,20 @@ class RoomObjectOverlay {
         
         roomBackground.appendChild(roomDebugOverlay);
         
-        // Add debug rectangles for each object
+        // Add debug rectangles for each object using object data directly
         for (const [objectName, objectData] of Object.entries(roomData.objects)) {
             const area = objectData.clickableArea;
             
-            // The coordinates from the editor are already relative to the CSS background container
-            // No scaling needed - use them directly
-            const scaleX = 1;
-            const scaleY = 1;
-            
+            // Use object data directly - NO CALCULATIONS!
             const debugRect = document.createElement('div');
             debugRect.className = 'object-debug-rect';
+            debugRect.setAttribute('data-object', objectName);
             debugRect.style.cssText = `
                 position: absolute;
-                left: ${area.x * scaleX}px;
-                top: ${area.y * scaleY}px;
-                width: ${area.width * scaleX}px;
-                height: ${area.height * scaleY}px;
+                left: ${area.x}px;
+                top: ${area.y}px;
+                width: ${area.width}px;
+                height: ${area.height}px;
                 border: 2px solid #ff00ff;
                 background: rgba(255, 0, 255, 0.2);
                 pointer-events: none;

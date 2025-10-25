@@ -1,33 +1,33 @@
 {
   "extracted_objects": {
     "living-room": {
-      "objects": ["fireplace", "wall-lamp", "bookshelf", "round-door", "armchair", "round-table", "table-lamp"],
-      "object_count": 7,
+      "objects": ["fireplace", "wall-lamp", "bookshelf", "round-door", "armchair", "round-table", "table-lamp", "hobbit"],
+      "object_count": 8,
       "has_dark_mode": true
     },
     "kitchen": {
-      "objects": ["fireplace", "oil-lamp", "shelves", "hanging-pots", "round-table", "fruit-bowl", "chairs", "window"],
-      "object_count": 8,
+      "objects": ["fireplace", "oil-lamp", "shelves", "hanging-pots", "round-table", "fruit-bowl", "chairs", "window", "hobbit"],
+      "object_count": 9,
       "has_dark_mode": true
     },
     "library": {
-      "objects": ["left-bookshelf", "right-bookshelf", "armchair", "small-table", "oil-lamp", "round-window", "curtain"],
-      "object_count": 7,
-      "has_dark_mode": true
-    },
-    "workshop": {
-      "objects": ["workbench-1", "workbench-2", "hanging-tools", "shelves", "wooden-crates", "stool", "wall-lantern-left", "wall-lantern-right"],
+      "objects": ["left-bookshelf", "right-bookshelf", "armchair", "small-table", "oil-lamp", "round-window", "curtain", "hobbit"],
       "object_count": 8,
       "has_dark_mode": true
     },
+    "workshop": {
+      "objects": ["workbench-1", "workbench-2", "hanging-tools", "shelves", "wooden-crates", "stool", "wall-lantern-left", "wall-lantern-right", "hobbit"],
+      "object_count": 9,
+      "has_dark_mode": true
+    },
     "bedroom": {
-      "objects": ["bed", "nightstand", "oil-lamp", "round-window", "curtains", "small-table"],
-      "object_count": 6,
+      "objects": ["bed", "nightstand", "oil-lamp", "round-window", "curtains", "small-table", "hobbit"],
+      "object_count": 7,
       "has_dark_mode": false
     },
     "garden": {
-      "objects": ["round-door", "round-window-left", "round-window-right", "flowers-red", "flowers-mixed", "flowers-orange", "wooden-fence", "stone-path", "large-tree"],
-      "object_count": 9,
+      "objects": ["round-door", "round-window-left", "round-window-right", "flowers-red", "flowers-mixed", "flowers-orange", "wooden-fence", "stone-path", "large-tree", "hobbit"],
+      "object_count": 10,
       "has_dark_mode": false
     }
   },
