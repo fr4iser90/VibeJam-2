@@ -11,7 +11,6 @@ class QuestManager {
         this.questProgress = new Map();
         this.questRewards = new Map();
         this.questDependencies = new Map();
-        this.hobbitPersonality = new HobbitPersonality();
         this.storageKey = 'fantasy-os-quest-state';
         this.isInitialized = false;
         
@@ -229,6 +228,11 @@ class QuestManager {
             
             // Trigger quest step completed event
             this.triggerEvent('quest-step-completed', questId, stepId);
+            
+            // Notify hobbit companion of quest progress
+            if (window.hobbitCompanion) {
+                window.hobbitCompanion.eventHandlers.get('quest-progress')?.(questId, stepId);
+            }
         }
         
         return true;

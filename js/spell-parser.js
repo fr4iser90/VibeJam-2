@@ -191,6 +191,11 @@ class SpellParser {
         // Add to spell history
         this.addToHistory(normalizedSpell);
         
+        // Check for incomplete portal spells
+        if (normalizedSpell === 'open portal') {
+            return this.handleIncompletePortalSpell();
+        }
+        
         // Check if spell exists
         const spell = this.spells[normalizedSpell];
         if (!spell) {
@@ -210,6 +215,39 @@ class SpellParser {
             effect: spell.effects,
             spell: normalizedSpell
         };
+    }
+    
+    /**
+     * Handle incomplete portal spell
+     */
+    handleIncompletePortalSpell() {
+        const availableRooms = this.getAvailableRooms();
+        
+        return {
+            success: false,
+            message: `Open portal to where? Available destinations: ${availableRooms.join(', ')}`,
+            effect: 'portal-prompt',
+            availableRooms: availableRooms
+        };
+    }
+    
+    /**
+     * Get available rooms for portal spells
+     */
+    getAvailableRooms() {
+        const roomTabs = document.querySelectorAll('.room-tab');
+        const rooms = [];
+        
+        roomTabs.forEach(tab => {
+            const roomId = tab.dataset.room;
+            if (roomId) {
+                // Convert room ID to readable name
+                const roomName = roomId.replace('-', ' ');
+                rooms.push(roomName);
+            }
+        });
+        
+        return rooms;
     }
     
     /**

@@ -22,7 +22,8 @@ class FantasyOS {
             particleSystem: null,
             soundSystem: null,
             questManager: null,
-            achievementSystem: null
+            achievementSystem: null,
+            hobbitCompanion: null
         };
         
         // Event handlers
@@ -119,6 +120,15 @@ class FantasyOS {
             this.components.achievementSystem = new AchievementSystem();
             console.log('🏆 Achievement System initialized');
         }
+        
+        // Initialize hobbit companion
+        if (typeof HobbitCompanion !== 'undefined') {
+            this.components.hobbitCompanion = new HobbitCompanion();
+            console.log('🧙‍♂️ Hobbit Companion System initialized');
+            
+            // Make it globally available
+            window.hobbitCompanion = this.components.hobbitCompanion;
+        }
     }
     
     /**
@@ -131,21 +141,8 @@ class FantasyOS {
             tab.addEventListener('click', (e) => this.handleRoomChange(e));
         });
         
-        // Spell casting
-        const spellInput = document.getElementById('spellInput');
-        const castSpellBtn = document.getElementById('castSpell');
-        
-        if (spellInput) {
-            spellInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    this.castSpell();
-                }
-            });
-        }
-        
-        if (castSpellBtn) {
-            castSpellBtn.addEventListener('click', () => this.castSpell());
-        }
+        // Spell casting - handle all spell inputs
+        this.setupSpellInputs();
         
         // Help and settings modals
         const helpBtn = document.getElementById('helpBtn');
@@ -201,6 +198,66 @@ class FantasyOS {
     }
     
     /**
+     * Set up spell input handlers for all rooms
+     */
+    setupSpellInputs() {
+        // Get all spell inputs and cast buttons
+        const spellInputs = document.querySelectorAll('.spell-input');
+        const castButtons = document.querySelectorAll('.cast-spell-btn');
+        
+        // Set up input handlers
+        spellInputs.forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.castSpellFromInput(input);
+                }
+            });
+        });
+        
+        // Set up button handlers
+        castButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const input = button.previousElementSibling;
+                if (input && input.classList.contains('spell-input')) {
+                    this.castSpellFromInput(input);
+                }
+            });
+        });
+    }
+    
+    /**
+     * Cast spell from specific input element
+     */
+    castSpellFromInput(inputElement) {
+        const spellText = inputElement.value.trim();
+        if (!spellText) return;
+        
+        console.log(`🔮 Casting spell: ${spellText}`);
+        
+        // Parse and execute spell
+        if (this.components.spellParser) {
+            const result = this.components.spellParser.parseSpell(spellText);
+            this.handleSpellResult(result);
+        } else {
+            console.error('❌ Spell parser not available');
+        }
+        
+        // Update last spell
+        this.lastSpell = spellText;
+        
+        // Clear input
+        inputElement.value = '';
+        
+        // Update status bar
+        this.updateStatusBar();
+        
+        // Play spell sound
+        if (this.components.soundSystem) {
+            this.components.soundSystem.play('spellCast');
+        }
+    }
+    
+    /**
      * Switch to a different room
      */
     switchRoom(roomId) {
@@ -240,6 +297,11 @@ class FantasyOS {
             this.components.soundSystem.playRoomChange();
         }
         
+        // Notify hobbit companion of room change
+        if (this.components.hobbitCompanion) {
+            this.components.hobbitCompanion.eventHandlers.get('room-changed')?.(roomId);
+        }
+        
         console.log(`🏠 Switched to room: ${roomId}`);
     }
     
@@ -254,38 +316,24 @@ class FantasyOS {
         if (this.components.objectInteraction) {
             this.components.objectInteraction.handleObjectClick(objectType);
         }
+        
+        // Notify hobbit companion of object interaction
+        if (this.components.hobbitCompanion) {
+            this.components.hobbitCompanion.eventHandlers.get('object-interaction')?.(objectType, this.currentRoom);
+        }
     }
     
     /**
-     * Cast a spell from the input field
+     * Cast a spell from the input field (legacy method)
      */
     castSpell() {
-        const spellInput = document.getElementById('spellInput');
-        if (!spellInput) return;
-        
-        const spellText = spellInput.value.trim();
-        if (!spellText) return;
-        
-        console.log(`🔮 Casting spell: ${spellText}`);
-        
-        // Parse and execute spell
-        if (this.components.spellParser) {
-            const result = this.components.spellParser.parseSpell(spellText);
-            this.handleSpellResult(result);
-        }
-        
-        // Update last spell
-        this.lastSpell = spellText;
-        
-        // Clear input
-        spellInput.value = '';
-        
-        // Update status bar
-        this.updateStatusBar();
-        
-        // Play spell sound
-        if (this.components.soundSystem) {
-            this.components.soundSystem.playSpellCast();
+        // Try to find any active spell input
+        const activeRoom = document.querySelector('.room.active');
+        if (activeRoom) {
+            const spellInput = activeRoom.querySelector('.spell-input');
+            if (spellInput) {
+                this.castSpellFromInput(spellInput);
+            }
         }
     }
     
@@ -298,7 +346,111 @@ class FantasyOS {
             this.showSpellEffect(result.effect);
         } else {
             console.log(`💥 Spell failed: ${result.message}`);
-            this.showSpellError(result.message);
+            
+            // Special handling for portal prompts
+            if (result.effect === 'portal-prompt') {
+                this.showPortalPrompt(result.message, result.availableRooms);
+            } else {
+                this.showSpellError(result.message);
+            }
+        }
+    }
+    
+    /**
+     * Show portal destination prompt
+     */
+    showPortalPrompt(message, availableRooms) {
+        // Create portal prompt element
+        const promptElement = document.createElement('div');
+        promptElement.className = 'portal-prompt';
+        promptElement.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+            color: #f4e4c1;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #8b4513;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            z-index: 3000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            min-width: 400px;
+            text-align: center;
+        `;
+        
+        // Create prompt content
+        promptElement.innerHTML = `
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #ffd700; margin: 0 0 10px 0;">🔮 Portal Destination</h3>
+                <p style="margin: 0;">${message}</p>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                ${availableRooms.map(room => `
+                    <button class="portal-destination-btn" data-room="${room.replace(' ', '-')}" 
+                            style="background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+                                   border: 1px solid #ffd700;
+                                   color: #f4e4c1;
+                                   padding: 8px 16px;
+                                   border-radius: 6px;
+                                   font-family: 'Cinzel', serif;
+                                   cursor: pointer;
+                                   transition: all 0.3s ease;">
+                        ${room}
+                    </button>
+                `).join('')}
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="close-portal-prompt" 
+                        style="background: #666;
+                               border: 1px solid #999;
+                               color: white;
+                               padding: 6px 12px;
+                               border-radius: 4px;
+                               font-family: 'Cinzel', serif;
+                               cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(promptElement);
+        
+        // Add event listeners
+        const destinationButtons = promptElement.querySelectorAll('.portal-destination-btn');
+        destinationButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const roomId = e.target.dataset.room;
+                this.castPortalSpell(roomId);
+                document.body.removeChild(promptElement);
+            });
+        });
+        
+        const closeButton = promptElement.querySelector('.close-portal-prompt');
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(promptElement);
+        });
+        
+        // Auto-close after 10 seconds
+        setTimeout(() => {
+            if (promptElement.parentNode) {
+                document.body.removeChild(promptElement);
+            }
+        }, 10000);
+    }
+    
+    /**
+     * Cast portal spell to specific room
+     */
+    castPortalSpell(roomId) {
+        const spellText = `open portal to ${roomId.replace('-', ' ')}`;
+        console.log(`🔮 Casting portal spell: ${spellText}`);
+        
+        if (this.components.spellParser) {
+            const result = this.components.spellParser.parseSpell(spellText);
+            this.handleSpellResult(result);
         }
     }
     

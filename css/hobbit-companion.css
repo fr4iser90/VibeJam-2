@@ -1,0 +1,379 @@
+/**
+ * Fantasy OS - Hobbit Companion Styles
+ * Styling for hobbit companion UI components
+ * Created: 2025-10-25T16:24:13.000Z
+ */
+
+/* Hobbit Companion Container */
+.hobbit-companion-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    border: 2px solid #8b4513;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    font-family: 'Cinzel', serif;
+    color: #f4e4c1;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.hobbit-companion-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Hobbit Dialogue Box */
+.hobbit-dialogue-box {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: linear-gradient(135deg, #1a0f08 0%, #2c1810 100%);
+    border-radius: 12px;
+    position: relative;
+}
+
+.hobbit-dialogue-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+    border-radius: 12px 12px 0 0;
+}
+
+/* Hobbit Avatar */
+.hobbit-avatar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.hobbit-face {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+    border-radius: 50%;
+    border: 3px solid #ffd700;
+    position: relative;
+    margin-right: 15px;
+    animation: hobbitPulse 2s ease-in-out infinite;
+}
+
+.hobbit-face::before {
+    content: '🧙‍♂️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+}
+
+@keyframes hobbitPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Personality Indicator */
+.personality-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    transition: all 0.3s ease;
+}
+
+.personality-indicator.mood-happy {
+    background: #4CAF50;
+    box-shadow: 0 0 10px #4CAF50;
+}
+
+.personality-indicator.mood-excited {
+    background: #FF9800;
+    box-shadow: 0 0 10px #FF9800;
+}
+
+.personality-indicator.mood-worried {
+    background: #FF5722;
+    box-shadow: 0 0 10px #FF5722;
+}
+
+.personality-indicator.mood-mysterious {
+    background: #9C27B0;
+    box-shadow: 0 0 10px #9C27B0;
+}
+
+.personality-indicator.mood-neutral {
+    background: #607D8B;
+    box-shadow: 0 0 10px #607D8B;
+}
+
+.personality-indicator.mood-proud {
+    background: #3F51B5;
+    box-shadow: 0 0 10px #3F51B5;
+}
+
+.personality-indicator.mood-curious {
+    background: #00BCD4;
+    box-shadow: 0 0 10px #00BCD4;
+}
+
+/* Dialogue Content */
+.dialogue-content {
+    flex: 1;
+}
+
+.dialogue-text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border-left: 3px solid #ffd700;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.dialogue-text::before {
+    content: '"';
+    font-size: 24px;
+    color: #ffd700;
+    margin-right: 5px;
+}
+
+.dialogue-text::after {
+    content: '"';
+    font-size: 24px;
+    color: #ffd700;
+    margin-left: 5px;
+}
+
+/* Dialogue Actions */
+.dialogue-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.dialogue-btn {
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+    border: 1px solid #ffd700;
+    color: #f4e4c1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dialogue-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.dialogue-btn:hover {
+    background: linear-gradient(135deg, #a0522d 0%, #cd853f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.dialogue-btn:hover::before {
+    left: 100%;
+}
+
+.dialogue-btn:active {
+    transform: translateY(0);
+}
+
+/* Memory Display */
+.hobbit-memory-display {
+    background: linear-gradient(135deg, #1a0f08 0%, #2c1810 100%);
+    border-top: 1px solid #8b4513;
+    padding: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.memory-header {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 1px solid #8b4513;
+    padding-bottom: 5px;
+}
+
+.memory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.memory-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px;
+    border-radius: 6px;
+    border-left: 3px solid #8b4513;
+    transition: all 0.3s ease;
+}
+
+.memory-item:hover {
+    background: rgba(0, 0, 0, 0.5);
+    border-left-color: #ffd700;
+}
+
+.memory-type {
+    font-size: 11px;
+    color: #ffd700;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.memory-content {
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 3px;
+}
+
+.memory-time {
+    font-size: 10px;
+    color: #8b7355;
+    font-style: italic;
+}
+
+/* Dialogue Animations */
+.dialogue-active {
+    animation: dialogueGlow 3s ease-in-out;
+}
+
+@keyframes dialogueGlow {
+    0% { 
+        box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        transform: scale(1.02);
+    }
+    100% { 
+        box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hobbit-companion-container {
+        width: 300px;
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .hobbit-face {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .hobbit-face::before {
+        font-size: 20px;
+    }
+    
+    .dialogue-text {
+        font-size: 13px;
+        min-height: 50px;
+    }
+    
+    .dialogue-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hobbit-companion-container {
+        width: 280px;
+        max-height: 400px;
+    }
+    
+    .hobbit-dialogue-box {
+        padding: 12px;
+    }
+    
+    .dialogue-actions {
+        gap: 6px;
+    }
+    
+    .dialogue-btn {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .hobbit-face,
+    .dialogue-active,
+    .dialogue-btn,
+    .hobbit-companion-container {
+        animation: none;
+        transition: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .hobbit-companion-container {
+        border-width: 3px;
+        border-color: #fff;
+    }
+    
+    .dialogue-text {
+        border-left-width: 4px;
+    }
+    
+    .dialogue-btn {
+        border-width: 2px;
+    }
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+    .hobbit-companion-container {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        border-color: #666;
+    }
+    
+    .hobbit-dialogue-box {
+        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .hobbit-companion-container {
+        display: none;
+    }
+}
