@@ -743,6 +743,210 @@ const questRewards = {
         type: 'title-unlock',
         description: 'Achieve Fantasy OS Master status',
         effect: 'unlock-master-features'
+    },
+    'workshop': {
+        id: 'workshop-crafting-mastery',
+        title: 'Workshop Crafting Mastery',
+        description: 'Master the art of magical crafting in the workshop',
+        type: 'room',
+        room: 'workshop',
+        steps: [
+            { 
+                id: 'light-workshop-lamp1', 
+                title: 'Light Workshop Lamp 1', 
+                description: 'Illuminate the first workshop lamp', 
+                room: 'workshop', 
+                completed: false,
+                triggers: ['workshop-lamp1-illuminate'],
+                objectCoords: { x: 117, y: 446 },
+                spell: 'illuminate',
+                hobbitDialogue: "The workshop is dark! Light the first lamp!"
+            },
+            { 
+                id: 'light-workshop-lamp2', 
+                title: 'Light Workshop Lamp 2', 
+                description: 'Illuminate the second workshop lamp', 
+                room: 'workshop', 
+                completed: false,
+                triggers: ['workshop-lamp2-illuminate'],
+                objectCoords: { x: 1313, y: 559 },
+                spell: 'illuminate',
+                hobbitDialogue: "Great! Now light the second lamp too!"
+            },
+            { 
+                id: 'examine-hammer', 
+                title: 'Examine Hammer', 
+                description: 'Check the hammer for magical properties', 
+                room: 'workshop', 
+                completed: false,
+                triggers: ['hammer-examine'],
+                objectCoords: { x: 1108, y: 496 },
+                spell: 'examine',
+                hobbitDialogue: "This hammer might have magical crafting powers!"
+            },
+            { 
+                id: 'use-workbench', 
+                title: 'Use Workbench', 
+                description: 'Use the workbench to craft magical items', 
+                room: 'workshop', 
+                completed: false,
+                triggers: ['workbench-use'],
+                objectCoords: { x: 41, y: 772 },
+                spell: 'craft',
+                hobbitDialogue: "The workbench is perfect for magical crafting!",
+                unlocks: ['library-portal']
+            },
+            { 
+                id: 'cast-library-portal', 
+                title: 'Cast Library Portal', 
+                description: 'Cast the portal spell to open the library', 
+                room: 'workshop', 
+                completed: false,
+                triggers: ['library-portal-cast'],
+                spell: 'open portal to library',
+                hobbitDialogue: "Perfect! Now I can open the library portal!"
+            }
+        ],
+        rewards: ['unlock-library', 'spell-unlock-teleport'],
+        dependencies: ['kitchen-magic-discovery'],
+        triggers: ['workshop-lamp1-illuminate', 'workshop-lamp2-illuminate', 'hammer-examine', 'workbench-use', 'library-portal-cast'],
+        status: 'locked'
+    },
+    'bedroom': {
+        id: 'bedroom-dream-exploration',
+        title: 'Bedroom Dream Exploration',
+        description: 'Explore dreams and memories in the bedroom',
+        type: 'room',
+        room: 'bedroom',
+        steps: [
+            { 
+                id: 'light-bedroom-lamp', 
+                title: 'Light Bedroom Lamp', 
+                description: 'Illuminate the bedroom lamp', 
+                room: 'bedroom', 
+                completed: false,
+                triggers: ['bedroom-lamp-illuminate'],
+                objectCoords: { x: 703, y: 556 },
+                spell: 'illuminate',
+                hobbitDialogue: "The bedroom is dark! Light the lamp!"
+            },
+            { 
+                id: 'examine-bed', 
+                title: 'Examine Bed', 
+                description: 'Check the bed for dream clues', 
+                room: 'bedroom', 
+                completed: false,
+                triggers: ['bed-examine'],
+                objectCoords: { x: 1274, y: 943 },
+                spell: 'examine',
+                hobbitDialogue: "This bed might hold dream memories!"
+            },
+            { 
+                id: 'open-bedroom-drawer', 
+                title: 'Open Bedroom Drawer', 
+                description: 'Open the drawer to find personal items', 
+                room: 'bedroom', 
+                completed: false,
+                triggers: ['bedroom-drawer-open'],
+                objectCoords: { x: 634, y: 738 },
+                spell: 'open',
+                hobbitDialogue: "The drawer might contain personal memories!"
+            },
+            { 
+                id: 'touch-star', 
+                title: 'Touch Star', 
+                description: 'Touch the star to enter dream realm', 
+                room: 'bedroom', 
+                completed: false,
+                triggers: ['star-touch'],
+                objectCoords: { x: 205, y: 376 },
+                spell: 'touch',
+                hobbitDialogue: "The star will take us to the dream realm!",
+                unlocks: ['garden-portal']
+            },
+            { 
+                id: 'cast-garden-portal', 
+                title: 'Cast Garden Portal', 
+                description: 'Cast the portal spell to open the garden', 
+                room: 'bedroom', 
+                completed: false,
+                triggers: ['garden-portal-cast'],
+                spell: 'open portal to garden',
+                hobbitDialogue: "Perfect! Now I can open the garden portal!"
+            }
+        ],
+        rewards: ['unlock-garden', 'spell-unlock-dream'],
+        dependencies: ['workshop-crafting-mastery'],
+        triggers: ['bedroom-lamp-illuminate', 'bed-examine', 'bedroom-drawer-open', 'star-touch', 'garden-portal-cast'],
+        status: 'locked'
+    },
+    'garden': {
+        id: 'garden-nature-connection',
+        title: 'Garden Nature Connection',
+        description: 'Connect with nature and external world in the garden',
+        type: 'room',
+        room: 'garden',
+        steps: [
+            { 
+                id: 'examine-far-away', 
+                title: 'Examine Far Away', 
+                description: 'Look at the distant horizon', 
+                room: 'garden', 
+                completed: false,
+                triggers: ['far-away-examine'],
+                objectCoords: { x: 988, y: 332 },
+                spell: 'examine',
+                hobbitDialogue: "The horizon holds secrets of the outside world!"
+            },
+            { 
+                id: 'touch-white-flowers', 
+                title: 'Touch White Flowers', 
+                description: 'Touch the white flowers for purity', 
+                room: 'garden', 
+                completed: false,
+                triggers: ['white-flowers-touch'],
+                objectCoords: { x: 210, y: 786 },
+                spell: 'touch',
+                hobbitDialogue: "These white flowers represent purity and hope!"
+            },
+            { 
+                id: 'touch-red-flowers', 
+                title: 'Touch Red Flowers', 
+                description: 'Touch the red flowers for passion', 
+                room: 'garden', 
+                completed: false,
+                triggers: ['red-flowers-touch'],
+                objectCoords: { x: 1339, y: 720 },
+                spell: 'touch',
+                hobbitDialogue: "These red flowers represent passion and energy!"
+            },
+            { 
+                id: 'open-garden-door', 
+                title: 'Open Garden Door', 
+                description: 'Open the door to the external world', 
+                room: 'garden', 
+                completed: false,
+                triggers: ['garden-door-open'],
+                objectCoords: { x: 307, y: 451 },
+                spell: 'open',
+                hobbitDialogue: "The door leads to the outside world!"
+            },
+            { 
+                id: 'examine-fence', 
+                title: 'Examine Fence', 
+                description: 'Check the fence for boundary magic', 
+                room: 'garden', 
+                completed: false,
+                triggers: ['fence-examine'],
+                objectCoords: { x: 1016, y: 507 },
+                spell: 'examine',
+                hobbitDialogue: "The fence protects our magical realm from the outside!"
+            }
+        ],
+        rewards: ['unlock-external-world', 'spell-unlock-nature'],
+        dependencies: ['bedroom-dream-exploration'],
+        triggers: ['far-away-examine', 'white-flowers-touch', 'red-flowers-touch', 'garden-door-open', 'fence-examine'],
+        status: 'locked'
     }
 };
 
