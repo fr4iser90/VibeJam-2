@@ -451,8 +451,15 @@ class HobbitDialogue {
                     room: 'living-room'
                 },
                 {
-                    id: 'obj-cauldron-1',
-                    text: "That cauldron has seen many magical brews over the years.",
+                    id: 'obj-basket-1',
+                    text: "The basket might contain magical ingredients!",
+                    category: 'object-interaction',
+                    priority: 2,
+                    room: 'kitchen'
+                },
+                {
+                    id: 'obj-drawer-1',
+                    text: "The drawer could hold cooking tools and secrets!",
                     category: 'object-interaction',
                     priority: 2,
                     room: 'kitchen'

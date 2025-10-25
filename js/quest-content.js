@@ -103,48 +103,93 @@ const mainQuestline = {
                 status: 'active'
             },
             'act-2': {
-                id: 'ancient-artifacts',
-                title: 'Ancient Artifacts Discovery',
-                description: 'Discover ancient magical artifacts hidden in the rooms',
+                id: 'kitchen-magic-discovery',
+                title: 'Kitchen Magic Discovery',
+                description: 'Discover magical cooking secrets in the kitchen',
                 type: 'main',
                 act: 2,
                 steps: [
                     { 
-                        id: 'discover-artifacts', 
-                        title: 'Discover Artifacts', 
-                        description: 'Find ancient artifacts in each room', 
+                        id: 'light-kitchen-lamp1', 
+                        title: 'Light Kitchen Lamp 1', 
+                        description: 'Illuminate the first kitchen lamp', 
                         room: 'kitchen', 
                         completed: false,
-                        triggers: ['artifact-discovery']
+                        triggers: ['lamp1-illuminate'],
+                        objectCoords: { x: 155, y: 393 },
+                        spell: 'illuminate',
+                        hobbitDialogue: "The kitchen is dark! Light the first lamp!"
                     },
                     { 
-                        id: 'analyze-artifacts', 
-                        title: 'Analyze Artifacts', 
-                        description: 'Study the magical properties of discovered artifacts', 
-                        room: 'library', 
+                        id: 'light-kitchen-lamp2', 
+                        title: 'Light Kitchen Lamp 2', 
+                        description: 'Illuminate the second kitchen lamp', 
+                        room: 'kitchen', 
                         completed: false,
-                        triggers: ['artifact-analysis']
+                        triggers: ['lamp2-illuminate'],
+                        objectCoords: { x: 1336, y: 468 },
+                        spell: 'illuminate',
+                        hobbitDialogue: "Great! Now light the second lamp too!"
                     },
                     { 
-                        id: 'restore-artifacts', 
-                        title: 'Restore Artifacts', 
-                        description: 'Restore the power of ancient artifacts', 
-                        room: 'workshop', 
+                        id: 'examine-basket', 
+                        title: 'Examine Basket', 
+                        description: 'Check the basket for magical ingredients', 
+                        room: 'kitchen', 
                         completed: false,
-                        triggers: ['artifact-restoration']
+                        triggers: ['basket-examine'],
+                        objectCoords: { x: 1507, y: 248 },
+                        spell: 'examine',
+                        hobbitDialogue: "This basket might contain magical ingredients!"
                     },
                     { 
-                        id: 'activate-artifacts', 
-                        title: 'Activate Artifacts', 
-                        description: 'Activate the restored artifacts', 
-                        room: 'living-room', 
+                        id: 'open-drawer', 
+                        title: 'Open Drawer', 
+                        description: 'Open the drawer to find cooking tools', 
+                        room: 'kitchen', 
                         completed: false,
-                        triggers: ['artifact-activation']
+                        triggers: ['drawer-open'],
+                        objectCoords: { x: 1249, y: 771 },
+                        spell: 'open',
+                        hobbitDialogue: "The drawer might contain cooking tools!"
+                    },
+                    { 
+                        id: 'open-chest', 
+                        title: 'Open Chest', 
+                        description: 'Open the chest to find magical recipes (unlocks workshop portal)', 
+                        room: 'kitchen', 
+                        completed: false,
+                        triggers: ['chest-open'],
+                        objectCoords: { x: 1472, y: 631 },
+                        spell: 'open',
+                        hobbitDialogue: "I found magical recipes in the chest! This will help us unlock the workshop!",
+                        unlocks: ['workshop-portal']
+                    },
+                    { 
+                        id: 'ignite-kitchen-fireplace', 
+                        title: 'Ignite Kitchen Fireplace', 
+                        description: 'Light the kitchen fireplace for cooking', 
+                        room: 'kitchen', 
+                        completed: false,
+                        triggers: ['fireplace-ignite'],
+                        objectCoords: { x: 58, y: 848 },
+                        spell: 'ignite',
+                        hobbitDialogue: "We need fire to cook magical meals!"
+                    },
+                    { 
+                        id: 'cast-workshop-portal', 
+                        title: 'Cast Workshop Portal', 
+                        description: 'Cast the portal spell to open the workshop', 
+                        room: 'kitchen', 
+                        completed: false,
+                        triggers: ['workshop-portal-cast'],
+                        spell: 'open portal to workshop',
+                        hobbitDialogue: "Perfect! Now I can open the workshop portal!"
                     }
                 ],
                 rewards: ['unlock-workshop', 'spell-unlock-fireball'],
                 dependencies: ['credentials-recovery'],
-                triggers: ['artifact-discovery'],
+                triggers: ['lamp1-illuminate', 'lamp2-illuminate', 'basket-examine', 'drawer-open', 'chest-open', 'fireplace-ignite', 'workshop-portal-cast'],
                 status: 'locked'
             },
             'act-3': {

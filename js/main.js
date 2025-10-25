@@ -371,7 +371,8 @@ class FantasyOS {
         
         // Check for auto-unlock opportunities
         if (this.components.roomProgression) {
-            this.components.roomProgression.checkAutoUnlock();
+            // Temporarily disabled to prevent all rooms from being unlocked
+            // this.components.roomProgression.checkAutoUnlock();
         }
         
         // Check for upgrade auto-unlock opportunities

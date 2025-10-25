@@ -352,6 +352,18 @@ class QuestManager {
                 case 'garden-portal':
                     console.log('🔓 Garden portal unlocked!');
                     break;
+                case 'basket-examine':
+                    console.log('🔓 Basket examined!');
+                    break;
+                case 'drawer-open':
+                    console.log('🔓 Drawer opened!');
+                    break;
+                case 'chest-open':
+                    console.log('🔓 Chest opened!');
+                    break;
+                case 'workshop-portal':
+                    console.log('🔓 Workshop portal unlocked!');
+                    break;
                 default:
                     console.log(`Unknown unlock: ${unlock}`);
             }
@@ -397,10 +409,24 @@ class QuestManager {
      */
     unlockRoom(roomId) {
         console.log(`🚪 Unlocking room: ${roomId}`);
-        // This would integrate with RoomManager
-        if (typeof window.fantasyOS !== 'undefined' && window.fantasyOS.components.roomManager) {
-            // Room unlocking logic would go here
-            console.log(`Room ${roomId} unlocked!`);
+        
+        // Use room progression system to unlock the room
+        if (typeof window.fantasyOS !== 'undefined' && window.fantasyOS.components.roomProgression) {
+            const roomProgression = window.fantasyOS.components.roomProgression;
+            const success = roomProgression.unlockRoom(roomId);
+            
+            if (success) {
+                console.log(`✅ Room ${roomId} unlocked successfully!`);
+                
+                // Trigger room unlocked event for other systems
+                if (window.fantasyOS.components.roomUnlocking) {
+                    window.fantasyOS.components.roomUnlocking.showUnlockSuccess(roomId, 'quest-reward');
+                }
+            } else {
+                console.warn(`❌ Failed to unlock room ${roomId}`);
+            }
+        } else {
+            console.warn(`❌ Room progression system not available`);
         }
     }
     

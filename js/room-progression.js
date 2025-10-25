@@ -147,41 +147,58 @@ class RoomProgression {
      * Initialize room UI based on access levels
      */
     initializeRoomUI() {
-        console.log('🎨 FORCE HIDING LOCKED ROOMS...');
+        console.log('🎨 Initializing room UI based on access levels...');
         
-        // FORCE HIDE ALL LOCKED ROOMS IMMEDIATELY
-        const lockedRooms = ['kitchen', 'bedroom', 'workshop', 'library', 'garden'];
+        // Check each room's access level and update UI accordingly
+        const allRooms = ['living-room', 'kitchen', 'bedroom', 'workshop', 'library', 'garden'];
         
-        lockedRooms.forEach(roomId => {
+        allRooms.forEach(roomId => {
             const roomTab = document.querySelector(`[data-room="${roomId}"]`);
             if (roomTab) {
-                roomTab.style.display = 'none';
-                roomTab.style.visibility = 'hidden';
-                roomTab.style.opacity = '0';
-                roomTab.style.pointerEvents = 'none';
-                roomTab.style.position = 'absolute';
-                roomTab.style.left = '-9999px';
-                roomTab.style.top = '-9999px';
-                roomTab.style.width = '0';
-                roomTab.style.height = '0';
-                roomTab.style.overflow = 'hidden';
-                roomTab.classList.add('locked');
-                console.log(`🔒 FORCE HIDDEN: ${roomId}`);
+                // Only Living Room is accessible by default, others must be explicitly unlocked
+                const isAccessible = roomId === 'living-room';
+                
+                if (isAccessible) {
+                    // Room is accessible - make it visible
+                    roomTab.classList.remove('locked');
+                    roomTab.style.setProperty('display', 'block', 'important');
+                    roomTab.style.setProperty('visibility', 'visible', 'important');
+                    roomTab.style.setProperty('opacity', '1', 'important');
+                    roomTab.style.setProperty('pointer-events', 'auto', 'important');
+                    roomTab.style.setProperty('position', 'relative', 'important');
+                    roomTab.style.setProperty('left', 'auto', 'important');
+                    roomTab.style.setProperty('top', 'auto', 'important');
+                    roomTab.style.setProperty('width', 'auto', 'important');
+                    roomTab.style.setProperty('height', 'auto', 'important');
+                    roomTab.style.setProperty('overflow', 'visible', 'important');
+                    
+                    // Remove lock icon if present
+                    const lockIcon = roomTab.querySelector('.lock-icon');
+                    if (lockIcon) {
+                        lockIcon.remove();
+                    }
+                    
+                    console.log(`🔓 ROOM VISIBLE: ${roomId}`);
+                } else {
+                    // Room is not accessible - hide it
+                    roomTab.classList.add('locked');
+                    roomTab.style.setProperty('display', 'none', 'important');
+                    roomTab.style.setProperty('visibility', 'hidden', 'important');
+                    roomTab.style.setProperty('opacity', '0', 'important');
+                    roomTab.style.setProperty('pointer-events', 'none', 'important');
+                    roomTab.style.setProperty('position', 'absolute', 'important');
+                    roomTab.style.setProperty('left', '-9999px', 'important');
+                    roomTab.style.setProperty('top', '-9999px', 'important');
+                    roomTab.style.setProperty('width', '0', 'important');
+                    roomTab.style.setProperty('height', '0', 'important');
+                    roomTab.style.setProperty('overflow', 'hidden', 'important');
+                    
+                    console.log(`🔒 ROOM HIDDEN: ${roomId}`);
+                }
             }
         });
         
-        // Make sure Living Room is visible
-        const livingRoomTab = document.querySelector('[data-room="living-room"]');
-        if (livingRoomTab) {
-            livingRoomTab.style.display = 'block';
-            livingRoomTab.style.visibility = 'visible';
-            livingRoomTab.style.opacity = '1';
-            livingRoomTab.style.pointerEvents = 'auto';
-            livingRoomTab.classList.remove('locked');
-            console.log(`🔓 LIVING ROOM VISIBLE`);
-        }
-        
-        console.log('✅ FORCE HIDE COMPLETE');
+        console.log('✅ Room UI initialization complete');
     }
     
     /**
@@ -191,6 +208,7 @@ class RoomProgression {
         const roomData = this.progressionData.rooms[roomId];
         if (!roomData) return false;
         
+        // Only return true if room is explicitly unlocked
         return roomData.accessLevel >= this.accessLevels.UNLOCKED;
     }
     
@@ -204,11 +222,13 @@ class RoomProgression {
         // Check quest requirements
         if (requirements.requiredQuests.length > 0) {
             const questManager = this.getQuestManager();
-            if (questManager) {
-                for (const questId of requirements.requiredQuests) {
-                    if (!questManager.isQuestCompleted(questId)) {
-                        return false;
-                    }
+            if (!questManager) {
+                // If quest manager is not available, requirements cannot be met
+                return false;
+            }
+            for (const questId of requirements.requiredQuests) {
+                if (!questManager.isQuestCompleted(questId)) {
+                    return false;
                 }
             }
         }
@@ -216,11 +236,13 @@ class RoomProgression {
         // Check achievement requirements
         if (requirements.requiredAchievements.length > 0) {
             const achievementSystem = this.getAchievementSystem();
-            if (achievementSystem) {
-                for (const achievementId of requirements.requiredAchievements) {
-                    if (!achievementSystem.isAchievementCompleted(achievementId)) {
-                        return false;
-                    }
+            if (!achievementSystem) {
+                // If achievement system is not available, requirements cannot be met
+                return false;
+            }
+            for (const achievementId of requirements.requiredAchievements) {
+                if (!achievementSystem.isAchievementCompleted(achievementId)) {
+                    return false;
                 }
             }
         }
@@ -282,9 +304,24 @@ class RoomProgression {
         if (isUnlocked) {
             roomTab.classList.remove('locked');
             roomTab.classList.add('unlocking');
-            roomTab.style.display = 'block';
-            roomTab.style.visibility = 'visible';
-            roomTab.style.pointerEvents = 'auto';
+            
+            // Force visibility with important styles
+            roomTab.style.setProperty('display', 'block', 'important');
+            roomTab.style.setProperty('visibility', 'visible', 'important');
+            roomTab.style.setProperty('pointer-events', 'auto', 'important');
+            roomTab.style.setProperty('opacity', '1', 'important');
+            roomTab.style.setProperty('position', 'relative', 'important');
+            roomTab.style.setProperty('left', 'auto', 'important');
+            roomTab.style.setProperty('top', 'auto', 'important');
+            roomTab.style.setProperty('width', 'auto', 'important');
+            roomTab.style.setProperty('height', 'auto', 'important');
+            roomTab.style.setProperty('overflow', 'visible', 'important');
+            
+            // Remove lock icon if present
+            const lockIcon = roomTab.querySelector('.lock-icon');
+            if (lockIcon) {
+                lockIcon.remove();
+            }
             
             // Add reveal animation
             setTimeout(() => {
@@ -296,9 +333,9 @@ class RoomProgression {
         } else {
             roomTab.classList.add('locked');
             roomTab.classList.remove('unlocking', 'revealing');
-            roomTab.style.display = 'none';
-            roomTab.style.visibility = 'hidden';
-            roomTab.style.pointerEvents = 'none';
+            roomTab.style.setProperty('display', 'none', 'important');
+            roomTab.style.setProperty('visibility', 'hidden', 'important');
+            roomTab.style.setProperty('pointer-events', 'none', 'important');
         }
     }
     

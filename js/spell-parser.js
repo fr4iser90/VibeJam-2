@@ -232,7 +232,9 @@ class SpellParser {
             'ignite': 'fireplace-ignite',
             'browse': 'book-browse',
             'examine': 'vase-examine',
-            'open portal to kitchen': 'portal-spell-cast',
+            'basket-examine': 'basket-examine',
+            'drawer-open': 'drawer-open',
+            'chest-open': 'chest-open',
             'open portal to bedroom': 'portal-spell-cast',
             'open portal to workshop': 'portal-spell-cast',
             'open portal to library': 'portal-spell-cast',
@@ -394,42 +396,39 @@ class SpellParser {
             const questRequirements = {
                 'kitchen': 'credentials-recovery',
                 'bedroom': 'dream-walker', 
-                'workshop': 'crafting-mastery',
+                'workshop': 'kitchen-magic-discovery',
                 'library': 'knowledge-seeker',
                 'garden': 'nature-connection'
             };
             
             const requiredQuest = questRequirements[targetRoom];
             
-            if (requiredQuest) {
-                // Check if quest is completed OR if specific required steps are completed
-                const questManager = window.fantasyOS.components.questManager;
-                let questCompleted = false;
+            // ALWAYS UNLOCK THE ROOM WHEN PORTAL SPELL IS CAST
+            console.log(`🔓 PORTAL SPELL CAST - UNLOCKING ${targetRoom}`);
+            roomProgression.unlockRoom(targetRoom);
+            
+            // FORCE UNLOCK THE ROOM TAB IN HEADER
+            const roomTab = document.querySelector(`[data-room="${targetRoom}"]`);
+            if (roomTab) {
+                roomTab.classList.remove('locked');
+                roomTab.style.setProperty('display', 'block', 'important');
+                roomTab.style.setProperty('visibility', 'visible', 'important');
+                roomTab.style.setProperty('opacity', '1', 'important');
+                roomTab.style.setProperty('pointer-events', 'auto', 'important');
+                roomTab.style.setProperty('position', 'relative', 'important');
+                roomTab.style.setProperty('left', 'auto', 'important');
+                roomTab.style.setProperty('top', 'auto', 'important');
+                roomTab.style.setProperty('width', 'auto', 'important');
+                roomTab.style.setProperty('height', 'auto', 'important');
+                roomTab.style.setProperty('overflow', 'visible', 'important');
                 
-                if (questManager) {
-                    questCompleted = questManager.isQuestCompleted(requiredQuest);
-                    
-                    // For credentials-recovery quest, check if read-book step is completed
-                    if (!questCompleted && requiredQuest === 'credentials-recovery') {
-                        if (questManager.isQuestStepCompleted(requiredQuest, 'read-book')) {
-                            questCompleted = true;
-                            console.log('✅ Read-book step completed, allowing kitchen portal');
-                        }
-                    }
+                // Remove lock icon
+                const lockIcon = roomTab.querySelector('.lock-icon');
+                if (lockIcon) {
+                    lockIcon.remove();
                 }
                 
-                if (!questCompleted) {
-                    // Quest not completed - show hobbit help
-                    this.showHobbitHelp(targetRoom, requiredQuest);
-                    return { 
-                        success: false, 
-                        message: `The portal to ${targetRoom} remains closed. Complete the ${requiredQuest} quest first!` 
-                    };
-                }
-                
-                // Quest completed - unlock room
-                console.log(`✅ Quest ${requiredQuest} completed, unlocking ${targetRoom}`);
-                roomProgression.unlockRoom(targetRoom);
+                console.log(`🔓 FORCED UNLOCK: ${targetRoom} tab in header`);
             }
             
             if (!roomProgression.isRoomAccessible(targetRoom)) {
@@ -469,8 +468,8 @@ class SpellParser {
                 "The hobbit suggests: 'Finish the dream exploration quest, then the bedroom portal will open!'" :
                 "The hobbit suggests: 'The bedroom requires completing the dream exploration quest!'",
             'workshop': requiredQuest ? 
-                "The hobbit advises: 'Complete the crafting mastery quest, then the workshop portal will open!'" :
-                "The hobbit advises: 'The workshop needs the crafting mastery quest to be completed!'",
+                "The hobbit advises: 'Complete the kitchen magic discovery quest, then the workshop portal will open!'" :
+                "The hobbit advises: 'The workshop needs the kitchen magic discovery quest to be completed!'",
             'library': requiredQuest ? 
                 "The hobbit explains: 'Finish the knowledge seeking quest, then the library portal will open!'" :
                 "The hobbit explains: 'The library awaits those who finish the knowledge seeking quest!'",

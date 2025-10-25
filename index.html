@@ -23,34 +23,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     
-    <!-- IMMEDIATE ROOM HIDING SCRIPT -->
-    <script>
-        // FORCE HIDE LOCKED ROOMS IMMEDIATELY
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔒 FORCE HIDING ROOMS ON PAGE LOAD...');
-            
-            const lockedRooms = ['kitchen', 'bedroom', 'workshop', 'library', 'garden'];
-            
-            lockedRooms.forEach(roomId => {
-                const roomTab = document.querySelector(`[data-room="${roomId}"]`);
-                if (roomTab) {
-                    roomTab.style.display = 'none';
-                    roomTab.style.visibility = 'hidden';
-                    roomTab.style.opacity = '0';
-                    roomTab.style.pointerEvents = 'none';
-                    roomTab.style.position = 'absolute';
-                    roomTab.style.left = '-9999px';
-                    roomTab.style.top = '-9999px';
-                    roomTab.style.width = '0';
-                    roomTab.style.height = '0';
-                    roomTab.style.overflow = 'hidden';
-                    console.log(`🔒 HIDDEN: ${roomId}`);
-                }
-            });
-            
-            console.log('✅ ROOMS FORCE HIDDEN ON LOAD');
-        });
-    </script>
+    
 </head>
 <body>
     <!-- Fantasy Desktop Container -->
@@ -63,27 +36,27 @@
                     <span class="room-icon">🏠</span>
                     <span class="room-name">Living Room</span>
                 </button>
-                <button class="room-tab locked" data-room="kitchen" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
+                <button class="room-tab locked" data-room="kitchen">
                     <span class="room-icon">🍳</span>
                     <span class="room-name">Kitchen</span>
                     <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab locked" data-room="bedroom" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
+                <button class="room-tab locked" data-room="bedroom">
                     <span class="room-icon">🛏️</span>
                     <span class="room-name">Bedroom</span>
                     <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab locked" data-room="workshop" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
+                <button class="room-tab locked" data-room="workshop">
                     <span class="room-icon">🔨</span>
                     <span class="room-name">Workshop</span>
                     <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab locked" data-room="library" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
+                <button class="room-tab locked" data-room="library">
                     <span class="room-icon">📚</span>
                     <span class="room-name">Library</span>
                     <span class="lock-icon">🔒</span>
                 </button>
-                <button class="room-tab locked" data-room="garden" style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
+                <button class="room-tab locked" data-room="garden">
                     <span class="room-icon">🌿</span>
                     <span class="room-name">Garden</span>
                     <span class="lock-icon">🔒</span>
@@ -206,7 +179,7 @@
                             <img src="assets/images/objects/hobbit.png" alt="Hobbit" class="hobbit-image">
                         </div>
                         <div class="hobbit-dialogue-sidebar" id="hobbitDialogueKitchen">
-                            <p class="hobbit-text">Look for credential fragments in the cauldron!</p>
+                            <p class="hobbit-text">Look for credential fragments in the chest!</p>
                             <div class="hobbit-options">
                                 <button class="hobbit-btn" onclick="talkToHobbit('greeting', 'kitchen')">Quest Info</button>
                                 <button class="hobbit-btn" onclick="talkToHobbit('interaction', 'kitchen')">Help</button>
@@ -680,6 +653,7 @@
     <script src="js/hobbit-memory.js"></script>
     <script src="js/hobbit-companion.js"></script>
     <script src="js/book-window.js"></script>
+    <script src="js/chest-window.js"></script>
     <script src="js/vase-window.js"></script>
     <script src="js/room-progression.js"></script>
     <script src="js/room-unlocking.js"></script>
@@ -687,382 +661,38 @@
     <script src="js/room-upgrades.js"></script>
     <script src="js/main.js"></script>
     
-    <!-- Hobbit Companion Script -->
+    <!-- Quest System Integration -->
     <script>
-        // Fantasy OS Quest System - Hobbit Credentials Recovery
-        let questProgress = {
-            currentQuest: 'credentials-recovery',
-            completedSteps: [],
-            foundItems: [],
-            currentStep: 'start'
-        };
-
-        const hobbitDialogues = {
-            'living-room': {
-                greeting: [
-                    "Oh no! I've lost my Fantasy OS credentials!",
-                    "I can't access my magical systems anymore!",
-                    "Can you help me find them? I think they're scattered across the rooms!"
-                ],
-                interaction: [
-                    "Please help me search for my lost credentials!",
-                    "I need to recover my magical access keys!",
-                    "The Fantasy OS won't work without them!"
-                ],
-                farewell: [
-                    "Thank you for helping me!",
-                    "I hope we can find my credentials soon!",
-                    "The Fantasy OS depends on it!"
-                ]
-            },
-            'kitchen': {
-                greeting: [
-                    "I think I might have dropped a credential fragment here!",
-                    "Look around the kitchen - maybe it's hidden in the cauldron?",
-                    "The magical ingredients might have preserved something!"
-                ],
-                interaction: [
-                    "Check the cauldron! It might contain a credential piece!",
-                    "The magical brewing process could have preserved my key!",
-                    "Look for anything that glows with magical energy!"
-                ],
-                farewell: [
-                    "Did you find anything magical here?",
-                    "Keep searching! Every piece matters!",
-                    "The Fantasy OS needs all its components!"
-                ]
-            },
-            'library': {
-                greeting: [
-                    "I remember! There's an ancient tome with corrupted data!",
-                    "I need to find the book and delete the corrupted information!",
-                    "It contains old credentials that are causing system conflicts!"
-                ],
-                interaction: [
-                    "Find the ancient tome with corrupted data!",
-                    "I need to delete the old credential information!",
-                    "The book is somewhere in these shelves - look for glowing text!"
-                ],
-                farewell: [
-                    "Have you found the corrupted tome yet?",
-                    "The old data must be deleted to restore the system!",
-                    "Look for books with magical glowing text!"
-                ]
-            },
-            'workshop': {
-                greeting: [
-                    "Perfect! I can repair my credentials here!",
-                    "I found some credential fragments, but they need editing!",
-                    "Use the workshop tools to fix the corrupted data!"
-                ],
-                interaction: [
-                    "I need to edit and repair my credential fragments!",
-                    "Use the crafting tools to fix the corrupted data!",
-                    "The workshop has the power to restore my access keys!"
-                ],
-                farewell: [
-                    "Are you ready to help me repair my credentials?",
-                    "The workshop tools can fix almost anything!",
-                    "Together we can restore the Fantasy OS!"
-                ]
-            },
-            'bedroom': {
-                greeting: [
-                    "I'm so tired from searching for my credentials!",
-                    "Maybe I should rest and think about where I last had them...",
-                    "The bedroom is where I keep my most important memories!"
-                ],
-                interaction: [
-                    "Help me remember where I last had my credentials!",
-                    "Maybe there's a clue hidden in my dreams!",
-                    "The bedroom holds the key to my memory!"
-                ],
-                farewell: [
-                    "I need to rest and think about this quest!",
-                    "Maybe the answer will come to me in my dreams!",
-                    "The Fantasy OS restoration depends on my memory!"
-                ]
-            },
-            'garden': {
-                greeting: [
-                    "The garden connects to the outside world!",
-                    "Maybe my credentials are in the network connection!",
-                    "I need to harvest some data from the external portal!"
-                ],
-                interaction: [
-                    "Help me harvest data from the external connection!",
-                    "The garden portal might contain credential fragments!",
-                    "I need to gather information from the outside world!"
-                ],
-                farewell: [
-                    "Did you find any data in the garden portal?",
-                    "The external connection might hold the key!",
-                    "Keep searching - we're getting closer!"
-                ]
-            }
-        };
-        
-        // Quest System Functions
-        function checkQuestProgress() {
-            const currentRoom = document.querySelector('.room.active');
-            if (!currentRoom) return;
-            
-            const roomId = currentRoom.id;
-            const dialogueElement = document.getElementById(`hobbitDialogue${roomId.charAt(0).toUpperCase() + roomId.slice(1)}`);
-            
-            if (dialogueElement) {
-                const textElement = dialogueElement.querySelector('.hobbit-text');
-                if (textElement) {
-                    let progressText = "Quest Progress:\n";
-                    progressText += `Current Quest: ${questProgress.currentQuest}\n`;
-                    progressText += `Completed Steps: ${questProgress.completedSteps.length}/6\n`;
-                    progressText += `Found Items: ${questProgress.foundItems.length}\n\n`;
-                    
-                    if (questProgress.completedSteps.length === 0) {
-                        progressText += "Start by searching each room for credential fragments!";
-                    } else if (questProgress.completedSteps.length < 6) {
-                        progressText += "Keep searching! You're making progress!";
-                    } else {
-                        progressText += "Congratulations! You've restored the Fantasy OS!";
-                    }
-                    
-                    // Add bounce animation
-                    const hobbitImage = dialogueElement.closest('.hobbit-companion').querySelector('.hobbit-image');
-                    if (hobbitImage) {
-                        hobbitImage.classList.add('clicked');
-                        setTimeout(() => {
-                            hobbitImage.classList.remove('clicked');
-                        }, 600);
-                    }
-                    
-                    // Update text with fade effect
-                    textElement.style.opacity = '0';
-                    setTimeout(() => {
-                        textElement.textContent = progressText;
-                        textElement.style.opacity = '1';
-                    }, 150);
-                }
-            }
-        }
-        
-        // Function to simulate quest actions
-        function performQuestAction(action, room) {
-            if (!questProgress.completedSteps.includes(action)) {
-                questProgress.completedSteps.push(action);
-                questProgress.foundItems.push(`${action}-${room}`);
-                
-                // Show success message
-                showQuestMessage(`Found credential fragment in ${room}!`, 'success');
-                
-                // Check if quest is complete
-                if (questProgress.completedSteps.length >= 6) {
-                    setTimeout(() => {
-                        showQuestMessage("Fantasy OS Credentials Restored! System Online!", 'victory');
-                    }, 1000);
-                }
-            }
-        }
-        
-        function showQuestMessage(message, type = 'info') {
-            // Create quest message overlay
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `quest-message quest-${type}`;
-            messageDiv.textContent = message;
-            messageDiv.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(135deg, var(--fantasy-magic-purple) 0%, var(--fantasy-warm-gold) 100%);
-                color: white;
-                padding: 20px 30px;
-                border-radius: 15px;
-                font-family: 'MedievalSharp', cursive;
-                font-size: 16px;
-                z-index: 10000;
-                box-shadow: 0 8px 16px var(--fantasy-shadow-dark);
-                animation: questMessageAppear 0.5s ease-out;
-            `;
-            
-            document.body.appendChild(messageDiv);
-            
-            // Auto-remove after 3 seconds
-            setTimeout(() => {
-                messageDiv.style.animation = 'questMessageDisappear 0.5s ease-out';
-                setTimeout(() => {
-                    if (messageDiv.parentNode) {
-                        messageDiv.remove();
-                    }
-                }, 500);
-            }, 3000);
-        }
-        
-        // Function to talk to hobbit - Updated for quest system integration
+        // Simple integration with the real quest system
         function talkToHobbit(context, room = null) {
             console.log(`🧙‍♂️ Talking to Hobbit: ${context}`);
             
-            // Get current room if not provided
-            if (!room) {
-                const currentRoomElement = document.querySelector('.room.active');
-                room = currentRoomElement ? currentRoomElement.id : 'living-room';
-            }
-            
-            const hobbitDialogue = document.getElementById('hobbitDialogue');
-            if (!hobbitDialogue) return;
-            
-            const hobbitText = hobbitDialogue.querySelector('.hobbit-text');
-            if (!hobbitText) return;
-            
-            // Get Hobbit personality from quest manager
+            // Use the real quest system
             if (window.fantasyOS && window.fantasyOS.components.questManager) {
                 const questManager = window.fantasyOS.components.questManager;
-                const hobbitPersonality = questManager.hobbitPersonality;
                 
-                if (hobbitPersonality) {
-                    // Update mood based on context
-                    hobbitPersonality.updateMood(context);
-                    
-                    // Get current room
-                    const currentRoom = window.fantasyOS.getCurrentRoom();
-                    
-                    // Get dialogue
-                    const dialogue = hobbitPersonality.getDialogue(context, currentRoom);
-                    hobbitText.textContent = dialogue;
-                    
-                    // Add bounce animation to Hobbit image
-                    const hobbitImage = document.querySelector('#hobbitCharacter .hobbit-image');
-                    if (hobbitImage) {
-                        hobbitImage.classList.add('clicked');
-                        setTimeout(() => {
-                            hobbitImage.classList.remove('clicked');
-                        }, 600);
-                    }
-                    
-                    // Show quest system if context is 'greeting'
-                    if (context === 'greeting') {
-                        window.fantasyOS.showQuestSystem();
-                    }
-                    
-                    // Show help if context is 'interaction'
-                    if (context === 'interaction') {
-                        window.fantasyOS.showHelp();
-                    }
-                    
-                    return;
-                }
-            }
-            
-            // Fallback to old dialogue system
-            const dialogues = hobbitDialogues[room] && hobbitDialogues[room][context];
-            if (dialogues && dialogues.length > 0) {
-                const randomDialogue = dialogues[Math.floor(Math.random() * dialogues.length)];
-                
-                // Add bounce animation to hobbit image
-                const hobbitImage = document.querySelector('#hobbitCharacter .hobbit-image');
-                if (hobbitImage) {
-                    hobbitImage.classList.add('clicked');
-                    setTimeout(() => {
-                        hobbitImage.classList.remove('clicked');
-                    }, 600);
-                }
-                
-                // Update text with fade effect
-                hobbitText.style.opacity = '0';
-                setTimeout(() => {
-                    hobbitText.textContent = randomDialogue;
-                    hobbitText.style.opacity = '1';
-                }, 150);
-                
-                // Show quest system if context is 'greeting'
                 if (context === 'greeting') {
-                    setTimeout(() => {
-                        if (window.fantasyOS) {
-                            window.fantasyOS.showQuestSystem();
-                        }
-                    }, 500);
-                }
-                
-                // Show help if context is 'interaction'
-                if (context === 'interaction') {
-                    setTimeout(() => {
-                        if (window.fantasyOS) {
-                            window.fantasyOS.showHelp();
-                        }
-                    }, 500);
-                }
-            } else {
-                // Ultimate fallback with better messages
-                const fallbackDialogues = {
-                    'greeting': "Hello! I'm here to help you on your quest! Click 'Quest Info' to see your current quests.",
-                    'interaction': "I can help you with spells, quests, and navigating the Fantasy OS! What do you need?",
-                    'quest-progress': "Great progress! Keep exploring and interacting with objects to advance your quest!"
-                };
-                
-                hobbitText.textContent = fallbackDialogues[context] || "🧙‍♂️ I'm here to help you on your adventure!";
-                
-                // Add bounce animation
-                const hobbitImage = document.querySelector('#hobbitCharacter .hobbit-image');
-                if (hobbitImage) {
-                    hobbitImage.classList.add('clicked');
-                    setTimeout(() => {
-                        hobbitImage.classList.remove('clicked');
-                    }, 600);
-                }
-                
-                // Show appropriate UI
-                if (context === 'greeting') {
-                    setTimeout(() => {
-                        if (window.fantasyOS) {
-                            window.fantasyOS.showQuestSystem();
-                        }
-                    }, 500);
-                }
-                
-                if (context === 'interaction') {
-                    setTimeout(() => {
-                        if (window.fantasyOS) {
-                            window.fantasyOS.showHelp();
-                        }
-                    }, 500);
+                    window.fantasyOS.showQuestSystem();
+                } else if (context === 'interaction') {
+                    window.fantasyOS.showHelp();
                 }
             }
         }
         
-        // Function to check quest progress
         function checkQuestProgress() {
             console.log('🎯 Checking quest progress');
             
-            // Show quest system
+            // Use the real quest system
             if (window.fantasyOS) {
                 window.fantasyOS.showQuestSystem();
             }
-            
-            // Update Hobbit dialogue
-            talkToHobbit('quest-progress');
-            
-            // Show quest progress notification
-            if (window.fantasyOS && window.fantasyOS.components.questManager) {
-                const questManager = window.fantasyOS.components.questManager;
-                const activeQuests = questManager.getActiveQuests();
-                const completedQuests = questManager.getCompletedQuests();
-                
-                let message = `Active Quests: ${activeQuests.length}\nCompleted Quests: ${completedQuests.length}`;
-                
-                if (activeQuests.length > 0) {
-                    message += `\n\nCurrent Quest: ${questManager.getQuestInfo(activeQuests[0])?.title || 'Unknown'}`;
-                }
-                
-                // Show notification
-                questManager.showQuestNotification(message);
-            }
         }
         
-        // Add click handler to hobbit images and demo quest actions
+        // Add click handler to hobbit images
         document.addEventListener('DOMContentLoaded', function() {
             const hobbitImages = document.querySelectorAll('.hobbit-image');
             hobbitImages.forEach(image => {
                 image.addEventListener('click', function() {
-                    // Random dialogue on image click
                     const dialogueTypes = ['greeting', 'interaction'];
                     const randomType = dialogueTypes[Math.floor(Math.random() * dialogueTypes.length)];
                     
@@ -1073,28 +703,6 @@
                     }
                 });
             });
-            
-            // Demo quest actions - simulate finding items when clicking on room objects
-            const roomBackgrounds = document.querySelectorAll('.room-background');
-            roomBackgrounds.forEach(background => {
-                background.addEventListener('click', function(e) {
-                    const currentRoom = document.querySelector('.room.active');
-                    if (currentRoom) {
-                        const roomId = currentRoom.id;
-                        const action = `find-credential-${roomId}`;
-                        
-                        // Simulate quest action with 30% chance
-                        if (Math.random() < 0.3 && !questProgress.completedSteps.includes(action)) {
-                            performQuestAction(action, roomId);
-                        }
-                    }
-                });
-            });
-            
-            // Show initial quest message
-            setTimeout(() => {
-                showQuestMessage("Welcome to Fantasy OS! Help the Hobbit recover his lost credentials!", 'info');
-            }, 1000);
         });
     </script>
 </body>

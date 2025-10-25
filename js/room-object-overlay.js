@@ -446,10 +446,10 @@ class RoomObjectOverlay {
     }
     
     /**
-     * Set initial dark mode for living room
+     * Set initial dark mode for living room and kitchen
      */
     setInitialDarkMode() {
-        console.log('🌙 Setting initial dark mode for living room...');
+        console.log('🌙 Setting initial dark mode for living room and kitchen...');
         
         // Set initial dark mode flag FIRST
         this.isDarkMode = true;
@@ -464,15 +464,35 @@ class RoomObjectOverlay {
             console.log('❌ Living room background not found!');
         }
         
-        // Set all lighting objects to inactive initially
+        // Set kitchen to dark mode initially
+        const kitchenBackground = document.querySelector('#kitchen .room-background');
+        if (kitchenBackground) {
+            kitchenBackground.style.backgroundImage = "url('assets/images/rooms/kitchen-dark.png')";
+            console.log('✅ Kitchen set to dark mode');
+        } else {
+            console.log('❌ Kitchen background not found!');
+        }
+        
+        // Set all living room lighting objects to inactive initially
         const livingRoomObjects = this.activeObjects.get('living-room');
         if (livingRoomObjects) {
             livingRoomObjects.set('lamp_1', { isActive: false, lastInteraction: null, interactionCount: 0 });
             livingRoomObjects.set('lamp_2', { isActive: false, lastInteraction: null, interactionCount: 0 });
             livingRoomObjects.set('fireplace', { isActive: false, lastInteraction: null, interactionCount: 0 });
-            console.log('✅ All lighting objects set to inactive');
+            console.log('✅ All living room lighting objects set to inactive');
         } else {
             console.log('❌ Living room objects not found!');
+        }
+        
+        // Set all kitchen lighting objects to inactive initially
+        const kitchenObjects = this.activeObjects.get('kitchen');
+        if (kitchenObjects) {
+            kitchenObjects.set('lamp_1', { isActive: false, lastInteraction: null, interactionCount: 0 });
+            kitchenObjects.set('lamp_2', { isActive: false, lastInteraction: null, interactionCount: 0 });
+            kitchenObjects.set('fireplace', { isActive: false, lastInteraction: null, interactionCount: 0 });
+            console.log('✅ All kitchen lighting objects set to inactive');
+        } else {
+            console.log('❌ Kitchen objects not found!');
         }
         
         // Force dark mode with timeout to ensure DOM is ready
@@ -481,6 +501,12 @@ class RoomObjectOverlay {
             if (livingRoomBackground) {
                 livingRoomBackground.style.backgroundImage = "url('assets/images/rooms/living-room-dark.png')";
                 console.log('✅ Living room FORCED to dark mode');
+            }
+            
+            const kitchenBackground = document.querySelector('#kitchen .room-background');
+            if (kitchenBackground) {
+                kitchenBackground.style.backgroundImage = "url('assets/images/rooms/kitchen-dark.png')";
+                console.log('✅ Kitchen FORCED to dark mode');
             }
         }, 100);
     }
@@ -931,6 +957,30 @@ class RoomObjectOverlay {
      */
     handleOpenAction(roomId, objectName, isActive) {
         const objectData = this.rooms[roomId].objects[objectName];
+        
+        console.log(`🔍 DEBUG: Opening ${objectName} in ${roomId}`);
+        
+        // Special case: Chest opening finds workshop portal spell
+        if (objectName === 'chest' && roomId === 'kitchen') {
+            console.log(`🔍 DEBUG: Chest detected! Calling handleChestOpening`);
+            this.handleChestOpening(roomId, objectName);
+            return;
+        }
+        
+        // Special case: Drawer opening finds cooking tools
+        if (objectName === 'drawer' && roomId === 'kitchen') {
+            console.log(`🔍 DEBUG: Drawer detected! Opening drawer modal`);
+            this.openDrawerModal(roomId, objectName);
+            return;
+        }
+        
+        // Special case: Basket examination finds ingredients
+        if (objectName === 'basket' && roomId === 'kitchen') {
+            console.log(`🔍 DEBUG: Basket detected! Opening basket modal`);
+            this.openBasketModal(roomId, objectName);
+            return;
+        }
+        
         if (isActive) {
             console.log(`🚪 Opening ${objectData.name}`);
             this.showMessage(`${objectData.name} is now open.`);
@@ -953,12 +1003,32 @@ class RoomObjectOverlay {
             return;
         }
         
+        // Special case: Basket examination finds ingredients
+        if (objectName === 'basket' && roomId === 'kitchen') {
+            console.log(`🔍 DEBUG: Basket examination detected! Opening basket modal`);
+            this.openBasketModal(roomId, objectName);
+            return;
+        }
+        
         this.showMessage(`You examine ${objectData.name} closely...`);
     }
     
     /**
-     * Handle vase examination - finds credentials
+     * Handle chest opening - finds workshop portal spell
      */
+    handleChestOpening(roomId, objectName) {
+        console.log(`📦 Opening chest - looking for workshop portal spell...`);
+
+        // Show message about finding the portal spell
+        this.showMessage(`You found magical recipes in the chest! The workshop portal spell is now available! Use "open portal to workshop" to enter the workshop!`);
+        
+        // Trigger quest progress for chest opening
+        this.triggerQuestProgress(roomId, objectName, 'open');
+        
+        // The portal spell will be unlocked through the quest system
+        console.log('🔓 Workshop portal spell unlocked!');
+    }
+    
     handleVaseExamination(roomId, objectName) {
         console.log(`🏺 Examining vase - looking for credentials...`);
 
@@ -1000,6 +1070,9 @@ class RoomObjectOverlay {
             'lamp_1': { 'illuminate': 'lamp1-illuminate' },
             'lamp_2': { 'illuminate': 'lamp2-illuminate' },
             'fireplace': { 'ignite': 'fireplace-ignite' },
+            'basket': { 'examine': 'basket-examine' },
+            'drawer': { 'open': 'drawer-open' },
+            'chest': { 'open': 'chest-open' },
             'book': { 'browse': 'book-browse' },
             'vase': { 'examine': 'vase-examine' }
         };
@@ -1688,6 +1761,139 @@ class RoomObjectOverlay {
         console.log('🔍 Debug overlay added - object areas are now visible!');
     }
     */
+    
+    /**
+     * Open drawer modal - shows cooking tools
+     */
+    openDrawerModal(roomId, objectName) {
+        console.log(`🔧 Opening drawer modal - showing cooking tools...`);
+        
+        // Create modal
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
+        
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+            background: linear-gradient(135deg, var(--fantasy-magic-purple) 0%, var(--fantasy-warm-gold) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            color: white;
+            font-family: 'MedievalSharp', cursive;
+            box-shadow: 0 8px 16px var(--fantasy-shadow-dark);
+        `;
+        
+        modalContent.innerHTML = `
+            <h2 style="margin-top: 0; color: var(--fantasy-warm-gold);">🔧 Cooking Tools Found!</h2>
+            <p>You found magical cooking tools in the drawer:</p>
+            <ul style="text-align: left; margin: 20px 0;">
+                <li>✨ Enchanted Wooden Spoon</li>
+                <li>🔥 Magical Whisk</li>
+                <li>⚡ Lightning-fast Knife</li>
+                <li>🌿 Herb Grinder</li>
+                <li>💎 Crystal Measuring Cup</li>
+            </ul>
+            <p>These tools will help you cook magical meals!</p>
+            <button onclick="this.closest('.modal').remove()" style="
+                background: var(--fantasy-warm-gold);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-family: 'MedievalSharp', cursive;
+                cursor: pointer;
+                margin-top: 15px;
+            ">Close</button>
+        `;
+        
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // Trigger quest progress
+        this.triggerQuestProgress(roomId, objectName, 'open');
+        console.log('🔧 Drawer modal opened with cooking tools!');
+    }
+    
+    /**
+     * Open basket modal - shows magical ingredients
+     */
+    openBasketModal(roomId, objectName) {
+        console.log(`🧺 Opening basket modal - showing magical ingredients...`);
+        
+        // Create modal
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
+        
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+            background: linear-gradient(135deg, var(--fantasy-magic-purple) 0%, var(--fantasy-warm-gold) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            color: white;
+            font-family: 'MedievalSharp', cursive;
+            box-shadow: 0 8px 16px var(--fantasy-shadow-dark);
+        `;
+        
+        modalContent.innerHTML = `
+            <h2 style="margin-top: 0; color: var(--fantasy-warm-gold);">🧺 Magical Ingredients Found!</h2>
+            <p>You found magical ingredients in the basket:</p>
+            <ul style="text-align: left; margin: 20px 0;">
+                <li>🌟 Starfruit (glows in the dark)</li>
+                <li>🌙 Moonbeam Herbs</li>
+                <li>☀️ Sunflower Seeds</li>
+                <li>⚡ Lightning Peppers</li>
+                <li>❄️ Ice Crystal Sugar</li>
+                <li>🔥 Fire Salt</li>
+            </ul>
+            <p>These ingredients will make your cooking magical!</p>
+            <button onclick="this.closest('.modal').remove()" style="
+                background: var(--fantasy-warm-gold);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-family: 'MedievalSharp', cursive;
+                cursor: pointer;
+                margin-top: 15px;
+            ">Close</button>
+        `;
+        
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // Trigger quest progress
+        this.triggerQuestProgress(roomId, objectName, 'examine');
+        console.log('🧺 Basket modal opened with magical ingredients!');
+    }
 }
 
 // Export for module systems

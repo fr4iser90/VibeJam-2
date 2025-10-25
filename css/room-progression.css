@@ -22,7 +22,7 @@
     overflow: hidden !important;
 }
 
-/* UNLOCKED ROOMS SHOULD BE VISIBLE */
+/* UNLOCKED ROOMS SHOULD BE VISIBLE - OVERRIDE ALL OTHER RULES */
 [data-room="kitchen"]:not(.locked),
 [data-room="bedroom"]:not(.locked), 
 [data-room="workshop"]:not(.locked),
@@ -38,6 +38,18 @@
     width: auto !important;
     height: auto !important;
     overflow: visible !important;
+}
+
+/* Force unlocked rooms to be visible even with inline styles */
+[data-room="kitchen"]:not(.locked),
+[data-room="bedroom"]:not(.locked),
+[data-room="workshop"]:not(.locked),
+[data-room="library"]:not(.locked),
+[data-room="garden"]:not(.locked) {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 /* Room Progression Base Styles */
