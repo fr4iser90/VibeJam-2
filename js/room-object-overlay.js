@@ -216,40 +216,40 @@ class RoomObjectOverlay {
                     'lamp_1': {
                         name: 'Lamp_1',
                         description: 'lamp_1 object',
-                        action: 'interact',
-                        effects: ['interaction'],
-                        sound: 'object-click',
-                        animation: 'objectGlow',
+                        action: 'illuminate',
+                        effects: ['light', 'workspace'],
+                        sound: 'lamp-on',
+                        animation: 'lightGlow',
                         clickableArea: { x: 117, y: 446, width: 77, height: 215 },
-                        type: 'interactive'
+                        type: 'lighting'
                     },
                     'lamp_2': {
                         name: 'Lamp_2',
                         description: 'lamp_2 object',
-                        action: 'interact',
-                        effects: ['interaction'],
-                        sound: 'object-click',
-                        animation: 'objectGlow',
+                        action: 'illuminate',
+                        effects: ['light', 'workspace'],
+                        sound: 'lamp-on',
+                        animation: 'lightGlow',
                         clickableArea: { x: 1313, y: 559, width: 53, height: 196 },
-                        type: 'interactive'
+                        type: 'lighting'
                     },
                     'hammer': {
                         name: 'Hammer',
                         description: 'hammer object',
-                        action: 'interact',
-                        effects: ['interaction'],
+                        action: 'examine',
+                        effects: ['tools', 'crafting'],
                         sound: 'object-click',
-                        animation: 'objectGlow',
+                        animation: 'toolGlow',
                         clickableArea: { x: 1108, y: 496, width: 66, height: 162 },
                         type: 'interactive'
                     },
                     'workbench': {
                         name: 'Workbench',
                         description: 'workbench object',
-                        action: 'interact',
-                        effects: ['interaction'],
+                        action: 'craft',
+                        effects: ['crafting', 'creation'],
                         sound: 'object-click',
-                        animation: 'objectGlow',
+                        animation: 'craftGlow',
                         clickableArea: { x: 41, y: 772, width: 531, height: 102 },
                         type: 'interactive'
                     }
