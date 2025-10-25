@@ -402,9 +402,21 @@ class SpellParser {
             const requiredQuest = questRequirements[targetRoom];
             
             if (requiredQuest) {
-                // Check if quest is completed
-                const questCompleted = window.fantasyOS.components.questManager ? 
-                    window.fantasyOS.components.questManager.isQuestCompleted(requiredQuest) : false;
+                // Check if quest is completed OR if specific required steps are completed
+                const questManager = window.fantasyOS.components.questManager;
+                let questCompleted = false;
+                
+                if (questManager) {
+                    questCompleted = questManager.isQuestCompleted(requiredQuest);
+                    
+                    // For credentials-recovery quest, check if read-book step is completed
+                    if (!questCompleted && requiredQuest === 'credentials-recovery') {
+                        if (questManager.isQuestStepCompleted(requiredQuest, 'read-book')) {
+                            questCompleted = true;
+                            console.log('✅ Read-book step completed, allowing kitchen portal');
+                        }
+                    }
+                }
                 
                 if (!questCompleted) {
                     // Quest not completed - show hobbit help

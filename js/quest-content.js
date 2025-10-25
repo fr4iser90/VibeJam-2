@@ -66,13 +66,14 @@ const mainQuestline = {
                     { 
                         id: 'read-book', 
                         title: 'Read Book', 
-                        description: 'Read the book to find the portal spell', 
+                        description: 'Read the book to find the portal spell (unlocks kitchen portal)', 
                         room: 'living-room', 
                         completed: false,
                         triggers: ['book-browse'],
                         objectCoords: { x: 538, y: 433 },
                         spell: 'browse',
-                        hobbitDialogue: "Thank you! Now I can see better. I need to read something to find the portal spell!"
+                        hobbitDialogue: "Thank you! Now I can see better. I need to read something to find the portal spell!",
+                        unlocks: ['kitchen-portal']
                     },
                     { 
                         id: 'cast-portal-spell', 

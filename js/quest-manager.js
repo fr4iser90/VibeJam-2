@@ -239,6 +239,12 @@ class QuestManager {
         quest.currentStep = questProgress.currentStep;
         quest.progress = questProgress.progress;
         
+        // Process step unlocks
+        const completedStep = quest.steps[stepIndex];
+        if (completedStep.unlocks) {
+            this.processStepUnlocks(completedStep.unlocks);
+        }
+        
         // Check if quest is complete
         if (questProgress.completedSteps.length === quest.steps.length) {
             this.completeQuest(questId);
@@ -320,6 +326,36 @@ class QuestManager {
         
         // Show reward notification
         this.showRewardNotification(rewards);
+    }
+    
+    /**
+     * Process step unlocks
+     */
+    processStepUnlocks(unlocks) {
+        console.log(`🔓 Processing step unlocks:`, unlocks);
+        
+        unlocks.forEach(unlock => {
+            switch (unlock) {
+                case 'kitchen-portal':
+                    console.log('🔓 Kitchen portal unlocked!');
+                    // The portal will be available through the spell parser
+                    break;
+                case 'bedroom-portal':
+                    console.log('🔓 Bedroom portal unlocked!');
+                    break;
+                case 'workshop-portal':
+                    console.log('🔓 Workshop portal unlocked!');
+                    break;
+                case 'library-portal':
+                    console.log('🔓 Library portal unlocked!');
+                    break;
+                case 'garden-portal':
+                    console.log('🔓 Garden portal unlocked!');
+                    break;
+                default:
+                    console.log(`Unknown unlock: ${unlock}`);
+            }
+        });
     }
     
     /**
@@ -702,6 +738,31 @@ class QuestManager {
      */
     isQuestCompleted(questId) {
         return this.completedQuests.has(questId);
+    }
+    
+    /**
+     * Check if specific quest step is completed
+     */
+    isQuestStepCompleted(questId, stepId) {
+        const quest = this.getQuestInfo(questId);
+        if (!quest || !quest.steps) {
+            return false;
+        }
+        
+        const step = quest.steps.find(s => s.id === stepId);
+        return step ? step.completed : false;
+    }
+    
+    /**
+     * Check if quest has minimum required steps completed for unlocking features
+     */
+    hasMinimumStepsCompleted(questId, requiredSteps) {
+        const quest = this.getQuestInfo(questId);
+        if (!quest || !quest.steps) {
+            return false;
+        }
+        
+        return requiredSteps.every(stepId => this.isQuestStepCompleted(questId, stepId));
     }
     
     /**
