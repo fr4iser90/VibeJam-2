@@ -38,9 +38,8 @@ class GestureRecognition {
         
         this.context = this.canvas.getContext('2d');
         
-        // Set canvas size to full screen
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        // Set canvas size to cover only the middle area (not sidebars)
+        this.updateCanvasSize();
         
         this.setupCanvas();
         this.setupEventListeners();
@@ -50,6 +49,31 @@ class GestureRecognition {
         
         console.log('🎨 Gesture recognition initialized');
         return true;
+    }
+    
+    /**
+     * Update canvas size to cover only the middle area (not sidebars, header, footer)
+     */
+    updateCanvasSize() {
+        const gestureContainer = document.querySelector('.gesture-canvas-container');
+        if (gestureContainer) {
+            const rect = gestureContainer.getBoundingClientRect();
+            
+            this.canvas.width = rect.width;
+            this.canvas.height = rect.height;
+            
+            // Position canvas INSIDE the gesture container (not over it)
+            this.canvas.style.position = 'absolute';
+            this.canvas.style.left = '0px';
+            this.canvas.style.top = '0px';
+            this.canvas.style.width = rect.width + 'px';
+            this.canvas.style.height = rect.height + 'px';
+            this.canvas.style.zIndex = '100';
+        } else {
+            // Fallback to calculated area (full screen minus header/footer)
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight - 120; // Minus header and footer
+        }
     }
     
     /**
@@ -183,8 +207,7 @@ class GestureRecognition {
         
         // Window resize handler
         window.addEventListener('resize', () => {
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
+            this.updateCanvasSize();
         });
     }
     

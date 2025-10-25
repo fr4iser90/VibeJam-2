@@ -79,9 +79,6 @@
                 
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/living-room.png');">
-                    <!-- Interactive Objects are now handled by RoomObjectOverlay system -->
-                    <!-- No need for separate object elements - clicks are detected on the background -->
-                    
                     <!-- Magical Particles -->
                     <div class="particle-system">
                         <div class="particle"></div>
@@ -94,18 +91,6 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gestures</h3>
-                    <div class="gesture-instructions">
-                        <h4>Gesture Spells:</h4>
-                        <ul>
-                            <li>Circle = Open portal</li>
-                            <li>Zigzag = Lightning</li>
-                            <li>Spiral = Fire</li>
-                            <li>Heart = Favorites</li>
-                        </ul>
-                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
-                    </div>
-                    
                     <!-- Hobbit Companion -->
                     <div class="hobbit-companion">
                         <h3 class="fantasy-header">Hobbit Companion</h3>
@@ -154,18 +139,6 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gestures</h3>
-                    <div class="gesture-instructions">
-                        <h4>Kitchen Gestures:</h4>
-                        <ul>
-                            <li>Circle = Stir cauldron</li>
-                            <li>Zigzag = Heat</li>
-                            <li>Spiral = Brew</li>
-                            <li>Heart = Favorites</li>
-                        </ul>
-                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
-                    </div>
-                    
                     <!-- Hobbit Companion -->
                     <div class="hobbit-companion">
                         <h3 class="fantasy-header">Hobbit Companion</h3>
@@ -213,18 +186,6 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gestures</h3>
-                    <div class="gesture-instructions">
-                        <h4>Bedroom Gestures:</h4>
-                        <ul>
-                            <li>Circle = Rest</li>
-                            <li>Zigzag = Alarm</li>
-                            <li>Spiral = Dreams</li>
-                            <li>Heart = Favorites</li>
-                        </ul>
-                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
-                    </div>
-                    
                     <!-- Hobbit Companion -->
                     <div class="hobbit-companion">
                         <h3 class="fantasy-header">Hobbit Companion</h3>
@@ -272,18 +233,6 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gestures</h3>
-                    <div class="gesture-instructions">
-                        <h4>Workshop Gestures:</h4>
-                        <ul>
-                            <li>Circle = Tool</li>
-                            <li>Zigzag = Repair</li>
-                            <li>Spiral = Forge</li>
-                            <li>Heart = Favorites</li>
-                        </ul>
-                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
-                    </div>
-                    
                     <!-- Hobbit Companion -->
                     <div class="hobbit-companion">
                         <h3 class="fantasy-header">Hobbit Companion</h3>
@@ -331,18 +280,6 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gestures</h3>
-                    <div class="gesture-instructions">
-                        <h4>Library Gestures:</h4>
-                        <ul>
-                            <li>Circle = Open book</li>
-                            <li>Zigzag = Search</li>
-                            <li>Spiral = Archive</li>
-                            <li>Heart = Favorites</li>
-                        </ul>
-                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
-                    </div>
-                    
                     <!-- Hobbit Companion -->
                     <div class="hobbit-companion">
                         <h3 class="fantasy-header">Hobbit Companion</h3>
@@ -390,18 +327,6 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gestures</h3>
-                    <div class="gesture-instructions">
-                        <h4>Garden Gestures:</h4>
-                        <ul>
-                            <li>Circle = Portal</li>
-                            <li>Zigzag = Network</li>
-                            <li>Spiral = Growth</li>
-                            <li>Heart = Favorites</li>
-                        </ul>
-                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
-                    </div>
-                    
                     <!-- Hobbit Companion -->
                     <div class="hobbit-companion">
                         <h3 class="fantasy-header">Hobbit Companion</h3>
@@ -421,7 +346,7 @@
             </div>
         </main>
 
-        <!-- Global Gesture Canvas - Full Screen -->
+        <!-- Gesture Canvas Container - Only over middle area -->
         <div class="gesture-canvas-container">
             <canvas id="gestureCanvas" class="gesture-canvas"></canvas>
         </div>

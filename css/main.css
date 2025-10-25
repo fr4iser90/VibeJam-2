@@ -340,6 +340,8 @@ body {
     border-radius: 15px;
     margin: 0 10px;
     box-shadow: 0 8px 16px var(--shadow-dark);
+    position: relative;
+    z-index: 200; /* Higher than gesture canvas */
 }
 
 .room-side-panel.left {
@@ -348,6 +350,8 @@ body {
 
 .room-side-panel.right {
     margin-left: 20px;
+    position: relative;
+    z-index: 200; /* Same as left sidebar */
 }
 
 /* Spell System */
@@ -409,19 +413,33 @@ body {
 }
 
 .gesture-canvas-container {
-    position: fixed;
+    position: absolute;
     top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 100; /* Lower z-index to not block room interactions */
-    pointer-events: none; /* Container blocks nothing by default */
+    left: 20%; /* Start after left sidebar */
+    width: 55%; /* Smaller to not overlap right sidebar */
+    height: 100%;
+    z-index: 100; /* Lower than sidebars (200) */
+    pointer-events: none;
     margin: 0;
     padding: 0;
 }
 
 .gesture-canvas-container .gesture-canvas {
-    pointer-events: auto; /* Canvas can receive events */
+    pointer-events: auto;
+}
+
+.gesture-canvas {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    cursor: default;
+    pointer-events: none;
+}
+
+.gesture-canvas.gesture-active {
+    cursor: crosshair;
+    pointer-events: auto;
 }
 
 .gesture-canvas-container::before {
@@ -798,24 +816,6 @@ body {
         right: 10px;
     }
     
-    .gesture-canvas-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1000;
-        pointer-events: none;
-    }
-    
-    .gesture-canvas {
-        width: 100%;
-        height: 100%;
-        border: none;
-        background: transparent;
-        cursor: crosshair;
-        pointer-events: auto;
-    }
     
     .status-bar {
         height: 50px;
