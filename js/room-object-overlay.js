@@ -19,8 +19,6 @@ class RoomObjectOverlay {
                         effects: ['fire', 'warmth', 'light'],
                         sound: 'fireplace-ignite',
                         animation: 'fireFlicker',
-                        position: { top: '20%', left: '10%' },
-                        size: { width: '200px', height: '300px' },
                         clickableArea: { x: 50, y: 200, width: 200, height: 300 }
                     },
                     'wall-lamp': {
@@ -30,8 +28,6 @@ class RoomObjectOverlay {
                         effects: ['light', 'ambient'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        position: { top: '15%', left: '15%' },
-                        size: { width: '80px', height: '120px' },
                         clickableArea: { x: 100, y: 150, width: 80, height: 120 }
                     },
                     'bookshelf': {
@@ -41,8 +37,6 @@ class RoomObjectOverlay {
                         effects: ['knowledge', 'storage'],
                         sound: 'book-open',
                         animation: 'bookGlow',
-                        position: { top: '10%', right: '20%' },
-                        size: { width: '150px', height: '400px' },
                         clickableArea: { x: 300, y: 100, width: 150, height: 400 }
                     },
                     'round-door': {
@@ -52,8 +46,6 @@ class RoomObjectOverlay {
                         effects: ['portal', 'navigation'],
                         sound: 'room-change',
                         animation: 'magicPulse',
-                        position: { top: '15%', right: '10%' },
-                        size: { width: '200px', height: '300px' },
                         clickableArea: { x: 600, y: 150, width: 200, height: 300 }
                     },
                     'armchair': {
@@ -63,8 +55,6 @@ class RoomObjectOverlay {
                         effects: ['comfort', 'rest'],
                         sound: 'object-click',
                         animation: 'comfortGlow',
-                        position: { bottom: '30%', right: '25%' },
-                        size: { width: '120px', height: '150px' },
                         clickableArea: { x: 500, y: 300, width: 120, height: 150 }
                     },
                     'round-table': {
@@ -74,8 +64,6 @@ class RoomObjectOverlay {
                         effects: ['workspace', 'utility'],
                         sound: 'object-click',
                         animation: 'utilityGlow',
-                        position: { bottom: '20%', right: '30%' },
-                        size: { width: '100px', height: '80px' },
                         clickableArea: { x: 450, y: 400, width: 100, height: 80 }
                     },
                     'table-lamp': {
@@ -85,8 +73,6 @@ class RoomObjectOverlay {
                         effects: ['light', 'focus'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        position: { bottom: '25%', right: '28%' },
-                        size: { width: '60px', height: '100px' },
                         clickableArea: { x: 470, y: 380, width: 60, height: 100 }
                     }
                 }
@@ -506,12 +492,12 @@ class RoomObjectOverlay {
             }
         });
         
-        // Listen for mouse moves for hover effects
-        document.addEventListener('mousemove', (e) => {
-            if (e.target.classList.contains('room-background')) {
-                this.handleRoomHover(e);
-            }
-        });
+        // Disabled hover effects - only clicks work
+        // document.addEventListener('mousemove', (e) => {
+        //     if (e.target.classList.contains('room-background')) {
+        //         this.handleRoomHover(e);
+        //     }
+        // });
     }
     
     /**
@@ -553,6 +539,8 @@ class RoomObjectOverlay {
         const scaledX = x / scaleX;
         const scaledY = y / scaleY;
         
+        console.log(`Click at: ${x}, ${y} -> Scaled: ${scaledX}, ${scaledY} in room: ${roomId}`);
+        
         // Check which object was clicked
         const clickedObject = this.findClickedObject(roomData, scaledX, scaledY);
         
@@ -562,51 +550,28 @@ class RoomObjectOverlay {
     }
     
     /**
-     * Handle room hover events
+     * Handle room hover events - DISABLED
      */
     handleRoomHover(event) {
-        const roomElement = event.target;
-        const roomId = roomElement.closest('.room').id;
-        const roomData = this.rooms[roomId];
-        
-        if (!roomData) return;
-        
-        // Get hover coordinates
-        const rect = roomElement.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        
-        // Scale coordinates
-        const scaleX = roomElement.offsetWidth / 800;
-        const scaleY = roomElement.offsetHeight / 600;
-        
-        const scaledX = x / scaleX;
-        const scaledY = y / scaleY;
-        
-        // Check which object is being hovered
-        const hoveredObject = this.findClickedObject(roomData, scaledX, scaledY);
-        
-        // Update cursor and show tooltip
-        if (hoveredObject) {
-            roomElement.style.cursor = 'pointer';
-            this.showObjectTooltip(hoveredObject, event.clientX, event.clientY);
-        } else {
-            roomElement.style.cursor = 'default';
-            this.hideObjectTooltip();
-        }
+        // Hover effects disabled - no tooltips or cursor changes
+        return;
     }
     
     /**
      * Find which object was clicked/hovered
      */
     findClickedObject(roomData, x, y) {
+        console.log(`Checking objects in ${roomData.name} at ${x}, ${y}`);
         for (const [objectName, objectData] of Object.entries(roomData.objects)) {
             const area = objectData.clickableArea;
+            console.log(`Checking ${objectName}: area ${area.x},${area.y} ${area.width}x${area.height}`);
             if (x >= area.x && x <= area.x + area.width &&
                 y >= area.y && y <= area.y + area.height) {
+                console.log(`Found object: ${objectName}`);
                 return { name: objectName, data: objectData };
             }
         }
+        console.log('No object found');
         return null;
     }
     
@@ -907,43 +872,19 @@ class RoomObjectOverlay {
     }
     
     /**
-     * Show object tooltip
+     * Show object tooltip - DISABLED
      */
     showObjectTooltip(object, x, y) {
-        this.hideObjectTooltip(); // Remove existing tooltip
-        
-        const tooltip = document.createElement('div');
-        tooltip.className = 'object-tooltip';
-        tooltip.textContent = `${object.data.name}: ${object.data.description}`;
-        tooltip.style.cssText = `
-            position: fixed;
-            top: ${y - 40}px;
-            left: ${x}px;
-            transform: translateX(-50%);
-            background: var(--magic-purple);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-family: 'MedievalSharp', cursive;
-            font-size: 12px;
-            white-space: nowrap;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            animation: tooltipFadeIn 0.3s ease-out;
-            pointer-events: none;
-        `;
-        
-        document.body.appendChild(tooltip);
+        // Tooltips disabled - no popups
+        return;
     }
     
     /**
-     * Hide object tooltip
+     * Hide object tooltip - DISABLED
      */
     hideObjectTooltip() {
-        const existingTooltip = document.querySelector('.object-tooltip');
-        if (existingTooltip) {
-            existingTooltip.remove();
-        }
+        // Tooltips disabled - no popups
+        return;
     }
     
     /**

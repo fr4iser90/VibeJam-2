@@ -131,7 +131,7 @@
             cursor: nw-resize;
         }
         
-        .editor-click-indicator {
+        .click-indicator {
             position: fixed;
             width: 20px;
             height: 20px;
@@ -141,6 +141,54 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 1001;
+        }
+        
+        .click-area {
+            position: absolute;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            background: rgba(212, 175, 55, 0.1);
+            pointer-events: none;
+            z-index: 5;
+            cursor: move;
+        }
+        
+        .click-area.active {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
+        .resize-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #D4AF37;
+            border: 1px solid white;
+            pointer-events: all;
+            cursor: nw-resize;
+        }
+        
+        .resize-handle.se {
+            bottom: -5px;
+            right: -5px;
+            cursor: se-resize;
+        }
+        
+        .resize-handle.sw {
+            bottom: -5px;
+            left: -5px;
+            cursor: sw-resize;
+        }
+        
+        .resize-handle.ne {
+            top: -5px;
+            right: -5px;
+            cursor: ne-resize;
+        }
+        
+        .resize-handle.nw {
+            top: -5px;
+            left: -5px;
+            cursor: nw-resize;
         }
         
         /* Disable gesture system when editor is active */
@@ -246,13 +294,25 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Object Editor</h3>
-                    <div class="gesture-instructions">
-                        <h4>Click Coordinates:</h4>
-                        <div id="coordinates" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Click on the image</div>
-                        <p><strong>Click anywhere on the room to add objects!</strong></p>
-                        <button onclick="toggleEditor()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🎯 Toggle Editor</button>
-                        <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Export</button>
+                    <h3 class="fantasy-header">🎯 Klick-Koordinaten</h3>
+                    <div class="coordinates" id="coordinates" style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0; border: 1px solid var(--magic-gold);">Klicke auf das Bild</div>
+                    
+                    <h3>📝 Identifizierte Objekte</h3>
+                    <div class="object-list" id="objectList">
+                        <p>Noch keine Objekte identifiziert</p>
+                    </div>
+                    
+                    <button onclick="clearObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">🗑️ Alle löschen</button>
+                    <button onclick="exportObjects()" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 8px 12px; margin: 5px 0; border-radius: 5px; cursor: pointer; font-family: 'MedievalSharp', cursive;">📤 Exportieren</button>
+                    
+                    <h3>⌨️ Keyboard Shortcuts</h3>
+                    <div style="font-size: 12px; color: #ccc;">
+                        <p><strong>WASD:</strong> Größe anpassen (wenn Objekt ausgewählt)</p>
+                        <p><strong>W:</strong> Höhe +10px</p>
+                        <p><strong>S:</strong> Höhe -10px</p>
+                        <p><strong>A:</strong> Breite -10px</p>
+                        <p><strong>D:</strong> Breite +10px</p>
+                        <p><strong>Delete:</strong> Ausgewähltes Objekt löschen</p>
                     </div>
                 </div>
             </div>
@@ -477,33 +537,7 @@
         </footer>
     </div>
 
-    <!-- Object Editor Sidebar -->
-    <div class="object-editor-sidebar" id="objectEditorSidebar">
-        <h3>🎯 Object Editor - <span id="currentRoomName">Living Room</span></h3>
-        
-        <div class="editor-coordinates" id="editorCoordinates">Click on the image</div>
-        
-        <h3>📝 Identified Objects</h3>
-        <div class="editor-object-list" id="editorObjectList">
-            <p>No objects identified yet</p>
-        </div>
-        
-        <button onclick="clearCurrentRoom()">🗑️ Clear All</button>
-        <button onclick="exportCurrentRoom()">📤 Export</button>
-        
-        <h3>⌨️ Keyboard Shortcuts</h3>
-        <div style="font-size: 12px; color: #ccc;">
-            <p><strong>WASD:</strong> Resize (when object selected)</p>
-            <p><strong>W:</strong> Height +10px</p>
-            <p><strong>S:</strong> Height -10px</p>
-            <p><strong>A:</strong> Width -10px</p>
-            <p><strong>D:</strong> Width +10px</p>
-            <p><strong>Delete:</strong> Delete selected object</p>
-            <p><strong>ESC:</strong> Close editor</p>
-        </div>
-    </div>
-    
-    <div class="editor-click-indicator" id="editorClickIndicator" style="display: none;"></div>
+    <div class="click-indicator" id="clickIndicator" style="display: none;"></div>
 
     <!-- JavaScript -->
     <script src="js/sound-system.js"></script>
@@ -520,75 +554,40 @@
     <script src="js/main.js"></script>
 
     <script>
-        // Editor functionality
-        let objects = {};
-        let currentRoom = 'living-room';
+        let objects = [];
         let selectedObject = null;
         let isResizing = false;
+        let currentRoom = 'living-room';
         
-        // Initialize room data
-        const roomData = {
-            'living-room': { name: 'Living Room', image: 'assets/images/rooms/living-room.png' },
-            'kitchen': { name: 'Kitchen', image: 'assets/images/rooms/kitchen.png' },
-            'bedroom': { name: 'Bedroom', image: 'assets/images/rooms/bedroom.png' },
-            'workshop': { name: 'Workshop', image: 'assets/images/rooms/workshop.png' },
-            'library': { name: 'Library', image: 'assets/images/rooms/library.png' },
-            'garden': { name: 'Garden', image: 'assets/images/rooms/garden.png' }
-        };
-        
-        function toggleEditor() {
-            const editorSidebar = document.getElementById('objectEditorSidebar');
-            const fantasyDesktop = document.getElementById('fantasyDesktop');
-            const isVisible = editorSidebar.classList.contains('active');
-            
-            if (isVisible) {
-                editorSidebar.classList.remove('active');
-                fantasyDesktop.classList.remove('editor-mode');
-                removeClickListeners();
-            } else {
-                editorSidebar.classList.add('active');
-                fantasyDesktop.classList.add('editor-mode');
-                addClickListeners();
-                updateCurrentRoomDisplay();
-            }
-        }
-        
-        function addClickListeners() {
-            const roomBackground = document.querySelector(`#${currentRoom} .room-background`);
-            if (roomBackground) {
-                roomBackground.addEventListener('click', handleRoomClick);
-            }
-        }
-        
-        function removeClickListeners() {
-            const roomBackground = document.querySelector(`#${currentRoom} .room-background`);
-            if (roomBackground) {
-                roomBackground.removeEventListener('click', handleRoomClick);
-            }
+        // Add click listener directly to room background elements
+        function setupRoomClickListeners() {
+            const roomBackgrounds = document.querySelectorAll('.room-background');
+            roomBackgrounds.forEach(bg => {
+                bg.addEventListener('click', handleRoomClick, true);
+                console.log('🎯 Click listener added to:', bg);
+            });
         }
         
         function handleRoomClick(e) {
+            console.log('🎯 Room click detected!', e.target);
+            
             const rect = e.currentTarget.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             
+            console.log(`Click coordinates: ${x}, ${y}`);
+            
             // Show click indicator
-            const indicator = document.getElementById('editorClickIndicator');
+            const indicator = document.getElementById('clickIndicator');
             indicator.style.display = 'block';
             indicator.style.left = e.clientX + 'px';
             indicator.style.top = e.clientY + 'px';
             
-            // Update coordinates display in right panel
-            const coordinatesElement = document.getElementById(`coordinates${currentRoom.charAt(0).toUpperCase() + currentRoom.slice(1)}`);
-            if (coordinatesElement) {
-                coordinatesElement.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
-            }
-            
-            // Update editor coordinates
-            document.getElementById('editorCoordinates').textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            // Update coordinates display
+            document.getElementById('coordinates').textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
             
             // Ask for object name
-            const objectName = prompt('What object is this? (e.g. "fireplace", "lamp", "chest")');
+            const objectName = prompt('Welches Objekt ist das? (z.B. "fireplace", "lamp", "chest")');
             if (objectName) {
                 addObject(objectName, x, y);
             }
@@ -600,10 +599,6 @@
         }
         
         function addObject(name, x, y) {
-            if (!objects[currentRoom]) {
-                objects[currentRoom] = [];
-            }
-            
             const object = {
                 name: name,
                 x: Math.round(x - 50), // Convert center to top-left corner
@@ -612,42 +607,38 @@
                 height: 100 // Default height
             };
             
-            objects[currentRoom].push(object);
+            objects.push(object);
             updateObjectList();
             drawObjectAreas();
         }
         
         function updateObjectList() {
-            const list = document.getElementById('editorObjectList');
-            const roomObjects = objects[currentRoom] || [];
-            
-            if (roomObjects.length === 0) {
-                list.innerHTML = '<p>No objects identified yet</p>';
+            const list = document.getElementById('objectList');
+            if (objects.length === 0) {
+                list.innerHTML = '<p>Noch keine Objekte identifiziert</p>';
                 return;
             }
             
-            list.innerHTML = roomObjects.map((obj, index) => `
-                <div class="editor-object-item">
+            list.innerHTML = objects.map((obj, index) => `
+                <div class="object-item" style="background: rgba(0,0,0,0.3); padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 4px solid var(--magic-gold);">
                     <strong>${obj.name}</strong><br>
                     Position (top-left): ${obj.x}, ${obj.y}<br>
-                    Size: ${obj.width} x ${obj.height}<br>
-                    Center: ${obj.x + obj.width/2}, ${obj.y + obj.height/2}<br>
-                    <button onclick="editObject(${index})">✏️ Edit</button>
-                    <button onclick="deleteObject(${index})">🗑️ Delete</button>
+                    Größe: ${obj.width} x ${obj.height}<br>
+                    Mitte: ${obj.x + obj.width/2}, ${obj.y + obj.height/2}<br>
+                    <button onclick="editObject(${index})" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 4px 8px; margin: 2px; border-radius: 3px; cursor: pointer; font-family: 'MedievalSharp', cursive; font-size: 10px;">✏️ Bearbeiten</button>
+                    <button onclick="deleteObject(${index})" style="background: var(--magic-purple); color: white; border: 2px solid var(--magic-gold); padding: 4px 8px; margin: 2px; border-radius: 3px; cursor: pointer; font-family: 'MedievalSharp', cursive; font-size: 10px;">🗑️ Löschen</button>
                 </div>
             `).join('');
         }
         
         function drawObjectAreas() {
             // Remove existing areas
-            document.querySelectorAll('.editor-click-area').forEach(area => area.remove());
-            
-            const roomObjects = objects[currentRoom] || [];
+            document.querySelectorAll('.click-area').forEach(area => area.remove());
             
             // Draw new areas
-            roomObjects.forEach((obj, index) => {
+            objects.forEach((obj, index) => {
                 const area = document.createElement('div');
-                area.className = 'editor-click-area';
+                area.className = 'click-area';
                 area.style.left = obj.x + 'px';
                 area.style.top = obj.y + 'px';
                 area.style.width = obj.width + 'px';
@@ -659,7 +650,7 @@
                 const handles = ['nw', 'ne', 'sw', 'se'];
                 handles.forEach(handle => {
                     const resizeHandle = document.createElement('div');
-                    resizeHandle.className = `editor-resize-handle ${handle}`;
+                    resizeHandle.className = `resize-handle ${handle}`;
                     resizeHandle.dataset.index = index;
                     resizeHandle.dataset.handle = handle;
                     
@@ -677,18 +668,18 @@
                     selectObject(index);
                 });
                 
-                document.querySelector(`#${currentRoom}`).appendChild(area);
+                document.querySelector('.room-background').appendChild(area);
             });
         }
         
         function selectObject(index) {
             // Remove previous selection
-            document.querySelectorAll('.editor-click-area').forEach(area => {
+            document.querySelectorAll('.click-area').forEach(area => {
                 area.classList.remove('active');
             });
             
             // Select new object
-            const areas = document.querySelectorAll('.editor-click-area');
+            const areas = document.querySelectorAll('.click-area');
             if (areas[index]) {
                 areas[index].classList.add('active');
                 selectedObject = index;
@@ -697,8 +688,7 @@
         
         function startResize(index, handle, e) {
             isResizing = true;
-            const roomObjects = objects[currentRoom] || [];
-            const obj = roomObjects[index];
+            const obj = objects[index];
             const startX = e.clientX;
             const startY = e.clientY;
             const startWidth = obj.width;
@@ -753,15 +743,14 @@
         }
         
         function editObject(index) {
-            const roomObjects = objects[currentRoom] || [];
-            const obj = roomObjects[index];
-            const newName = prompt('New name:', obj.name);
+            const obj = objects[index];
+            const newName = prompt('Neuer Name:', obj.name);
             if (newName) obj.name = newName;
             
-            const newWidth = prompt('New width:', obj.width);
+            const newWidth = prompt('Neue Breite:', obj.width);
             if (newWidth) obj.width = parseInt(newWidth);
             
-            const newHeight = prompt('New height:', obj.height);
+            const newHeight = prompt('Neue Höhe:', obj.height);
             if (newHeight) obj.height = parseInt(newHeight);
             
             updateObjectList();
@@ -769,35 +758,29 @@
         }
         
         function deleteObject(index) {
-            const roomObjects = objects[currentRoom] || [];
-            roomObjects.splice(index, 1);
+            objects.splice(index, 1);
             updateObjectList();
             drawObjectAreas();
         }
         
-        function clearCurrentRoom() {
-            objects[currentRoom] = [];
+        function clearObjects() {
+            objects = [];
             updateObjectList();
             drawObjectAreas();
         }
         
         function exportObjects() {
-            exportCurrentRoom();
-        }
-        
-        function exportCurrentRoom() {
-            const roomObjects = objects[currentRoom] || [];
             const exportData = {
-                [currentRoom]: {
-                    name: roomData[currentRoom].name,
-                    backgroundImage: roomData[currentRoom].image,
-                    darkBackgroundImage: roomData[currentRoom].image.replace('.png', '-dark.png'),
+                'living-room': {
+                    name: 'Living Room',
+                    backgroundImage: 'assets/images/rooms/living-room.png',
+                    darkBackgroundImage: 'assets/images/rooms/living-room-dark.png',
                     objects: {}
                 }
             };
             
-            roomObjects.forEach(obj => {
-                exportData[currentRoom].objects[obj.name] = {
+            objects.forEach(obj => {
+                exportData['living-room'].objects[obj.name] = {
                     name: obj.name.charAt(0).toUpperCase() + obj.name.slice(1),
                     description: `${obj.name} object`,
                     action: 'interact',
@@ -817,82 +800,44 @@
             
             // Copy to clipboard
             navigator.clipboard.writeText(JSON.stringify(exportData, null, 2)).then(() => {
-                alert('Data copied to clipboard!');
+                alert('Daten in Zwischenablage kopiert!');
             });
         }
         
-        function updateCurrentRoomDisplay() {
-            document.getElementById('currentRoomName').textContent = roomData[currentRoom].name;
-        }
-        
-        // Room switching
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.room-tab')) {
-                const roomTab = e.target.closest('.room-tab');
-                const roomId = roomTab.dataset.room;
-                
-                // Update active tab
-                document.querySelectorAll('.room-tab').forEach(tab => tab.classList.remove('active'));
-                roomTab.classList.add('active');
-                
-                // Update active room
-                document.querySelectorAll('.room').forEach(room => room.classList.remove('active'));
-                document.getElementById(roomId).classList.add('active');
-                
-                // Update current room
-                currentRoom = roomId;
-                document.querySelector('.current-room').textContent = roomData[roomId].name;
-                
-                // Update editor if open
-                if (document.getElementById('objectEditorSidebar').classList.contains('active')) {
-                    updateCurrentRoomDisplay();
-                    updateObjectList();
-                    drawObjectAreas();
-                }
-            }
-        });
-        
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            if (document.getElementById('objectEditorSidebar').classList.contains('active')) {
-                if (selectedObject !== null) {
-                    const roomObjects = objects[currentRoom] || [];
-                    const obj = roomObjects[selectedObject];
-                    
-                    switch(e.key.toLowerCase()) {
-                        case 'w':
-                            obj.height = Math.max(20, obj.height + 10);
-                            updateObjectList();
-                            drawObjectAreas();
-                            selectObject(selectedObject);
-                            break;
-                        case 's':
-                            obj.height = Math.max(20, obj.height - 10);
-                            updateObjectList();
-                            drawObjectAreas();
-                            selectObject(selectedObject);
-                            break;
-                        case 'a':
-                            obj.width = Math.max(20, obj.width - 10);
-                            updateObjectList();
-                            drawObjectAreas();
-                            selectObject(selectedObject);
-                            break;
-                        case 'd':
-                            obj.width = Math.max(20, obj.width + 10);
-                            updateObjectList();
-                            drawObjectAreas();
-                            selectObject(selectedObject);
-                            break;
-                        case 'delete':
-                            deleteObject(selectedObject);
-                            selectedObject = null;
-                            break;
-                    }
-                }
+            if (selectedObject !== null) {
+                const obj = objects[selectedObject];
                 
-                if (e.key === 'Escape') {
-                    toggleEditor();
+                switch(e.key.toLowerCase()) {
+                    case 'w':
+                        obj.height = Math.max(20, obj.height + 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 's':
+                        obj.height = Math.max(20, obj.height - 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 'a':
+                        obj.width = Math.max(20, obj.width - 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 'd':
+                        obj.width = Math.max(20, obj.width + 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 'delete':
+                        deleteObject(selectedObject);
+                        selectedObject = null;
+                        break;
                 }
             }
         });
@@ -900,6 +845,11 @@
         // Initialize
         window.addEventListener('load', () => {
             console.log('🎯 Fantasy OS Object Editor initialized');
+            
+            // Setup click listeners after everything is loaded
+            setTimeout(() => {
+                setupRoomClickListeners();
+            }, 1000);
             
             // Update time display
             function updateTime() {
