@@ -85,20 +85,40 @@ class GestureRecognition {
         this.canvas.addEventListener('mousedown', (e) => {
             this.isMouseDown = true;
             this.hasMoved = false;
-            // Don't start drawing yet - wait for movement
-            // Don't prevent default - let clicks pass through
+            this.startTime = Date.now();
+            console.log('🖱️ Mouse down - starting gesture detection');
         });
         
         this.canvas.addEventListener('mousemove', (e) => {
-            // Only handle if we're actually drawing
+            if (this.isMouseDown) {
+                this.hasMoved = true;
+                if (!this.isDrawing) {
+                    this.isDrawing = true;
+                    console.log('🎨 Mouse moved - starting gesture drawing');
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }
             if (this.isDrawing) {
                 e.preventDefault();
                 e.stopPropagation();
+                this.draw(e);
             }
-            this.draw(e);
         });
         
         this.canvas.addEventListener('mouseup', (e) => {
+            const clickDuration = Date.now() - this.startTime;
+            
+            if (clickDuration < 200 && !this.hasMoved) {
+                // Kurzer Klick - durchlassen
+                console.log('👆 Short click detected - passing through to objects');
+                this.isMouseDown = false;
+                this.hasMoved = false;
+                this.isDrawing = false;
+                return;
+            }
+            
+            console.log('🎨 Gesture completed - processing gesture');
             this.isMouseDown = false;
             this.hasMoved = false;
             this.stopDrawing();

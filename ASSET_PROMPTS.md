@@ -280,6 +280,122 @@ Each sound: 1-3 seconds, clear, fantasy theme
 
 ---
 
+## 🧙‍♂️ **HOBBIT-CHARAKTERE**
+
+### **Statischer Hobbit-Charakter**
+```
+Create a detailed hobbit character portrait for a fantasy desktop interface.
+
+Style: Tolkien-inspired hobbit with:
+- Friendly, welcoming face with warm smile
+- Curly brown hair with natural texture
+- Bright, intelligent eyes (green or brown)
+- Pointed ears slightly visible
+- Simple, comfortable clothing (earth tones)
+- Warm, inviting expression
+- Magical sparkles around character
+- Hobbit-hole background with warm lighting
+- Size: 256x256 pixels, PNG with transparency
+- Style: Detailed, fantasy, warm colors (browns, greens, golds)
+- No text or UI elements, just the character
+```
+
+### **Animierter Hobbit-Charakter (Sprechend)**
+```
+Create an animated hobbit character for a fantasy desktop interface.
+
+Style: Friendly hobbit with speaking animation:
+- Character facing forward, friendly expression
+- Mouth slightly open as if speaking
+- Gentle hand gestures (welcoming pose)
+- Warm, magical glow around character
+- Hobbit-hole interior background
+- Earth tones: browns, greens, warm yellows
+- Magical sparkles and particles
+- Size: 256x256 pixels, PNG with transparency
+- Style: Detailed, fantasy, warm colors
+- Animation frame: Speaking/idle state
+- No text or UI elements
+```
+
+### **Hobbit-Assistent (Interaktiver Charakter)**
+```
+Create a helpful hobbit assistant character for a fantasy desktop interface.
+
+Style: Wise hobbit guide with:
+- Knowledgeable, helpful expression
+- Holding a small magical item (crystal or book)
+- Warm, trustworthy appearance
+- Simple wizard-like robes in earth tones
+- Gentle magical aura around character
+- Hobbit-hole library background
+- Rich browns, deep greens, golden lighting
+- Magical sparkles and mystical particles
+- Size: 256x256 pixels, PNG with transparency
+- Style: Detailed, fantasy, warm magical colors
+- No text or UI elements
+```
+
+### **Hobbit-Animationen (Mehrere Frames)**
+```
+Create multiple animation frames for a hobbit character:
+
+Frame 1 - Idle: Standing calmly, gentle smile
+Frame 2 - Speaking: Mouth open, hand gesture
+Frame 3 - Thinking: Hand on chin, thoughtful expression
+Frame 4 - Welcoming: Arms open, warm smile
+Frame 5 - Working: Holding tools, focused expression
+
+Each frame:
+- Consistent hobbit design
+- Warm earth tone colors
+- Magical sparkles around character
+- Hobbit-hole background
+- Size: 256x256 pixels each, PNG with transparency
+- Style: Detailed, fantasy, warm colors
+- No text or UI elements
+```
+
+### **Hobbit-Sprach-Assistent (Audio-Visual)**
+```
+Create a hobbit character for voice interaction in a fantasy desktop interface.
+
+Style: Friendly hobbit with:
+- Open, welcoming expression
+- Slightly raised hand in greeting
+- Warm, magical glow around character
+- Hobbit-hole interior with cozy lighting
+- Earth tones: browns, greens, warm yellows
+- Magical particles floating around
+- Character appears to be listening/speaking
+- Size: 256x256 pixels, PNG with transparency
+- Style: Detailed, fantasy, warm colors
+- No text or UI elements
+- Suitable for voice interaction UI
+```
+
+### **Hobbit-Sprach-Prompts**
+```
+Generate a friendly hobbit voice for a fantasy desktop assistant:
+
+Voice characteristics:
+- Warm, welcoming tone
+- Slightly higher pitch (hobbit-like)
+- Gentle, helpful intonation
+- Clear, understandable speech
+- Magical, mystical quality
+- Earthy, natural sound
+- Friendly, approachable personality
+
+Sample phrases:
+- "Welcome to your hobbit-hole!"
+- "How may I assist you today?"
+- "Let me help you with that spell."
+- "Your files are safely stored in the treasure chest."
+```
+
+---
+
 ## 📝 **USAGE INSTRUCTIONS**
 
 ### **Für ChatGPT:**

@@ -41,10 +41,10 @@
   }
 
   {
-    "living-room": {
-      "name": "Living Room",
-      "backgroundImage": "assets/images/rooms/living-room.png",
-      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+    "kitchen": {
+      "name": "Kitchen",
+      "backgroundImage": "assets/images/rooms/kitchen.png",
+      "darkBackgroundImage": "assets/images/rooms/kitchen-dark.png",
       "objects": {
         "fireplace": {
           "name": "Fireplace",
@@ -115,10 +115,10 @@
   }
 
   {
-    "living-room": {
-      "name": "Living Room",
-      "backgroundImage": "assets/images/rooms/living-room.png",
-      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+    "bedroom": {
+      "name": "Bedroom",
+      "backgroundImage": "assets/images/rooms/bedroom.png",
+      "darkBackgroundImage": "assets/images/rooms/bedroom-dark.png",
       "objects": {
         "lamp": {
           "name": "Lamp",
@@ -152,9 +152,9 @@
             "height": 38
           }
         },
-        "under_bed": {
-          "name": "Under_bed",
-          "description": "under_bed object",
+        "bed_bottom": {
+          "name": "Bed_bottom",
+          "description": "bed_bottom object",
           "action": "interact",
           "effects": [
             "interaction"
@@ -173,10 +173,10 @@
   }
 
   {
-    "living-room": {
-      "name": "Living Room",
-      "backgroundImage": "assets/images/rooms/living-room.png",
-      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+    "workshop": {
+      "name": "Workshop",
+      "backgroundImage": "assets/images/rooms/workshop.png",
+      "darkBackgroundImage": "assets/images/rooms/workshop-dark.png",
       "objects": {
         "hammer": {
           "name": "Hammer",
@@ -230,10 +230,10 @@
     }
   }
   {
-    "living-room": {
-      "name": "Living Room",
-      "backgroundImage": "assets/images/rooms/living-room.png",
-      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+    "library": {
+      "name": "Library",
+      "backgroundImage": "assets/images/rooms/library.png",
+      "darkBackgroundImage": "assets/images/rooms/library-dark.png",
       "objects": {
         "lamp": {
           "name": "Lamp",
@@ -251,9 +251,9 @@
             "height": 119
           }
         },
-        "shelf_under": {
-          "name": "Shelf_under",
-          "description": "shelf_under object",
+        "shelf_bottom": {
+          "name": "Shelf_bottom",
+          "description": "shelf_bottom object",
           "action": "interact",
           "effects": [
             "interaction"
@@ -335,10 +335,10 @@
     }
   }
   {
-    "living-room": {
-      "name": "Living Room",
-      "backgroundImage": "assets/images/rooms/living-room.png",
-      "darkBackgroundImage": "assets/images/rooms/living-room-dark.png",
+    "garden": {
+      "name": "Garden",
+      "backgroundImage": "assets/images/rooms/garden.png",
+      "darkBackgroundImage": "assets/images/rooms/garden-dark.png",
       "objects": {
         "Door": {
           "name": "Door",

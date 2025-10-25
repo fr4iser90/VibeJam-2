@@ -12,6 +12,16 @@ class RoomObjectOverlay {
                 backgroundImage: 'assets/images/rooms/living-room.png',
                 darkBackgroundImage: 'assets/images/rooms/living-room-dark.png',
                 objects: {
+                    'lamp': {
+                        name: 'Lamp',
+                        description: 'Oil lamp for ambient lighting',
+                        action: 'illuminate',
+                        effects: ['light', 'ambient'],
+                        sound: 'lamp-on',
+                        animation: 'lightGlow',
+                        clickableArea: { x: 484, y: 459, width: 88, height: 146 },
+                        type: 'lighting'
+                    },
                     'fireplace': {
                         name: 'Fireplace',
                         description: 'Warm hearth for energy and light',
@@ -19,61 +29,8 @@ class RoomObjectOverlay {
                         effects: ['fire', 'warmth', 'light'],
                         sound: 'fireplace-ignite',
                         animation: 'fireFlicker',
-                        clickableArea: { x: 50, y: 200, width: 200, height: 300 }
-                    },
-                    'wall-lamp': {
-                        name: 'Wall Lamp',
-                        description: 'Oil lamp for ambient lighting',
-                        action: 'illuminate',
-                        effects: ['light', 'ambient'],
-                        sound: 'lamp-on',
-                        animation: 'lightGlow',
-                        clickableArea: { x: 100, y: 150, width: 80, height: 120 }
-                    },
-                    'bookshelf': {
-                        name: 'Bookshelf',
-                        description: 'Knowledge repository',
-                        action: 'browse',
-                        effects: ['knowledge', 'storage'],
-                        sound: 'book-open',
-                        animation: 'bookGlow',
-                        clickableArea: { x: 300, y: 100, width: 150, height: 400 }
-                    },
-                    'round-door': {
-                        name: 'Round Door',
-                        description: 'Portal to other rooms',
-                        action: 'open',
-                        effects: ['portal', 'navigation'],
-                        sound: 'room-change',
-                        animation: 'magicPulse',
-                        clickableArea: { x: 600, y: 150, width: 200, height: 300 }
-                    },
-                    'armchair': {
-                        name: 'Armchair',
-                        description: 'Comfortable seating',
-                        action: 'sit',
-                        effects: ['comfort', 'rest'],
-                        sound: 'object-click',
-                        animation: 'comfortGlow',
-                        clickableArea: { x: 500, y: 300, width: 120, height: 150 }
-                    },
-                    'round-table': {
-                        name: 'Round Table',
-                        description: 'Workspace surface',
-                        action: 'use',
-                        effects: ['workspace', 'utility'],
-                        sound: 'object-click',
-                        animation: 'utilityGlow',
-                        clickableArea: { x: 450, y: 400, width: 100, height: 80 }
-                    },
-                    'table-lamp': {
-                        name: 'Table Lamp',
-                        description: 'Focused reading light',
-                        action: 'illuminate',
-                        effects: ['light', 'focus'],
-                        sound: 'lamp-on',
-                        animation: 'lightGlow',
-                        clickableArea: { x: 470, y: 380, width: 60, height: 100 }
+                        clickableArea: { x: 113, y: 495, width: 154, height: 110 },
+                        type: 'lighting'
                     }
                 }
             },
@@ -83,76 +40,44 @@ class RoomObjectOverlay {
                 darkBackgroundImage: 'assets/images/rooms/kitchen-dark.png',
                 objects: {
                     'fireplace': {
-                        name: 'Kitchen Fireplace',
+                        name: 'Fireplace',
                         description: 'Cooking hearth',
                         action: 'ignite',
                         effects: ['fire', 'cooking'],
                         sound: 'fireplace-ignite',
                         animation: 'fireFlicker',
-                        clickableArea: { x: 50, y: 200, width: 200, height: 300 }
+                        clickableArea: { x: 31, y: 534, width: 163, height: 103 },
+                        type: 'lighting'
                     },
-                    'oil-lamp': {
-                        name: 'Oil Lamp',
+                    'lamp': {
+                        name: 'Lamp',
                         description: 'Kitchen lighting',
                         action: 'illuminate',
                         effects: ['light', 'cooking'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        clickableArea: { x: 100, y: 150, width: 60, height: 100 }
+                        clickableArea: { x: 929, y: 275, width: 38, height: 112 },
+                        type: 'lighting'
                     },
-                    'shelves': {
-                        name: 'Kitchen Shelves',
-                        description: 'Storage for ingredients',
-                        action: 'browse',
-                        effects: ['storage', 'ingredients'],
+                    'chest': {
+                        name: 'Chest',
+                        description: 'Storage chest',
+                        action: 'open',
+                        effects: ['storage', 'items'],
+                        sound: 'chest-open',
+                        animation: 'storageGlow',
+                        clickableArea: { x: 1020, y: 390, width: 89, height: 67 },
+                        type: 'interactive'
+                    },
+                    'basket': {
+                        name: 'Basket',
+                        description: 'Storage basket',
+                        action: 'examine',
+                        effects: ['storage', 'items'],
                         sound: 'object-click',
                         animation: 'storageGlow',
-                        clickableArea: { x: 300, y: 100, width: 400, height: 200 }
-                    },
-                    'hanging-pots': {
-                        name: 'Hanging Pots',
-                        description: 'Cooking utensils',
-                        action: 'use',
-                        effects: ['cooking', 'tools'],
-                        sound: 'object-click',
-                        animation: 'toolGlow',
-                        clickableArea: { x: 350, y: 300, width: 300, height: 100 }
-                    },
-                    'round-table': {
-                        name: 'Kitchen Table',
-                        description: 'Dining surface',
-                        action: 'use',
-                        effects: ['dining', 'preparation'],
-                        sound: 'object-click',
-                        animation: 'utilityGlow',
-                        clickableArea: { x: 200, y: 400, width: 150, height: 120 }
-                    },
-                    'fruit-bowl': {
-                        name: 'Fruit Bowl',
-                        description: 'Fresh ingredients',
-                        action: 'examine',
-                        effects: ['food', 'freshness'],
-                        sound: 'object-click',
-                        animation: 'foodGlow',
-                        clickableArea: { x: 220, y: 420, width: 80, height: 60 }
-                    },
-                    'chairs': {
-                        name: 'Kitchen Chairs',
-                        description: 'Seating for meals',
-                        action: 'sit',
-                        effects: ['comfort', 'dining'],
-                        sound: 'object-click',
-                        animation: 'comfortGlow',
-                        clickableArea: { x: 150, y: 450, width: 250, height: 100 }
-                    },
-                    'window': {
-                        name: 'Kitchen Window',
-                        description: 'View to the outside',
-                        action: 'gaze',
-                        effects: ['view', 'nature'],
-                        sound: 'object-click',
-                        animation: 'viewGlow',
-                        clickableArea: { x: 400, y: 150, width: 120, height: 150 }
+                        clickableArea: { x: 1054, y: 120, width: 89, height: 60 },
+                        type: 'interactive'
                     }
                 }
             },
@@ -161,68 +86,65 @@ class RoomObjectOverlay {
                 backgroundImage: 'assets/images/rooms/library.png',
                 darkBackgroundImage: 'assets/images/rooms/library-dark.png',
                 objects: {
-                    'left-bookshelf': {
-                        name: 'Left Bookshelf',
-                        description: 'Ancient knowledge collection',
-                        action: 'browse',
-                        effects: ['knowledge', 'ancient'],
-                        sound: 'book-open',
-                        animation: 'bookGlow',
-                        clickableArea: { x: 50, y: 100, width: 200, height: 400 }
-                    },
-                    'right-bookshelf': {
-                        name: 'Right Bookshelf',
-                        description: 'Modern knowledge collection',
-                        action: 'browse',
-                        effects: ['knowledge', 'modern'],
-                        sound: 'book-open',
-                        animation: 'bookGlow',
-                        clickableArea: { x: 600, y: 100, width: 150, height: 400 }
-                    },
-                    'armchair': {
-                        name: 'Reading Chair',
-                        description: 'Comfortable reading spot',
-                        action: 'sit',
-                        effects: ['comfort', 'reading'],
-                        sound: 'object-click',
-                        animation: 'comfortGlow',
-                        clickableArea: { x: 400, y: 300, width: 120, height: 150 }
-                    },
-                    'small-table': {
-                        name: 'Reading Table',
-                        description: 'Surface for books',
-                        action: 'use',
-                        effects: ['workspace', 'reading'],
-                        sound: 'object-click',
-                        animation: 'utilityGlow',
-                        clickableArea: { x: 350, y: 400, width: 100, height: 80 }
-                    },
-                    'oil-lamp': {
-                        name: 'Reading Lamp',
-                        description: 'Focused reading light',
+                    'lamp': {
+                        name: 'Lamp',
+                        description: 'Reading lamp',
                         action: 'illuminate',
                         effects: ['light', 'reading'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        clickableArea: { x: 370, y: 380, width: 60, height: 100 }
+                        clickableArea: { x: 548, y: 457, width: 47, height: 119 },
+                        type: 'lighting'
                     },
-                    'round-window': {
-                        name: 'Library Window',
-                        description: 'Portal to knowledge',
-                        action: 'gaze',
-                        effects: ['vision', 'knowledge'],
-                        sound: 'crystal-ball',
-                        animation: 'magicPulse',
-                        clickableArea: { x: 350, y: 150, width: 150, height: 150 }
+                    'shelf_bottom': {
+                        name: 'Shelf Bottom',
+                        description: 'Bottom bookshelf',
+                        action: 'browse',
+                        effects: ['knowledge', 'storage'],
+                        sound: 'book-open',
+                        animation: 'bookGlow',
+                        clickableArea: { x: 915, y: 689, width: 160, height: 33 },
+                        type: 'interactive'
                     },
-                    'curtain': {
-                        name: 'Window Curtain',
-                        description: 'Privacy control',
-                        action: 'adjust',
-                        effects: ['privacy', 'lighting'],
+                    'book_1': {
+                        name: 'Book 1',
+                        description: 'Ancient tome',
+                        action: 'browse',
+                        effects: ['knowledge', 'ancient'],
+                        sound: 'book-open',
+                        animation: 'bookGlow',
+                        clickableArea: { x: 233, y: 370, width: 20, height: 74 },
+                        type: 'interactive'
+                    },
+                    'book_2': {
+                        name: 'Book 2',
+                        description: 'Modern volume',
+                        action: 'browse',
+                        effects: ['knowledge', 'modern'],
+                        sound: 'book-open',
+                        animation: 'bookGlow',
+                        clickableArea: { x: 989, y: 426, width: 46, height: 20 },
+                        type: 'interactive'
+                    },
+                    'vase': {
+                        name: 'Vase',
+                        description: 'Decorative vase',
+                        action: 'examine',
+                        effects: ['decoration', 'beauty'],
                         sound: 'object-click',
-                        animation: 'adjustGlow',
-                        clickableArea: { x: 300, y: 150, width: 50, height: 200 }
+                        animation: 'decorationGlow',
+                        clickableArea: { x: -1, y: 351, width: 35, height: 96 },
+                        type: 'interactive'
+                    },
+                    'shelf_top': {
+                        name: 'Shelf Top',
+                        description: 'Top bookshelf',
+                        action: 'browse',
+                        effects: ['knowledge', 'storage'],
+                        sound: 'book-open',
+                        animation: 'bookGlow',
+                        clickableArea: { x: 420, y: 180, width: 49, height: 26 },
+                        type: 'interactive'
                     }
                 }
             },
@@ -231,226 +153,139 @@ class RoomObjectOverlay {
                 backgroundImage: 'assets/images/rooms/workshop.png',
                 darkBackgroundImage: 'assets/images/rooms/workshop-dark.png',
                 objects: {
-                    'workbench-1': {
-                        name: 'Main Workbench',
-                        description: 'Primary crafting station',
-                        action: 'craft',
-                        effects: ['crafting', 'creation'],
-                        sound: 'object-click',
-                        animation: 'craftGlow',
-                        clickableArea: { x: 100, y: 350, width: 200, height: 100 }
-                    },
-                    'workbench-2': {
-                        name: 'Secondary Workbench',
-                        description: 'Additional workspace',
-                        action: 'use',
-                        effects: ['workspace', 'utility'],
-                        sound: 'object-click',
-                        animation: 'utilityGlow',
-                        clickableArea: { x: 400, y: 300, width: 300, height: 120 }
-                    },
-                    'hanging-tools': {
-                        name: 'Hanging Tools',
-                        description: 'Crafting implements',
+                    'hammer': {
+                        name: 'Hammer',
+                        description: 'Crafting hammer',
                         action: 'use',
                         effects: ['tools', 'crafting'],
                         sound: 'object-click',
                         animation: 'toolGlow',
-                        clickableArea: { x: 50, y: 200, width: 150, height: 200 }
+                        clickableArea: { x: 766, y: 287, width: 54, height: 127 },
+                        type: 'interactive'
                     },
-                    'shelves': {
-                        name: 'Tool Shelves',
-                        description: 'Storage for materials',
-                        action: 'browse',
-                        effects: ['storage', 'materials'],
-                        sound: 'object-click',
-                        animation: 'storageGlow',
-                        clickableArea: { x: 300, y: 100, width: 400, height: 150 }
-                    },
-                    'wooden-crates': {
-                        name: 'Wooden Crates',
-                        description: 'Material storage',
-                        action: 'open',
-                        effects: ['storage', 'materials'],
-                        sound: 'chest-open',
-                        animation: 'storageGlow',
-                        clickableArea: { x: 200, y: 400, width: 100, height: 80 }
-                    },
-                    'stool': {
-                        name: 'Work Stool',
-                        description: 'Crafting seating',
-                        action: 'sit',
-                        effects: ['comfort', 'crafting'],
-                        sound: 'object-click',
-                        animation: 'comfortGlow',
-                        clickableArea: { x: 150, y: 450, width: 60, height: 60 }
-                    },
-                    'wall-lantern-left': {
-                        name: 'Left Lantern',
+                    'lamp': {
+                        name: 'Lamp',
                         description: 'Workshop lighting',
                         action: 'illuminate',
                         effects: ['light', 'workspace'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        clickableArea: { x: 50, y: 150, width: 80, height: 120 }
+                        clickableArea: { x: 79, y: 255, width: 59, height: 153 },
+                        type: 'lighting'
                     },
-                    'wall-lantern-right': {
-                        name: 'Right Lantern',
-                        description: 'Additional lighting',
-                        action: 'illuminate',
-                        effects: ['light', 'workspace'],
-                        sound: 'lamp-on',
-                        animation: 'lightGlow',
-                        clickableArea: { x: 700, y: 150, width: 80, height: 120 }
+                    'workbench': {
+                        name: 'Workbench',
+                        description: 'Main crafting station',
+                        action: 'craft',
+                        effects: ['crafting', 'creation'],
+                        sound: 'object-click',
+                        animation: 'craftGlow',
+                        clickableArea: { x: 290, y: 538, width: 527, height: 183 },
+                        type: 'interactive'
                     }
                 }
             },
             'bedroom': {
                 name: 'Bedroom',
                 backgroundImage: 'assets/images/rooms/bedroom.png',
-                darkBackgroundImage: null, // No dark version
+                darkBackgroundImage: 'assets/images/rooms/bedroom-dark.png',
                 objects: {
-                    'bed': {
-                        name: 'Bed',
-                        description: 'Rest and recovery',
-                        action: 'rest',
-                        effects: ['rest', 'recovery'],
-                        sound: 'object-click',
-                        animation: 'restGlow',
-                        clickableArea: { x: 500, y: 200, width: 200, height: 300 }
-                    },
-                    'nightstand': {
-                        name: 'Nightstand',
-                        description: 'Bedside storage',
-                        action: 'use',
-                        effects: ['storage', 'bedside'],
-                        sound: 'object-click',
-                        animation: 'utilityGlow',
-                        clickableArea: { x: 450, y: 250, width: 80, height: 100 }
-                    },
-                    'oil-lamp': {
-                        name: 'Bedside Lamp',
-                        description: 'Gentle night light',
+                    'lamp': {
+                        name: 'Lamp',
+                        description: 'Bedside lamp',
                         action: 'illuminate',
                         effects: ['light', 'gentle'],
                         sound: 'lamp-on',
                         animation: 'lightGlow',
-                        clickableArea: { x: 470, y: 230, width: 60, height: 100 }
+                        clickableArea: { x: 490, y: 336, width: 36, height: 115 },
+                        type: 'lighting'
                     },
-                    'round-window': {
-                        name: 'Bedroom Window',
-                        description: 'View to the stars',
-                        action: 'gaze',
-                        effects: ['view', 'stars'],
-                        sound: 'object-click',
-                        animation: 'viewGlow',
-                        clickableArea: { x: 100, y: 150, width: 150, height: 150 }
+                    'drawer': {
+                        name: 'Drawer',
+                        description: 'Bedside drawer',
+                        action: 'open',
+                        effects: ['storage', 'bedside'],
+                        sound: 'chest-open',
+                        animation: 'storageGlow',
+                        clickableArea: { x: 433, y: 460, width: 83, height: 38 },
+                        type: 'interactive'
                     },
-                    'curtains': {
-                        name: 'Window Curtains',
-                        description: 'Privacy and darkness',
-                        action: 'adjust',
-                        effects: ['privacy', 'darkness'],
+                    'bed_bottom': {
+                        name: 'Bed Bottom',
+                        description: 'Sleeping area',
+                        action: 'rest',
+                        effects: ['rest', 'recovery'],
                         sound: 'object-click',
-                        animation: 'adjustGlow',
-                        clickableArea: { x: 50, y: 150, width: 200, height: 200 }
-                    },
-                    'small-table': {
-                        name: 'Bedside Table',
-                        description: 'Additional surface',
-                        action: 'use',
-                        effects: ['workspace', 'bedside'],
-                        sound: 'object-click',
-                        animation: 'utilityGlow',
-                        clickableArea: { x: 200, y: 400, width: 100, height: 80 }
+                        animation: 'restGlow',
+                        clickableArea: { x: 886, y: 610, width: 66, height: 43 },
+                        type: 'interactive'
                     }
                 }
             },
             'garden': {
                 name: 'Garden',
                 backgroundImage: 'assets/images/rooms/garden.png',
-                darkBackgroundImage: null, // No dark version
+                darkBackgroundImage: 'assets/images/rooms/garden-dark.png',
                 objects: {
-                    'round-door': {
-                        name: 'Garden Door',
+                    'Door': {
+                        name: 'Door',
                         description: 'Portal to nature',
                         action: 'open',
                         effects: ['portal', 'nature'],
                         sound: 'room-change',
                         animation: 'natureGlow',
-                        clickableArea: { x: 200, y: 300, width: 200, height: 300 }
+                        clickableArea: { x: 231, y: 225, width: 265, height: 372 },
+                        type: 'interactive'
                     },
-                    'round-window-left': {
-                        name: 'Left Window',
-                        description: 'Garden view',
-                        action: 'gaze',
-                        effects: ['view', 'nature'],
-                        sound: 'object-click',
-                        animation: 'viewGlow',
-                        clickableArea: { x: 100, y: 250, width: 80, height: 80 }
-                    },
-                    'round-window-right': {
-                        name: 'Right Window',
-                        description: 'Garden view',
-                        action: 'gaze',
-                        effects: ['view', 'nature'],
-                        sound: 'object-click',
-                        animation: 'viewGlow',
-                        clickableArea: { x: 400, y: 250, width: 80, height: 80 }
-                    },
-                    'flowers-red': {
-                        name: 'Red Flowers',
-                        description: 'Beautiful blooms',
-                        action: 'admire',
-                        effects: ['beauty', 'nature'],
-                        sound: 'object-click',
-                        animation: 'natureGlow',
-                        clickableArea: { x: 50, y: 200, width: 100, height: 150 }
-                    },
-                    'flowers-mixed': {
-                        name: 'Mixed Flowers',
-                        description: 'Colorful garden',
-                        action: 'admire',
-                        effects: ['beauty', 'color'],
-                        sound: 'object-click',
-                        animation: 'natureGlow',
-                        clickableArea: { x: 150, y: 400, width: 200, height: 100 }
-                    },
-                    'flowers-orange': {
-                        name: 'Orange Flowers',
-                        description: 'Warm blooms',
-                        action: 'admire',
-                        effects: ['beauty', 'warmth'],
-                        sound: 'object-click',
-                        animation: 'natureGlow',
-                        clickableArea: { x: 500, y: 300, width: 150, height: 120 }
-                    },
-                    'wooden-fence': {
-                        name: 'Wooden Fence',
+                    'fence': {
+                        name: 'Fence',
                         description: 'Garden boundary',
                         action: 'examine',
                         effects: ['boundary', 'structure'],
                         sound: 'object-click',
                         animation: 'structureGlow',
-                        clickableArea: { x: 300, y: 200, width: 300, height: 80 }
+                        clickableArea: { x: 1008, y: 415, width: 398, height: 171 },
+                        type: 'interactive'
                     },
-                    'stone-path': {
-                        name: 'Stone Path',
-                        description: 'Garden walkway',
-                        action: 'follow',
-                        effects: ['path', 'journey'],
-                        sound: 'object-click',
-                        animation: 'pathGlow',
-                        clickableArea: { x: 200, y: 500, width: 200, height: 100 }
-                    },
-                    'large-tree': {
-                        name: 'Large Tree',
-                        description: 'Ancient guardian',
+                    'flowers_red': {
+                        name: 'Red Flowers',
+                        description: 'Beautiful red blooms',
                         action: 'admire',
-                        effects: ['wisdom', 'nature'],
+                        effects: ['beauty', 'nature'],
                         sound: 'object-click',
                         animation: 'natureGlow',
-                        clickableArea: { x: 600, y: 100, width: 200, height: 300 }
+                        clickableArea: { x: 1221, y: 589, width: 302, height: 386 },
+                        type: 'interactive'
+                    },
+                    'flowers_white': {
+                        name: 'White Flowers',
+                        description: 'Pure white blooms',
+                        action: 'admire',
+                        effects: ['beauty', 'purity'],
+                        sound: 'object-click',
+                        animation: 'natureGlow',
+                        clickableArea: { x: 802, y: 544, width: 150, height: 107 },
+                        type: 'interactive'
+                    },
+                    'flowers_white_2': {
+                        name: 'White Flowers 2',
+                        description: 'More white blooms',
+                        action: 'admire',
+                        effects: ['beauty', 'purity'],
+                        sound: 'object-click',
+                        animation: 'natureGlow',
+                        clickableArea: { x: 177, y: 651, width: 223, height: 239 },
+                        type: 'interactive'
+                    },
+                    'far_far_away': {
+                        name: 'Far Far Away',
+                        description: 'Distant horizon',
+                        action: 'gaze',
+                        effects: ['view', 'horizon'],
+                        sound: 'object-click',
+                        animation: 'viewGlow',
+                        clickableArea: { x: 964, y: 246, width: 355, height: 58 },
+                        type: 'interactive'
                     }
                 }
             }
@@ -461,6 +296,8 @@ class RoomObjectOverlay {
         this.maxHistorySize = 50;
         this.isDarkMode = false;
         this.currentRoom = 'living-room';
+        this.fantasyOSMode = true; // Enable FantasyOS mode
+        this.autoLighting = true; // Enable automatic lighting control
         
         // Initialize object system
         this.initializeObjectSystem();
@@ -521,11 +358,15 @@ class RoomObjectOverlay {
      * Handle room click events
      */
     handleRoomClick(event) {
+        console.log('🎯 Room click detected!');
         const roomElement = event.target;
         const roomId = roomElement.closest('.room').id;
         const roomData = this.rooms[roomId];
         
-        if (!roomData) return;
+        if (!roomData) {
+            console.log('❌ No room data found for:', roomId);
+            return;
+        }
         
         // Get click coordinates relative to the room background
         const rect = roomElement.getBoundingClientRect();
@@ -545,7 +386,10 @@ class RoomObjectOverlay {
         const clickedObject = this.findClickedObject(roomData, scaledX, scaledY);
         
         if (clickedObject) {
+            console.log('✅ Object clicked:', clickedObject.name);
             this.handleObjectClick(clickedObject, roomId);
+        } else {
+            console.log('❌ No object found at coordinates:', scaledX, scaledY);
         }
     }
     
@@ -1014,7 +858,12 @@ class RoomObjectOverlay {
         
         // Check all lighting objects (fireplaces and lamps)
         for (const [objectName, objectData] of Object.entries(roomData.objects)) {
-            if (objectData.action === 'ignite' || objectData.action === 'illuminate') {
+            // Check both by action type and explicit type property
+            const isLightingObject = objectData.type === 'lighting' || 
+                                   objectData.action === 'ignite' || 
+                                   objectData.action === 'illuminate';
+            
+            if (isLightingObject) {
                 const objectState = roomActiveObjects.get(objectName);
                 if (objectState && objectState.isActive) {
                     hasActiveLighting = true;
@@ -1063,7 +912,12 @@ class RoomObjectOverlay {
         
         // Check all lighting objects (fireplaces and lamps)
         for (const [objectName, objectData] of Object.entries(roomData.objects)) {
-            if (objectData.action === 'ignite' || objectData.action === 'illuminate') {
+            // Check both by action type and explicit type property
+            const isLightingObject = objectData.type === 'lighting' || 
+                                   objectData.action === 'ignite' || 
+                                   objectData.action === 'illuminate';
+            
+            if (isLightingObject) {
                 const objectState = roomActiveObjects.get(objectName);
                 if (objectState && objectState.isActive) {
                     return true;
@@ -1089,7 +943,9 @@ class RoomObjectOverlay {
             totalRooms: Object.keys(this.rooms).length,
             totalObjects: 0,
             activeObjects: 0,
-            totalInteractions: this.interactionHistory.length
+            totalInteractions: this.interactionHistory.length,
+            lightingObjects: 0,
+            interactiveObjects: 0
         };
         
         for (const [roomName, roomData] of Object.entries(this.rooms)) {
@@ -1100,10 +956,77 @@ class RoomObjectOverlay {
                 if (objectState.isActive) {
                     stats.activeObjects++;
                 }
+                
+                // Count object types
+                const objectData = roomData.objects[objectName];
+                if (objectData.type === 'lighting') {
+                    stats.lightingObjects++;
+                } else if (objectData.type === 'interactive') {
+                    stats.interactiveObjects++;
+                }
             }
         }
         
         return stats;
+    }
+    
+    /**
+     * FantasyOS: Get system status
+     */
+    getFantasyOSStatus() {
+        return {
+            mode: this.fantasyOSMode ? 'FantasyOS' : 'Normal',
+            currentRoom: this.currentRoom,
+            darkMode: this.isDarkMode,
+            autoLighting: this.autoLighting,
+            activeLighting: this.getActiveLightingCount(),
+            totalRooms: Object.keys(this.rooms).length,
+            systemTime: new Date().toLocaleTimeString()
+        };
+    }
+    
+    /**
+     * FantasyOS: Get count of active lighting objects
+     */
+    getActiveLightingCount() {
+        let count = 0;
+        for (const [roomName, roomData] of Object.entries(this.rooms)) {
+            const roomActiveObjects = this.activeObjects.get(roomName);
+            for (const [objectName, objectData] of Object.entries(roomData.objects)) {
+                if (objectData.type === 'lighting') {
+                    const objectState = roomActiveObjects.get(objectName);
+                    if (objectState && objectState.isActive) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    
+    /**
+     * FantasyOS: Toggle automatic lighting control
+     */
+    toggleAutoLighting() {
+        this.autoLighting = !this.autoLighting;
+        console.log(`🔮 FantasyOS Auto-Lighting: ${this.autoLighting ? 'ON' : 'OFF'}`);
+        return this.autoLighting;
+    }
+    
+    /**
+     * FantasyOS: Simulate day/night cycle
+     */
+    simulateDayNightCycle() {
+        const hour = new Date().getHours();
+        const isNightTime = hour < 6 || hour > 18; // Night from 6 PM to 6 AM
+        
+        if (this.autoLighting && isNightTime && !this.isDarkMode) {
+            console.log('🌙 FantasyOS: Night time detected, switching to dark mode');
+            this.setDarkMode(true);
+        } else if (this.autoLighting && !isNightTime && this.isDarkMode) {
+            console.log('☀️ FantasyOS: Day time detected, switching to light mode');
+            this.setDarkMode(false);
+        }
     }
 }
 
