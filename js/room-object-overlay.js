@@ -1019,8 +1019,12 @@ class RoomObjectOverlay {
     handleChestOpening(roomId, objectName) {
         console.log(`📦 Opening chest - looking for workshop portal spell...`);
 
-        // Show message about finding the portal spell
-        this.showMessage(`You found magical recipes in the chest! The workshop portal spell is now available! Use "open portal to workshop" to enter the workshop!`);
+        // Open chest window
+        if (window.chestWindow) {
+            window.chestWindow.showChestWindow();
+        } else {
+            this.showMessage(`You found magical recipes in the chest! The workshop portal spell is now available! Use "open portal to workshop" to enter the workshop!`);
+        }
         
         // Trigger quest progress for chest opening
         this.triggerQuestProgress(roomId, objectName, 'open');
