@@ -70,11 +70,24 @@ class RoomManager {
         // Update UI
         this.updateRoomUI();
         
+        // Update room backgrounds based on lighting state
+        this.updateRoomLighting();
+        
         // Emit room change event
         this.onRoomChange(roomId);
         
         console.log(`🏠 Switched to room: ${this.rooms[roomId].name}`);
         return true;
+    }
+    
+    /**
+     * Update room lighting based on active objects
+     */
+    updateRoomLighting() {
+        // Check if RoomObjectOverlay is available
+        if (typeof RoomObjectOverlay !== 'undefined' && window.roomObjectOverlay) {
+            window.roomObjectOverlay.updateRoomBackgrounds();
+        }
     }
     
     /**

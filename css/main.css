@@ -414,10 +414,14 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1000;
-    pointer-events: none;
+    z-index: 100; /* Lower z-index to not block room interactions */
+    pointer-events: none; /* Container blocks nothing by default */
     margin: 0;
     padding: 0;
+}
+
+.gesture-canvas-container .gesture-canvas {
+    pointer-events: auto; /* Canvas can receive events */
 }
 
 .gesture-canvas-container::before {
@@ -484,12 +488,12 @@ body {
     height: 100%;
     border: none;
     background: transparent;
-    cursor: crosshair;
-    pointer-events: auto;
+    cursor: default; /* Default cursor when not drawing */
+    pointer-events: auto; /* Enable pointer events for gesture detection */
     position: relative;
 }
 
-.gesture-canvas:hover {
+.gesture-canvas.gesture-active {
     cursor: crosshair;
 }
 

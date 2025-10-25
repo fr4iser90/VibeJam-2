@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+        }
+        .test-area {
+            width: 400px;
+            height: 300px;
+            background: #333;
+            border: 2px solid #666;
+            margin: 20px 0;
+            position: relative;
+            cursor: pointer;
+        }
+        .test-area:hover {
+            background: #444;
+        }
+        .gesture-canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 100;
+            pointer-events: none;
+            margin: 0;
+            padding: 0;
+        }
+        .gesture-canvas-container .gesture-canvas {
+            pointer-events: auto;
+        }
+        .gesture-canvas {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            cursor: default;
+            position: relative;
+        }
+        .gesture-canvas.gesture-active {
+            cursor: crosshair;
+        }
+        .log {
+            background: #222;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Gesture System Test</h1>
+    
+    <div class="test-area" onclick="log('Test Area clicked!')">
+        <p>Click me to test object interaction</p>
+        <p>Hold and drag to test gesture</p>
+    </div>
+    
+    <div class="log" id="log"></div>
+    
+    <canvas id="gestureCanvas" class="gesture-canvas"></canvas>
+    
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${time}] ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        class SimpleGestureTest {
+            constructor() {
+                this.canvas = document.getElementById('gestureCanvas');
+                this.context = this.canvas.getContext('2d');
+                this.isDrawing = false;
+                this.isMouseDown = false;
+                this.hasMoved = false;
+                this.path = [];
+                
+                this.setupCanvas();
+                this.setupEventListeners();
+            }
+            
+            setupCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.context.strokeStyle = '#D4AF37';
+                this.context.lineWidth = 3;
+                this.context.lineCap = 'round';
+            }
+            
+            setupEventListeners() {
+                this.canvas.addEventListener('mousedown', (e) => {
+                    this.isMouseDown = true;
+                    this.hasMoved = false;
+                    log('Mouse down - waiting for movement');
+                });
+                
+                this.canvas.addEventListener('mousemove', (e) => {
+                    if (this.isMouseDown && !this.hasMoved) {
+                        this.hasMoved = true;
+                        this.startDrawing(e);
+                        log('Gesture started!');
+                        return;
+                    }
+                    
+                    if (this.isDrawing) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.draw(e);
+                    }
+                });
+                
+                this.canvas.addEventListener('mouseup', (e) => {
+                    this.isMouseDown = false;
+                    this.hasMoved = false;
+                    this.stopDrawing();
+                });
+            }
+            
+            startDrawing(e) {
+                this.isDrawing = true;
+                this.path = [];
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const point = {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+                
+                this.path.push(point);
+                this.context.beginPath();
+                this.context.moveTo(point.x, point.y);
+            }
+            
+            draw(e) {
+                if (!this.isDrawing) return;
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const point = {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+                
+                this.path.push(point);
+                this.context.lineTo(point.x, point.y);
+                this.context.stroke();
+            }
+            
+            stopDrawing() {
+                if (this.isDrawing) {
+                    this.isDrawing = false;
+                    log(`Gesture completed with ${this.path.length} points`);
+                    setTimeout(() => this.clearCanvas(), 1000);
+                }
+            }
+            
+            clearCanvas() {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.path = [];
+            }
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            new SimpleGestureTest();
+            log('Gesture test system initialized');
+        });
+    </script>
+</body>
+</html>

@@ -704,9 +704,13 @@ class RoomObjectOverlay {
         if (isActive) {
             console.log(`🔥 ${objectData.name} ignited!`);
             this.showMessage(`${objectData.name} is now burning brightly!`);
+            // Automatically switch to dark mode when fireplace is lit
+            this.setDarkMode(true);
         } else {
             console.log(`❄️ ${objectData.name} extinguished`);
             this.showMessage(`${objectData.name} has been extinguished.`);
+            // Check if any lighting objects are still active
+            this.checkLightingState(roomId);
         }
     }
     
@@ -718,9 +722,13 @@ class RoomObjectOverlay {
         if (isActive) {
             console.log(`💡 ${objectData.name} illuminated!`);
             this.showMessage(`${objectData.name} is now providing light!`);
+            // Automatically switch to dark mode when lamp is lit
+            this.setDarkMode(true);
         } else {
             console.log(`🌙 ${objectData.name} dimmed`);
             this.showMessage(`${objectData.name} has been dimmed.`);
+            // Check if any lighting objects are still active
+            this.checkLightingState(roomId);
         }
     }
     
@@ -950,9 +958,15 @@ class RoomObjectOverlay {
     }
     
     /**
-     * Show a message to the user
+     * Show a message to the user (disabled to prevent spam)
      */
     showMessage(message, duration = 3000) {
+        // Disabled to prevent spam of info boxes
+        console.log(`📢 ${message}`);
+        return;
+        
+        // Original message display code (commented out)
+        /*
         const messageElement = document.createElement('div');
         messageElement.className = 'interaction-message';
         messageElement.textContent = message;
@@ -984,6 +998,7 @@ class RoomObjectOverlay {
                 }, 300);
             }
         }, duration);
+        */
     }
     
     /**
@@ -1047,6 +1062,33 @@ class RoomObjectOverlay {
     }
     
     /**
+     * Check if any lighting objects are still active in the current room
+     */
+    checkLightingState(roomId) {
+        const roomData = this.rooms[roomId];
+        if (!roomData) return;
+        
+        const roomActiveObjects = this.activeObjects.get(roomId);
+        let hasActiveLighting = false;
+        
+        // Check all lighting objects (fireplaces and lamps)
+        for (const [objectName, objectData] of Object.entries(roomData.objects)) {
+            if (objectData.action === 'ignite' || objectData.action === 'illuminate') {
+                const objectState = roomActiveObjects.get(objectName);
+                if (objectState && objectState.isActive) {
+                    hasActiveLighting = true;
+                    break;
+                }
+            }
+        }
+        
+        // If no lighting objects are active, switch back to normal mode
+        if (!hasActiveLighting) {
+            this.setDarkMode(false);
+        }
+    }
+    
+    /**
      * Update room backgrounds based on dark mode
      */
     updateRoomBackgrounds() {
@@ -1057,12 +1099,38 @@ class RoomObjectOverlay {
             const backgroundElement = roomElement.querySelector('.room-background');
             if (!backgroundElement) continue;
             
-            if (this.isDarkMode && roomData.darkBackgroundImage) {
+            // Check if current room has active lighting
+            const hasActiveLighting = this.checkRoomLightingState(roomId);
+            
+            if (hasActiveLighting && roomData.darkBackgroundImage) {
                 backgroundElement.style.backgroundImage = `url('${roomData.darkBackgroundImage}')`;
             } else {
                 backgroundElement.style.backgroundImage = `url('${roomData.backgroundImage}')`;
             }
         }
+    }
+    
+    /**
+     * Check if a specific room has active lighting
+     */
+    checkRoomLightingState(roomId) {
+        const roomData = this.rooms[roomId];
+        if (!roomData) return false;
+        
+        const roomActiveObjects = this.activeObjects.get(roomId);
+        if (!roomActiveObjects) return false;
+        
+        // Check all lighting objects (fireplaces and lamps)
+        for (const [objectName, objectData] of Object.entries(roomData.objects)) {
+            if (objectData.action === 'ignite' || objectData.action === 'illuminate') {
+                const objectState = roomActiveObjects.get(objectName);
+                if (objectState && objectState.isActive) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
     
     /**

@@ -10,6 +10,8 @@ class GestureRecognition {
         this.canvas = null;
         this.context = null;
         this.isDrawing = false;
+        this.isMouseDown = false; // Track if mouse is pressed
+        this.hasMoved = false; // Track if mouse has moved while pressed
         this.path = [];
         
         // Initialize gesture modules
@@ -80,22 +82,50 @@ class GestureRecognition {
      */
     setupEventListeners() {
         // Mouse events
-        this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
-        this.canvas.addEventListener('mousemove', (e) => this.draw(e));
-        this.canvas.addEventListener('mouseup', () => this.stopDrawing());
-        this.canvas.addEventListener('mouseout', () => this.stopDrawing());
+        this.canvas.addEventListener('mousedown', (e) => {
+            this.isMouseDown = true;
+            this.hasMoved = false;
+            // Don't start drawing yet - wait for movement
+            // Don't prevent default - let clicks pass through
+        });
+        
+        this.canvas.addEventListener('mousemove', (e) => {
+            // Only handle if we're actually drawing
+            if (this.isDrawing) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            this.draw(e);
+        });
+        
+        this.canvas.addEventListener('mouseup', (e) => {
+            this.isMouseDown = false;
+            this.hasMoved = false;
+            this.stopDrawing();
+        });
+        
+        this.canvas.addEventListener('mouseout', () => {
+            this.isMouseDown = false;
+            this.hasMoved = false;
+            this.stopDrawing();
+        });
         
         // Touch events
         this.canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            this.startDrawing(e.touches[0]);
+            this.isMouseDown = true;
+            this.hasMoved = false;
         });
+        
         this.canvas.addEventListener('touchmove', (e) => {
             e.preventDefault();
             this.draw(e.touches[0]);
         });
+        
         this.canvas.addEventListener('touchend', (e) => {
             e.preventDefault();
+            this.isMouseDown = false;
+            this.hasMoved = false;
             this.stopDrawing();
         });
         
@@ -107,9 +137,12 @@ class GestureRecognition {
     }
     
     /**
-     * Start drawing gesture
+     * Start drawing gesture (only when mouse is pressed AND moved)
      */
     startDrawing(e) {
+        // Only start drawing if mouse is down AND has moved
+        if (!this.isMouseDown || !this.hasMoved) return;
+        
         this.isDrawing = true;
         this.path = [];
         this.trailPoints = [];
@@ -133,12 +166,24 @@ class GestureRecognition {
         
         // Add magic sparkle effect at start
         this.drawMagicSparkle(point.x, point.y);
+        
+        console.log('🎨 Gesture drawing started');
     }
     
     /**
      * Draw gesture path
      */
     draw(e) {
+        // Track mouse movement
+        if (this.isMouseDown && !this.hasMoved) {
+            this.hasMoved = true;
+            // Now start drawing if we haven't already
+            if (!this.isDrawing) {
+                this.startDrawing(e);
+                return;
+            }
+        }
+        
         if (!this.isDrawing) return;
         
         const rect = this.canvas.getBoundingClientRect();

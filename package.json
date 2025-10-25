@@ -21,6 +21,7 @@
   "author": "Fantasy OS Team",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "serve": "^14.2.1"
   },
   "engines": {

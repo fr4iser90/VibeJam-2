@@ -80,6 +80,9 @@ class FantasyOS {
         if (typeof RoomObjectOverlay !== 'undefined') {
             this.components.roomObjectOverlay = new RoomObjectOverlay();
             console.log('🎯 Room Object Overlay System initialized');
+            
+            // Make it globally available for debugging
+            window.roomObjectOverlay = this.components.roomObjectOverlay;
         }
         
         // Initialize spell parser
@@ -205,6 +208,11 @@ class FantasyOS {
         
         // Update current room
         this.currentRoom = roomId;
+        
+        // Update room backgrounds based on lighting state
+        if (this.components.roomObjectOverlay) {
+            this.components.roomObjectOverlay.updateRoomBackgrounds();
+        }
         
         // Update status bar
         this.updateStatusBar();

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living Room - Objekt Identifikation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+        }
+        .image-container {
+            position: relative;
+            display: inline-block;
+            border: 2px solid #666;
+        }
+        .room-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .click-indicator {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+            border: 2px solid white;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+        }
+        .info-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #666;
+        }
+        .coordinates {
+            font-family: monospace;
+            background: #333;
+            padding: 5px;
+            border-radius: 3px;
+            margin: 5px 0;
+        }
+        .object-list {
+            margin-top: 20px;
+        }
+        .object-item {
+            background: #333;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #D4AF37;
+        }
+        .click-area {
+            position: absolute;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            background: rgba(212, 175, 55, 0.1);
+            pointer-events: none;
+            z-index: 5;
+            cursor: move;
+        }
+        .click-area.active {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.2);
+        }
+        .resize-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #D4AF37;
+            border: 1px solid white;
+            pointer-events: all;
+            cursor: nw-resize;
+        }
+        .resize-handle.se {
+            bottom: -5px;
+            right: -5px;
+            cursor: se-resize;
+        }
+        .resize-handle.sw {
+            bottom: -5px;
+            left: -5px;
+            cursor: sw-resize;
+        }
+        .resize-handle.ne {
+            top: -5px;
+            right: -5px;
+            cursor: ne-resize;
+        }
+        .resize-handle.nw {
+            top: -5px;
+            left: -5px;
+            cursor: nw-resize;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏠 Living Room - Objekt Identifikation</h1>
+    
+    <div class="info-panel">
+        <h3>🎯 Klick-Koordinaten</h3>
+        <div class="coordinates" id="coordinates">Klicke auf das Bild</div>
+        
+        <h3>📝 Identifizierte Objekte</h3>
+        <div class="object-list" id="objectList">
+            <p>Noch keine Objekte identifiziert</p>
+        </div>
+        
+        <button onclick="clearObjects()">🗑️ Alle löschen</button>
+        <button onclick="exportObjects()">📤 Exportieren</button>
+        
+        <h3>⌨️ Keyboard Shortcuts</h3>
+        <div style="font-size: 12px; color: #ccc;">
+            <p><strong>WASD:</strong> Größe anpassen (wenn Objekt ausgewählt)</p>
+            <p><strong>W:</strong> Höhe +10px</p>
+            <p><strong>S:</strong> Höhe -10px</p>
+            <p><strong>A:</strong> Breite -10px</p>
+            <p><strong>D:</strong> Breite +10px</p>
+            <p><strong>Delete:</strong> Ausgewähltes Objekt löschen</p>
+        </div>
+    </div>
+    
+    <div class="image-container">
+        <img src="assets/images/rooms/living-room.png" alt="Living Room" class="room-image" id="roomImage">
+        <div class="click-indicator" id="clickIndicator" style="display: none;"></div>
+    </div>
+    
+    <script>
+        let objects = [];
+        let imageRect = null;
+        
+        document.getElementById('roomImage').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Show click indicator
+            const indicator = document.getElementById('clickIndicator');
+            indicator.style.display = 'block';
+            indicator.style.left = e.clientX + 'px';
+            indicator.style.top = e.clientY + 'px';
+            
+            // Update coordinates display
+            document.getElementById('coordinates').textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            
+            // Ask for object name
+            const objectName = prompt('Welches Objekt ist das? (z.B. "fireplace", "lamp", "chest")');
+            if (objectName) {
+                addObject(objectName, x, y);
+            }
+            
+            // Hide indicator after 1 second
+            setTimeout(() => {
+                indicator.style.display = 'none';
+            }, 1000);
+        });
+        
+        function addObject(name, x, y) {
+            const object = {
+                name: name,
+                x: Math.round(x - 50), // Convert center to top-left corner
+                y: Math.round(y - 50), // Convert center to top-left corner
+                width: 100, // Default width
+                height: 100 // Default height
+            };
+            
+            objects.push(object);
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function updateObjectList() {
+            const list = document.getElementById('objectList');
+            if (objects.length === 0) {
+                list.innerHTML = '<p>Noch keine Objekte identifiziert</p>';
+                return;
+            }
+            
+            list.innerHTML = objects.map((obj, index) => `
+                <div class="object-item">
+                    <strong>${obj.name}</strong><br>
+                    Position (top-left): ${obj.x}, ${obj.y}<br>
+                    Größe: ${obj.width} x ${obj.height}<br>
+                    Mitte: ${obj.x + obj.width/2}, ${obj.y + obj.height/2}<br>
+                    <button onclick="editObject(${index})">✏️ Bearbeiten</button>
+                    <button onclick="deleteObject(${index})">🗑️ Löschen</button>
+                </div>
+            `).join('');
+        }
+        
+        function drawObjectAreas() {
+            // Remove existing areas
+            document.querySelectorAll('.click-area').forEach(area => area.remove());
+            
+            // Draw new areas
+            objects.forEach((obj, index) => {
+                const area = document.createElement('div');
+                area.className = 'click-area';
+                area.style.left = obj.x + 'px';
+                area.style.top = obj.y + 'px';
+                area.style.width = obj.width + 'px';
+                area.style.height = obj.height + 'px';
+                area.title = obj.name;
+                area.dataset.index = index;
+                
+                // Add resize handles
+                const handles = ['nw', 'ne', 'sw', 'se'];
+                handles.forEach(handle => {
+                    const resizeHandle = document.createElement('div');
+                    resizeHandle.className = `resize-handle ${handle}`;
+                    resizeHandle.dataset.index = index;
+                    resizeHandle.dataset.handle = handle;
+                    
+                    resizeHandle.addEventListener('mousedown', (e) => {
+                        e.stopPropagation();
+                        startResize(index, handle, e);
+                    });
+                    
+                    area.appendChild(resizeHandle);
+                });
+                
+                // Add click to select
+                area.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectObject(index);
+                });
+                
+                document.querySelector('.image-container').appendChild(area);
+            });
+        }
+        
+        let selectedObject = null;
+        let isResizing = false;
+        
+        function selectObject(index) {
+            // Remove previous selection
+            document.querySelectorAll('.click-area').forEach(area => {
+                area.classList.remove('active');
+            });
+            
+            // Select new object
+            const areas = document.querySelectorAll('.click-area');
+            if (areas[index]) {
+                areas[index].classList.add('active');
+                selectedObject = index;
+            }
+        }
+        
+        function startResize(index, handle, e) {
+            isResizing = true;
+            const obj = objects[index];
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startWidth = obj.width;
+            const startHeight = obj.height;
+            const startX_pos = obj.x;
+            const startY_pos = obj.y;
+            
+            function doResize(e) {
+                if (!isResizing) return;
+                
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                switch(handle) {
+                    case 'se': // Bottom-right
+                        obj.width = Math.max(20, startWidth + deltaX);
+                        obj.height = Math.max(20, startHeight + deltaY);
+                        break;
+                    case 'sw': // Bottom-left
+                        obj.width = Math.max(20, startWidth - deltaX);
+                        obj.height = Math.max(20, startHeight + deltaY);
+                        obj.x = startX_pos + deltaX;
+                        break;
+                    case 'ne': // Top-right
+                        obj.width = Math.max(20, startWidth + deltaX);
+                        obj.height = Math.max(20, startHeight - deltaY);
+                        obj.y = startY_pos + deltaY;
+                        break;
+                    case 'nw': // Top-left
+                        obj.width = Math.max(20, startWidth - deltaX);
+                        obj.height = Math.max(20, startHeight - deltaY);
+                        obj.x = startX_pos + deltaX;
+                        obj.y = startY_pos + deltaY;
+                        break;
+                }
+                
+                updateObjectList();
+                drawObjectAreas();
+                if (selectedObject === index) {
+                    selectObject(index);
+                }
+            }
+            
+            function stopResize() {
+                isResizing = false;
+                document.removeEventListener('mousemove', doResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+            
+            document.addEventListener('mousemove', doResize);
+            document.addEventListener('mouseup', stopResize);
+        }
+        
+        function editObject(index) {
+            const obj = objects[index];
+            const newName = prompt('Neuer Name:', obj.name);
+            if (newName) obj.name = newName;
+            
+            const newWidth = prompt('Neue Breite:', obj.width);
+            if (newWidth) obj.width = parseInt(newWidth);
+            
+            const newHeight = prompt('Neue Höhe:', obj.height);
+            if (newHeight) obj.height = parseInt(newHeight);
+            
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function deleteObject(index) {
+            objects.splice(index, 1);
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function clearObjects() {
+            objects = [];
+            updateObjectList();
+            drawObjectAreas();
+        }
+        
+        function exportObjects() {
+            const exportData = {
+                'living-room': {
+                    name: 'Living Room',
+                    backgroundImage: 'assets/images/rooms/living-room.png',
+                    darkBackgroundImage: 'assets/images/rooms/living-room-dark.png',
+                    objects: {}
+                }
+            };
+            
+            objects.forEach(obj => {
+                exportData['living-room'].objects[obj.name] = {
+                    name: obj.name.charAt(0).toUpperCase() + obj.name.slice(1),
+                    description: `${obj.name} object`,
+                    action: 'interact',
+                    effects: ['interaction'],
+                    sound: 'object-click',
+                    animation: 'objectGlow',
+                    clickableArea: {
+                        x: obj.x,
+                        y: obj.y,
+                        width: obj.width,
+                        height: obj.height
+                    }
+                };
+            });
+            
+            console.log('Export Data:', JSON.stringify(exportData, null, 2));
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(JSON.stringify(exportData, null, 2)).then(() => {
+                alert('Daten in Zwischenablage kopiert!');
+            });
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (selectedObject !== null) {
+                const obj = objects[selectedObject];
+                
+                switch(e.key.toLowerCase()) {
+                    case 'w':
+                        obj.height = Math.max(20, obj.height + 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 's':
+                        obj.height = Math.max(20, obj.height - 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 'a':
+                        obj.width = Math.max(20, obj.width - 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 'd':
+                        obj.width = Math.max(20, obj.width + 10);
+                        updateObjectList();
+                        drawObjectAreas();
+                        selectObject(selectedObject);
+                        break;
+                    case 'delete':
+                        deleteObject(selectedObject);
+                        selectedObject = null;
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
