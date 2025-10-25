@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,27 +28,27 @@
             <div class="room-tabs">
                 <button class="room-tab active" data-room="living-room">
                     <span class="room-icon">🏠</span>
-                    <span class="room-name">Wohnzimmer</span>
+                    <span class="room-name">Living Room</span>
                 </button>
                 <button class="room-tab" data-room="kitchen">
                     <span class="room-icon">🍳</span>
-                    <span class="room-name">Küche</span>
+                    <span class="room-name">Kitchen</span>
                 </button>
                 <button class="room-tab" data-room="bedroom">
                     <span class="room-icon">🛏️</span>
-                    <span class="room-name">Schlafzimmer</span>
+                    <span class="room-name">Bedroom</span>
                 </button>
                 <button class="room-tab" data-room="workshop">
                     <span class="room-icon">🔨</span>
-                    <span class="room-name">Werkstatt</span>
+                    <span class="room-name">Workshop</span>
                 </button>
                 <button class="room-tab" data-room="library">
                     <span class="room-icon">📚</span>
-                    <span class="room-name">Bibliothek</span>
+                    <span class="room-name">Library</span>
                 </button>
                 <button class="room-tab" data-room="garden">
                     <span class="room-icon">🌿</span>
-                    <span class="room-name">Garten</span>
+                    <span class="room-name">Garden</span>
                 </button>
             </div>
         </nav>
@@ -60,13 +60,13 @@
             <div class="room active" id="living-room">
                 <!-- Left Side Panel -->
                 <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <h3 class="fantasy-header">Spells</h3>
                     <div class="spell-input-container">
-                        <input type="text" id="spellInput" placeholder="Zauberspruch eingeben..." class="spell-input">
-                        <button id="castSpell" class="cast-spell-btn">Zaubern</button>
+                        <input type="text" id="spellInput" placeholder="Enter spell..." class="spell-input">
+                        <button id="castSpell" class="cast-spell-btn">Cast</button>
                     </div>
                     <div class="spell-list">
-                        <h4>Bekannte Sprüche:</h4>
+                        <h4>Known Spells:</h4>
                         <ul>
                             <li>"ignite fireplace"</li>
                             <li>"summon light"</li>
@@ -83,8 +83,8 @@
                     
                     <!-- Fireplace -->
                     <div class="object fireplace" data-object="fireplace">
-                        <img src="assets/images/objects/fireplace.png" alt="Kamin" class="object-icon">
-                        <div class="object-tooltip">Kamin - Helligkeit/Energie</div>
+                        <img src="assets/images/objects/fireplace.png" alt="Fireplace" class="object-icon">
+                        <div class="object-tooltip">Fireplace - Brightness/Energy</div>
                         <div class="object-effects">
                             <div class="fire-effect"></div>
                         </div>
@@ -92,8 +92,8 @@
                     
                     <!-- Lamp -->
                     <div class="object lamp" data-object="lamp">
-                        <img src="assets/images/objects/lamp.png" alt="Lampe" class="object-icon">
-                        <div class="object-tooltip">Lampe - Beleuchtung</div>
+                        <img src="assets/images/objects/lamp.png" alt="Lamp" class="object-icon">
+                        <div class="object-tooltip">Lamp - Lighting</div>
                         <div class="object-effects">
                             <div class="light-effect"></div>
                         </div>
@@ -101,8 +101,8 @@
                     
                     <!-- Chest -->
                     <div class="object chest" data-object="chest">
-                        <img src="assets/images/objects/chest.png" alt="Truhe" class="object-icon">
-                        <div class="object-tooltip">Truhe - Dateien speichern</div>
+                        <img src="assets/images/objects/chest.png" alt="Chest" class="object-icon">
+                        <div class="object-tooltip">Chest - Store files</div>
                         <div class="object-effects">
                             <div class="treasure-effect"></div>
                         </div>
@@ -110,8 +110,8 @@
                     
                     <!-- Crystal Ball -->
                     <div class="object crystal-ball" data-object="crystal-ball">
-                        <img src="assets/images/objects/crystal-ball.png" alt="Kristallkugel" class="object-icon">
-                        <div class="object-tooltip">Kristallkugel - Monitor/Display</div>
+                        <img src="assets/images/objects/crystal-ball.png" alt="Crystal Ball" class="object-icon">
+                        <div class="object-tooltip">Crystal Ball - Monitor/Display</div>
                         <div class="object-effects">
                             <div class="magic-effect"></div>
                         </div>
@@ -119,8 +119,8 @@
                     
                     <!-- Spell Book -->
                     <div class="object spell-book" data-object="spell-book">
-                        <img src="assets/images/objects/spell-book.png" alt="Zauberbuch" class="object-icon">
-                        <div class="object-tooltip">Zauberbuch - Hilfe/Dokumentation</div>
+                        <img src="assets/images/objects/spell-book.png" alt="Spell Book" class="object-icon">
+                        <div class="object-tooltip">Spell Book - Help/Documentation</div>
                         <div class="object-effects">
                             <div class="book-effect"></div>
                         </div>
@@ -128,8 +128,8 @@
                     
                     <!-- Cauldron -->
                     <div class="object cauldron" data-object="cauldron">
-                        <img src="assets/images/objects/cauldron.png" alt="Kessel" class="object-icon">
-                        <div class="object-tooltip">Kessel - Downloads/Verarbeitung</div>
+                        <img src="assets/images/objects/cauldron.png" alt="Cauldron" class="object-icon">
+                        <div class="object-tooltip">Cauldron - Downloads/Processing</div>
                         <div class="object-effects">
                             <div class="brew-effect"></div>
                         </div>
@@ -148,16 +148,16 @@
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gesten</h3>
+                    <h3 class="fantasy-header">Gestures</h3>
                     <div class="gesture-instructions">
-                        <h4>Gesten-Zaubersprüche:</h4>
+                        <h4>Gesture Spells:</h4>
                         <ul>
-                            <li>Kreis = Portal öffnen</li>
-                            <li>Zick-Zack = Blitz</li>
-                            <li>Spirale = Feuer</li>
-                            <li>Herz = Favoriten</li>
+                            <li>Circle = Open portal</li>
+                            <li>Zigzag = Lightning</li>
+                            <li>Spiral = Fire</li>
+                            <li>Heart = Favorites</li>
                         </ul>
-                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
+                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
                     </div>
                 </div>
             </div>
@@ -166,13 +166,13 @@
             <div class="room" id="kitchen">
                 <!-- Left Side Panel -->
                 <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <h3 class="fantasy-header">Spells</h3>
                     <div class="spell-input-container">
                         <input type="text" id="spellInputKitchen" placeholder="Zauberspruch eingeben..." class="spell-input">
                         <button id="castSpellKitchen" class="cast-spell-btn">Zaubern</button>
                     </div>
                     <div class="spell-list">
-                        <h4>Küchen-Sprüche:</h4>
+                        <h4>Kitchen Spells:</h4>
                         <ul>
                             <li>"brew potion"</li>
                             <li>"summon ingredients"</li>
@@ -185,23 +185,23 @@
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/kitchen.png');">
                     <div class="room-content-text">
-                        <h2>Küche - Datei-Manager</h2>
-                        <p>Organisierte Speisekammer für deine Dateien</p>
+                        <h2>Kitchen - File Manager</h2>
+                        <p>Organized pantry for your files</p>
                     </div>
                 </div>
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gesten</h3>
+                    <h3 class="fantasy-header">Gestures</h3>
                     <div class="gesture-instructions">
-                        <h4>Küchen-Gesten:</h4>
+                        <h4>Kitchen Gestures:</h4>
                         <ul>
-                            <li>Kreis = Kessel rühren</li>
-                            <li>Zick-Zack = Hitze</li>
-                            <li>Spirale = Brauen</li>
-                            <li>Herz = Favoriten</li>
+                            <li>Circle = Stir cauldron</li>
+                            <li>Zigzag = Heat</li>
+                            <li>Spiral = Brew</li>
+                            <li>Heart = Favorites</li>
                         </ul>
-                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
+                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
                     </div>
                 </div>
             </div>
@@ -209,13 +209,13 @@
             <div class="room" id="bedroom">
                 <!-- Left Side Panel -->
                 <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <h3 class="fantasy-header">Spells</h3>
                     <div class="spell-input-container">
                         <input type="text" id="spellInputBedroom" placeholder="Zauberspruch eingeben..." class="spell-input">
                         <button id="castSpellBedroom" class="cast-spell-btn">Zaubern</button>
                     </div>
                     <div class="spell-list">
-                        <h4>Schlafzimmer-Sprüche:</h4>
+                        <h4>Bedroom Spells:</h4>
                         <ul>
                             <li>"rest mode"</li>
                             <li>"sleep timer"</li>
@@ -228,23 +228,23 @@
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/bedroom.png');">
                     <div class="room-content-text">
-                        <h2>Schlafzimmer - Ruhemodus</h2>
-                        <p>Ruhiger Rückzugsort für Pausen</p>
+                        <h2>Bedroom - Rest Mode</h2>
+                        <p>Quiet retreat for breaks</p>
                     </div>
                 </div>
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gesten</h3>
+                    <h3 class="fantasy-header">Gestures</h3>
                     <div class="gesture-instructions">
-                        <h4>Schlafzimmer-Gesten:</h4>
+                        <h4>Bedroom Gestures:</h4>
                         <ul>
-                            <li>Kreis = Ruhe</li>
-                            <li>Zick-Zack = Wecker</li>
-                            <li>Spirale = Träume</li>
-                            <li>Herz = Favoriten</li>
+                            <li>Circle = Rest</li>
+                            <li>Zigzag = Alarm</li>
+                            <li>Spiral = Dreams</li>
+                            <li>Heart = Favorites</li>
                         </ul>
-                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
+                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
                     </div>
                 </div>
             </div>
@@ -252,13 +252,13 @@
             <div class="room" id="workshop">
                 <!-- Left Side Panel -->
                 <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <h3 class="fantasy-header">Spells</h3>
                     <div class="spell-input-container">
                         <input type="text" id="spellInputWorkshop" placeholder="Zauberspruch eingeben..." class="spell-input">
                         <button id="castSpellWorkshop" class="cast-spell-btn">Zaubern</button>
                     </div>
                     <div class="spell-list">
-                        <h4>Werkstatt-Sprüche:</h4>
+                        <h4>Workshop Spells:</h4>
                         <ul>
                             <li>"craft tool"</li>
                             <li>"repair item"</li>
@@ -271,23 +271,23 @@
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/workshop.png');">
                     <div class="room-content-text">
-                        <h2>Werkstatt - Tools/Apps</h2>
-                        <p>Arbeitsplatz mit Werkzeugen und Anwendungen</p>
+                        <h2>Workshop - Tools/Apps</h2>
+                        <p>Workplace with tools and applications</p>
                     </div>
                 </div>
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gesten</h3>
+                    <h3 class="fantasy-header">Gestures</h3>
                     <div class="gesture-instructions">
-                        <h4>Werkstatt-Gesten:</h4>
+                        <h4>Workshop Gestures:</h4>
                         <ul>
-                            <li>Kreis = Werkzeug</li>
-                            <li>Zick-Zack = Reparatur</li>
-                            <li>Spirale = Schmieden</li>
-                            <li>Herz = Favoriten</li>
+                            <li>Circle = Tool</li>
+                            <li>Zigzag = Repair</li>
+                            <li>Spiral = Forge</li>
+                            <li>Heart = Favorites</li>
                         </ul>
-                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
+                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
                     </div>
                 </div>
             </div>
@@ -295,13 +295,13 @@
             <div class="room" id="library">
                 <!-- Left Side Panel -->
                 <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <h3 class="fantasy-header">Spells</h3>
                     <div class="spell-input-container">
                         <input type="text" id="spellInputLibrary" placeholder="Zauberspruch eingeben..." class="spell-input">
                         <button id="castSpellLibrary" class="cast-spell-btn">Zaubern</button>
                     </div>
                     <div class="spell-list">
-                        <h4>Bibliothek-Sprüche:</h4>
+                        <h4>Library Spells:</h4>
                         <ul>
                             <li>"open book"</li>
                             <li>"search knowledge"</li>
@@ -314,23 +314,23 @@
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
                     <div class="room-content-text">
-                        <h2>Bibliothek - Dokumente</h2>
-                        <p>Bücher und Schriftrollen für deine Dokumente</p>
+                        <h2>Library - Documents</h2>
+                        <p>Books and scrolls for your documents</p>
                     </div>
                 </div>
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gesten</h3>
+                    <h3 class="fantasy-header">Gestures</h3>
                     <div class="gesture-instructions">
-                        <h4>Bibliothek-Gesten:</h4>
+                        <h4>Library Gestures:</h4>
                         <ul>
-                            <li>Kreis = Buch öffnen</li>
-                            <li>Zick-Zack = Suchen</li>
-                            <li>Spirale = Archivieren</li>
-                            <li>Herz = Favoriten</li>
+                            <li>Circle = Open book</li>
+                            <li>Zigzag = Search</li>
+                            <li>Spiral = Archive</li>
+                            <li>Heart = Favorites</li>
                         </ul>
-                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
+                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
                     </div>
                 </div>
             </div>
@@ -338,13 +338,13 @@
             <div class="room" id="garden">
                 <!-- Left Side Panel -->
                 <div class="room-side-panel left">
-                    <h3 class="fantasy-header">Zaubersprüche</h3>
+                    <h3 class="fantasy-header">Spells</h3>
                     <div class="spell-input-container">
                         <input type="text" id="spellInputGarden" placeholder="Zauberspruch eingeben..." class="spell-input">
                         <button id="castSpellGarden" class="cast-spell-btn">Zaubern</button>
                     </div>
                     <div class="spell-list">
-                        <h4>Garten-Sprüche:</h4>
+                        <h4>Garden Spells:</h4>
                         <ul>
                             <li>"connect internet"</li>
                             <li>"open portal"</li>
@@ -357,23 +357,23 @@
                 <!-- Center Background -->
                 <div class="room-background" style="background-image: url('assets/images/rooms/library.png');">
                     <div class="room-content-text">
-                        <h2>Garten - Externe Verbindungen</h2>
-                        <p>Verbindung zur Außenwelt und Internet</p>
+                        <h2>Garden - External Connections</h2>
+                        <p>Connection to the outside world and internet</p>
                     </div>
                 </div>
                 
                 <!-- Right Side Panel -->
                 <div class="room-side-panel right">
-                    <h3 class="fantasy-header">Gesten</h3>
+                    <h3 class="fantasy-header">Gestures</h3>
                     <div class="gesture-instructions">
-                        <h4>Garten-Gesten:</h4>
+                        <h4>Garden Gestures:</h4>
                         <ul>
-                            <li>Kreis = Portal</li>
-                            <li>Zick-Zack = Netzwerk</li>
-                            <li>Spirale = Wachstum</li>
-                            <li>Herz = Favoriten</li>
+                            <li>Circle = Portal</li>
+                            <li>Zigzag = Network</li>
+                            <li>Spiral = Growth</li>
+                            <li>Heart = Favorites</li>
                         </ul>
-                        <p><strong>Zeichne Gesten überall auf dem Bildschirm!</strong></p>
+                        <p><strong>Draw gestures anywhere on the screen!</strong></p>
                     </div>
                 </div>
             </div>
@@ -392,13 +392,13 @@
             </div>
             
             <div class="gesture-instructions">
-                <p><strong>🎨 Gesten-Erkennung aktiviert!</strong></p>
-                <p>Zeichne Gesten überall auf dem Bildschirm:</p>
+                <p><strong>🎨 Gesture Recognition Activated!</strong></p>
+                <p>Draw gestures anywhere on the screen:</p>
                 <ul>
-                    <li>Kreis = Portal öffnen</li>
-                    <li>Zick-Zack = Blitz</li>
-                    <li>Spirale = Feuer</li>
-                    <li>Herz = Favoriten</li>
+                    <li>Circle = Open portal</li>
+                    <li>Zigzag = Lightning</li>
+                    <li>Spiral = Fire</li>
+                    <li>Heart = Favorites</li>
                 </ul>
             </div>
         </div>
@@ -406,17 +406,17 @@
         <!-- Status Bar -->
         <footer class="status-bar">
             <div class="status-left">
-                <span class="current-room">Wohnzimmer</span>
-                <span class="magic-level">Magie: 100%</span>
+                <span class="current-room">Living Room</span>
+                <span class="magic-level">Magic: 100%</span>
             </div>
             <div class="status-center">
                 <div class="spell-history">
-                    <span class="last-spell">Letzter Zauberspruch: -</span>
+                    <span class="last-spell">Last Spell: -</span>
                 </div>
             </div>
             <div class="status-right">
-                <button class="help-btn" id="helpBtn">Hilfe</button>
-                <button class="settings-btn" id="settingsBtn">Einstellungen</button>
+                <button class="help-btn" id="helpBtn">Help</button>
+                <button class="settings-btn" id="settingsBtn">Settings</button>
             </div>
         </footer>
     </div>
@@ -425,27 +425,27 @@
     <div class="modal" id="helpModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Zauberbuch - Hilfe</h2>
+                <h2>Spellbook - Help</h2>
                 <button class="close-btn" id="closeHelp">&times;</button>
             </div>
             <div class="modal-body">
-                <h3>Zaubersprüche:</h3>
+                <h3>Spells:</h3>
                 <ul>
-                    <li><code>"ignite fireplace"</code> - Kamin entzünden</li>
-                    <li><code>"summon light"</code> - Lampe einschalten</li>
-                    <li><code>"open portal to kitchen"</code> - Küche öffnen</li>
-                    <li><code>"store treasure in chest"</code> - Datei speichern</li>
-                    <li><code>"cast protection spell"</code> - Sicherheitsmodus</li>
-                    <li><code>"brew potion"</code> - Download starten</li>
-                    <li><code>"read ancient tome"</code> - Dokument öffnen</li>
+                    <li><code>"ignite fireplace"</code> - Ignite fireplace</li>
+                    <li><code>"summon light"</code> - Turn on lamp</li>
+                    <li><code>"open portal to kitchen"</code> - Open kitchen</li>
+                    <li><code>"store treasure in chest"</code> - Save file</li>
+                    <li><code>"cast protection spell"</code> - Security mode</li>
+                    <li><code>"brew potion"</code> - Start download</li>
+                    <li><code>"read ancient tome"</code> - Open document</li>
                 </ul>
                 
-                <h3>Gesten:</h3>
+                <h3>Gestures:</h3>
                 <ul>
-                    <li>Kreis zeichnen - Portal öffnen</li>
-                    <li>Zick-Zack - Blitz (Licht)</li>
-                    <li>Spirale - Feuer (Wärme)</li>
-                    <li>Herz - Favoriten hinzufügen</li>
+                    <li>Draw circle - Open portal</li>
+                    <li>Zigzag - Lightning (Light)</li>
+                    <li>Spiral - Fire (Heat)</li>
+                    <li>Heart - Add to favorites</li>
                 </ul>
             </div>
         </div>
@@ -455,20 +455,20 @@
     <div class="modal" id="settingsModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Einstellungen</h2>
+                <h2>Settings</h2>
                 <button class="close-btn" id="closeSettings">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="setting-group">
-                    <label for="soundVolume">Sound-Lautstärke:</label>
+                    <label for="soundVolume">Sound Volume:</label>
                     <input type="range" id="soundVolume" min="0" max="100" value="50">
                 </div>
                 <div class="setting-group">
-                    <label for="particleEffects">Partikel-Effekte:</label>
+                    <label for="particleEffects">Particle Effects:</label>
                     <input type="checkbox" id="particleEffects" checked>
                 </div>
                 <div class="setting-group">
-                    <label for="gestureRecognition">Gesten-Erkennung:</label>
+                    <label for="gestureRecognition">Gesture Recognition:</label>
                     <input type="checkbox" id="gestureRecognition" checked>
                 </div>
             </div>
